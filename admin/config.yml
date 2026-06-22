@@ -1,0 +1,211 @@
+# ============================================================
+# P.A.S.T. — Configurazione Decap CMS
+# ============================================================
+
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "img/uploads"
+public_folder: "/img/uploads"
+
+locale: "it"
+
+collections:
+
+  # ── EVENTI ─────────────────────────────────────────────────
+  - name: "eventi"
+    label: "📅 Eventi"
+    label_singular: "Evento"
+    folder: "_eventi"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+
+      - label: "Titolo evento"
+        name: "titolo"
+        widget: "string"
+        hint: "Es: Apertura straordinaria Duomo San Giorgio"
+
+      - label: "Sottotitolo"
+        name: "sottotitolo"
+        widget: "string"
+        hint: "Es: Ore 20:00 · Duomo San Giorgio"
+
+      - label: "Giorno"
+        name: "giorno"
+        widget: "string"
+        hint: "Solo il numero del giorno — es: 23"
+
+      - label: "Mese"
+        name: "mese"
+        widget: "string"
+        hint: "Abbreviazione 3 lettere — es: Apr, Mag, Giu"
+
+      - label: "Categoria"
+        name: "categoria"
+        widget: "select"
+        options:
+          - { label: "Inaugurazione", value: "inaugurazione" }
+          - { label: "Apertura serale", value: "apertura" }
+          - { label: "Proiezione", value: "proiezione" }
+          - { label: "Incontro / Conferenza", value: "incontro" }
+          - { label: "Workshop", value: "workshop" }
+          - { label: "Altro", value: "altro" }
+
+      - label: "Testo anteprima"
+        name: "anteprima"
+        widget: "text"
+        hint: "Breve descrizione visibile nella griglia eventi"
+
+      - label: "Descrizione completa"
+        name: "descrizione"
+        widget: "markdown"
+
+      - label: "Luogo"
+        name: "luogo"
+        widget: "string"
+
+      - label: "Orario"
+        name: "orario"
+        widget: "string"
+        hint: "Es: 20:00 – 23:00"
+
+      - label: "Data completa"
+        name: "data_completa"
+        widget: "string"
+        hint: "Es: 24 Aprile 2025"
+
+      - label: "Prezzo / Ingresso"
+        name: "prezzo"
+        widget: "string"
+        hint: "Es: € 5,00 — oppure: Ingresso libero"
+
+      - label: "Sottotitolo prezzo"
+        name: "sub_prezzo"
+        widget: "string"
+        required: false
+
+      - label: "Tipo prenotazione"
+        name: "tipo_prenotazione"
+        widget: "select"
+        options:
+          - { label: "Eventbrite", value: "eventbrite" }
+          - { label: "Regiondo", value: "regiondo" }
+          - { label: "Ingresso libero (nessuna prenotazione)", value: "free" }
+
+      - label: "Link prenotazione"
+        name: "link_prenotazione"
+        widget: "string"
+        required: false
+
+      - label: "Badge 1"
+        name: "badge1"
+        widget: "select"
+        required: false
+        options:
+          - { label: "Inaugurazione", value: "badge-mostra" }
+          - { label: "Workshop", value: "badge-workshop" }
+          - { label: "Spettacolo", value: "badge-spettacolo" }
+          - { label: "Incontro", value: "badge-incontro" }
+          - { label: "Ingresso libero", value: "badge-gratuito" }
+
+      - label: "Badge 2 (opzionale)"
+        name: "badge2"
+        widget: "select"
+        required: false
+        options:
+          - { label: "Nessuno", value: "" }
+          - { label: "Ingresso libero", value: "badge-gratuito" }
+          - { label: "Workshop", value: "badge-workshop" }
+
+      - label: "Immagine di sfondo hero"
+        name: "immagine"
+        widget: "image"
+        required: false
+
+  # ── NOTIZIE ────────────────────────────────────────────────
+  - name: "notizie"
+    label: "📰 Notizie"
+    label_singular: "Notizia"
+    folder: "_notizie"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+
+      - label: "Titolo notizia"
+        name: "titolo"
+        widget: "string"
+
+      - label: "Testo anteprima"
+        name: "anteprima"
+        widget: "text"
+
+      - label: "Contenuto completo"
+        name: "contenuto"
+        widget: "markdown"
+
+      - label: "Data pubblicazione"
+        name: "data"
+        widget: "string"
+        hint: "Es: 20 marzo 2025"
+
+      - label: "Categoria"
+        name: "badge_testo"
+        widget: "select"
+        options:
+          - { label: "Annuncio", value: "Annuncio" }
+          - { label: "Evento", value: "Evento" }
+          - { label: "Luogo", value: "Luogo" }
+          - { label: "Associazione", value: "Associazione" }
+
+  # ── LUOGHI ─────────────────────────────────────────────────
+  - name: "luoghi"
+    label: "📍 Luoghi"
+    label_singular: "Luogo"
+    folder: "_luoghi"
+    create: false
+    extension: "json"
+    format: "json"
+    fields:
+
+      - label: "Nome del luogo"
+        name: "titolo"
+        widget: "string"
+
+      - label: "Categoria"
+        name: "categoria"
+        widget: "select"
+        options:
+          - { label: "Museo", value: "Musei" }
+          - { label: "Chiesa", value: "Chiese" }
+          - { label: "Unicità", value: "Unicità" }
+
+      - label: "Descrizione breve"
+        name: "descrizione_breve"
+        widget: "text"
+
+      - label: "Descrizione completa"
+        name: "descrizione"
+        widget: "markdown"
+
+      - label: "Orari di apertura"
+        name: "orari"
+        widget: "string"
+
+      - label: "Prezzo"
+        name: "prezzo"
+        widget: "string"
+
+      - label: "Indirizzo"
+        name: "indirizzo"
+        widget: "string"
+
+      - label: "Link prenotazione Regiondo"
+        name: "link_regiondo"
+        widget: "string"
+        required: false
