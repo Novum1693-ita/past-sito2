@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I Luoghi — P.A.S.T.</title>
+  <meta name="description" content="P.A.S.T. — Patrimonio Arte Storia Territorio. Progetto di valorizzazione culturale di Ragusa." />
+  <link rel="icon" href="img/logo.png" type="image/png" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="logo">
+      <img src="img/logo.png" alt="P.A.S.T." />
+    </a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="chi-siamo.html">Chi siamo</a></li>
+      <li class="nav-dropdown">
+        <a href="I-luoghi.html" class="active">I Luoghi <span class="dropdown-arrow">▾</span></a>
+        <div class="dropdown-menu">
+          <a href="luoghi/museo-del-duomo.html">Museo del Duomo</a>
+          <a href="luoghi/san-giacomo.html">Chiesa di San Giacomo Apostolo</a>
+          <a href="luoghi/maddalena.html">Chiesa S. Maria Maddalena</a>
+          <a href="luoghi/obsculta.html">Museo Benedettino Obsculta</a>
+          <a href="luoghi/san-giorgio.html">Chiesa Madre San Giorgio</a>
+          <a href="luoghi/museo-cattedrale.html">Museo della Cattedrale</a>
+          <a href="luoghi/cattedrale.html">Cattedrale S. Giovanni Battista</a>
+          <a href="luoghi/purgatorio.html">Chiesa Anime Sante Purgatorio</a>
+          <a href="luoghi/itria.html">Chiesa S. Maria dell'Itria</a>
+          <a href="luoghi/scale.html">Chiesa S. Maria delle Scale</a>
+        </div>
+      </li>
+      <li><a href="Le-Card.html">Vitruvio Card</a></li>
+      <li class="nav-dropdown">
+        <a href="eventi.html">Eventi <span class="dropdown-arrow">▾</span></a>
+        <div class="dropdown-menu" id="dropdown-eventi">
+          <a href="eventi.html">Tutti gli eventi →</a>
+        </div>
+      </li>
+      <li><a href="notizie.html">Notizie</a></li>
+      <li><a href="contatti.html">Contatti</a></li>
+      <li class="lang-switch">
+        <a href="index.html" class="lang-btn active">IT</a>
+        <span class="lang-sep">·</span>
+        <a href="en/index.html" class="lang-btn ">EN</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="ticker-bar">
+    <div class="ticker-label"><span class="ticker-dot"></span>Ultima ora</div>
+    <div class="ticker-window"><div class="ticker-track" id="ticker-track"></div></div>
+  </div>
+  <div class="page-header">
+    <div class="page-tag">I Luoghi</div>
+    <h1>Scegli la tua prossima<br>scoperta</h1>
+  </div>
+  <div class="filter-bar">
+    <a class="filter-pill active" data-categoria="tutti">Tutti</a>
+    <a class="filter-pill" data-categoria="Musei">Musei</a>
+    <a class="filter-pill" data-categoria="Chiese">Chiese</a>
+    <a class="filter-pill" data-categoria="Unicità">Unicità</a>
+  </div>
+  <div class="courses-grid">
+
+    <a href="luoghi/museo-del-duomo.html" class="course-card" data-categoria="Musei">
+      <div class="course-thumb">
+        <img src="img/I luoghi/museo-duomo.png" alt="Museo del Duomo" />
+        <span class="course-badge">Museo</span>
+      </div>
+      <div class="course-body">
+        <h3>Museo del Duomo</h3>
+        <p>Un museo che racchiude la storia della città e del Duomo di Ragusa pre e post terremoto del 1693.</p>
+        <div class="course-meta"><span>Lun–Sab 10:00–13:00 / 16:00–19:00</span><span>€ 3,00</span></div>
+        <span class="book-link">Scopri e prenota</span>
+      </div>
+    </a>
+
+    <a href="luoghi/san-giacomo.html" class="course-card" data-categoria="Chiese">
+      <div class="course-thumb">
+        <img src="img/I luoghi/san-giacomo.png" alt="Chiesa di San Giacomo Apostolo" />
+        <span class="course-badge">Chiesa</span>
+      </div>
+      <div class="course-body">
+        <h3>Chiesa di San Giacomo Apostolo</h3>
+        <p>Uno dei gioielli più belli del territorio, dove arte e fede si intrecciano in un'architettura barocca unica.</p>
+        <div class="course-meta"><span>Tutti i giorni 10:30–17:30</span><span>€ 2,00</span></div>
+        <span class="book-link">Scopri e prenota</span>
+      </div>
+    </a>
+
+    <a href="luoghi/maddalena.html" class="course-card" data-categoria="Chiese">
+      <div class="course-thumb">
+        <img src="img/I luoghi/maddalena.png" alt="Chiesa di Santa Maria Maddalena" />
+        <span class="course-badge">Chiesa</span>
+      </div>
+      <div class="course-body">
+        <h3>Chiesa di Santa Maria Maddalena</h3>
+        <p>Un gioiello dell'architettura barocca ragusana con interni riccamente decorati.</p>
+        <div class="course-meta"><span>Tutti i giorni 10:00–17:00</span><span>€ 2,00</span></div>
+        <span class="book-link">Scopri e prenota</span>
+      </div>
+    </a>
+
+    <a href="luoghi/obsculta.html" class="course-card" data-categoria="Musei">
+      <div class="course-thumb">
+        <img src="img/I luoghi/obsculta.png" alt="Museo Benedettino Obsculta" />
+        <span class="course-badge">Museo</span>
+      </div>
+      <div class="course-body">
+        <h3>Museo Benedettino Obsculta</h3>
+        <p>Il museo ospitato nell'antico convento benedettino racconta secoli di vita monastica e arte sacra.</p>
+        <div class="course-meta"><span>Mar–Dom 9:30–17:00</span><span>€ 4,00</span></div>
+        <span class="book-link">Scopri e prenota</span>
+      </div>
+    </a>
+
+    <a href="luoghi/san-giorgio.html" class="course-card" data-categoria="Unicità">
+      <div class="course-thumb">
+        <img src="img/I luoghi/san-giorgio.png" alt="Chiesa Madre San Giorgio" />
+        <span class="course-badge">Unicità</span>
+      </div>
+      <div class="course-body">
+        <h3>Chiesa Madre e Duomo San Giorgio</h3>
+        <p>Capolavoro del barocco siciliano di Rosario Gagliardi. Con accesso alla Balaustra e alla Scalinata.</p>
+        <div class="course-meta"><span>Tutti i giorni 9:00–19:00</span><span>€ 3,00</span></div>
+        <span class="book-link">Scopri e prenota</span>
+      </div>
+    </a>
+
+    <a href="luoghi/museo-cattedrale.html" class="course-card" data-categoria="Musei">
+      <div class="course-thumb">
+        <img src="img/I luoghi/museo-cattedrale.png" alt="Museo della Cattedrale" />
+        <span class="course-badge">Museo</span>
+      </div>
+      <div class="course-body">
+        <h3>Museo della Cattedrale</h3>
+        <p>Collezione di arte sacra e oggetti liturgici che ripercorrono la storia della diocesi ragusana.</p>
+        <div class="course-meta"><span>Mar–Sab 10:00–17:00</span><span>€ 3,00</span></div>
+        <span class="book-link">Scopri e prenota</span>
+      </div>
+    </a>
+
+    <a href="luoghi/cattedrale.html" class="course-card" data-categoria="Chiese">
+      <div class="course-thumb">
+        <img src="img/I luoghi/cattedrale.png" alt="Cattedrale San Giovanni Battista" />
+        <span class="course-badge">Chiesa</span>
+      </div>
+      <div class="course-body">
+        <h3>Cattedrale San Giovanni Battista</h3>
+        <p>La Cattedrale della Diocesi di Ragusa, con la sua imponente facciata barocca e i preziosi interni.</p>
+        <div class="course-meta"><span>Tutti i giorni 8:00–19:00</span><span>Gratuito</span></div>
+        <span class="book-link">Scopri e prenota</span>
+      </div>
+    </a>
+
+    <a href="luoghi/purgatorio.html" class="course-card" data-categoria="Chiese">
+      <div class="course-thumb">
+        <img src="img/I luoghi/purgatorio.png" alt="Chiesa Anime Sante del Purgatorio" />
+        <span class="course-badge">Chiesa</span>
+      </div>
+      <div class="course-body">
+        <h3>Chiesa Anime Sante del Purgatorio</h3>
+        <p>Una delle più suggestive chiese di Ragusa Ibla, con un repertorio iconografico dedicato ai defunti.</p>
+        <div class="course-meta"><span>Sab–Dom 10:00–13:00</span><span>€ 2,00</span></div>
+        <span class="book-link">Scopri e prenota</span>
+      </div>
+    </a>
+
+    <a href="luoghi/itria.html" class="course-card" data-categoria="Chiese">
+      <div class="course-thumb">
+        <img src="img/I luoghi/itria.png" alt="Chiesa di Santa Maria dell'Itria" />
+        <span class="course-badge">Chiesa</span>
+      </div>
+      <div class="course-body">
+        <h3>Chiesa di Santa Maria dell'Itria</h3>
+        <p>Nota per il suo campanile maiolicato, è uno dei simboli visivi più riconoscibili di Ragusa Ibla.</p>
+        <div class="course-meta"><span>Tutti i giorni 10:00–17:00</span><span>€ 2,00</span></div>
+        <span class="book-link">Scopri e prenota</span>
+      </div>
+    </a>
+
+    <a href="luoghi/scale.html" class="course-card" data-categoria="Chiese">
+      <div class="course-thumb">
+        <img src="img/I luoghi/scale.png" alt="Chiesa di Santa Maria delle Scale" />
+        <span class="course-badge">Chiesa</span>
+      </div>
+      <div class="course-body">
+        <h3>Chiesa di Santa Maria delle Scale</h3>
+        <p>Costruita tra il vecchio e il nuovo Ragusa, custodisce un importante portale gotico-catalano.</p>
+        <div class="course-meta"><span>Tutti i giorni 10:00–17:00</span><span>€ 2,00</span></div>
+        <span class="book-link">Scopri e prenota</span>
+      </div>
+    </a>
+
+  </div>
+  <div class="sponsor-bar">
+    <div class="sponsor-bar-label">Progetto nato dalla collaborazione di:</div>
+    <div class="sponsor-track">
+      <a href="https://www.diocesidiragusa.it" target="_blank" rel="noopener" class="sponsor-item">
+        <img src="img/loghi/logo-diocesi.png" alt="Diocesi di Ragusa" />
+      </a>
+      <a href="https://www.novum1693.it" target="_blank" rel="noopener" class="sponsor-item">
+        <img src="img/loghi/logo-novum.png" alt="Novum 1693 Cantiere Culturale" />
+      </a>
+      <a href="https://www.comune.ragusa.gov.it" target="_blank" rel="noopener" class="sponsor-item">
+        <img src="img/loghi/logo-comune.png" alt="Comune di Ragusa" />
+      </a>
+    </div>
+  </div>
+  <footer>
+    <a href="index.html" class="footer-logo">
+      <img src="img/logo.png" alt="P.A.S.T." />
+    </a>
+    <div class="footer-info">
+      Via Salita Duomo 13, Ragusa &nbsp;·&nbsp;
+      <a href="mailto:info@novum1693.it">info@novum1693.it</a> &nbsp;·&nbsp;
+      <a href="privacy.html">Privacy policy</a>
+    </div>
+    <div class="footer-copy">© 2025 Guardiani del Tempo</div>
+  </footer>
+  <div class="cookie-banner" id="cookie-banner">
+    <div class="cookie-testo">Utilizziamo solo cookie tecnici necessari al funzionamento del sito. Leggi la nostra <a href="privacy.html">Privacy Policy</a>.</div>
+    <div class="cookie-azioni">
+      <button class="btn-cookie-rifiuta" id="cookie-rifiuta">Solo necessari</button>
+      <button class="btn-cookie-accetta" id="cookie-accetta">Accetto</button>
+    </div>
+  </div>
+  <script src="js/data-eventi.js"></script>
+  <script src="js/data-notizie.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
