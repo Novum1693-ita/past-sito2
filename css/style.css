@@ -644,7 +644,7 @@ a   { color: inherit; text-decoration: none; }
 }
 .luogo-layout {
   display: grid;
-  grid-template-columns: 1fr 320px;
+  grid-template-columns: 1fr 500px;
   gap: 0; border-top: 1px solid var(--bordo);
 }
 .luogo-descrizione {
