@@ -665,7 +665,7 @@ a   { color: inherit; text-decoration: none; }
   font-size: 15px; color: rgba(245,240,232,0.7);
   line-height: 1.9; margin-bottom: 4px;
 }
-.luogo-sidebar { position: sticky; top: 100px; }
+.luogo-sidebar { position: sticky; top: 72px; }
 .sidebar-card { border-bottom: 1px solid var(--bordo); }
 .sidebar-card-header {
   padding: 2rem;
@@ -674,7 +674,7 @@ a   { color: inherit; text-decoration: none; }
 }
 .sidebar-card-header .prezzo {
   font-family: var(--font-display);
-  font-size: 28px; font-weight: 300; color: var(--bianco);
+  font-size: 28px; font-weight: 500; color: var(--bianco);
   line-height: 1.3;
 }
 .sidebar-card-header .prezzo-sub {
