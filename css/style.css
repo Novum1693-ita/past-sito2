@@ -235,9 +235,11 @@ a   { color: inherit; text-decoration: none; }
   display: flex; align-items: flex-end;
   padding: 5rem 4rem;
   position: relative; overflow: hidden;
-  background-image: url('img/sfondo-principale.png');
+  background-color: var(--sfondo);
+  background-image: url('img/ibla.jpeg');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
 }
 /* Overlay scuro sul fondo per leggibilità */
 .hero::before {
