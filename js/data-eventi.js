@@ -30,10 +30,10 @@ var EVENTI_PAST = [
   {
     titolo:     'San Giorgio, tra Arte e Leggenda',
     sottotitolo:'Apertura serale · Duomo San Giorgio',
-    giorno:     '24',
-    mese:       'Apr',
+    giorno:     '15 e 22',
+    mese:       'Ago',
     categoria:  'apertura',
-    anteprima:  'Apertura straordinaria serale del Duomo San Giorgio con visita guidata e racconto storico.',
+    anteprima:  'Apertura straordinaria serale del portone ligneo del Duomo di San Giorgio',
     badge:      [
       { classe: 'badge-spettacolo', testo: 'Apertura serale' }
     ],
