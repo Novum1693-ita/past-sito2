@@ -14,7 +14,7 @@
 var EVENTI_PAST = [
 
   {
-    titolo:     'Inaugurazione nuovo allestimento Museo del Duomo',
+    titolo:     'Mostra delle Confraternite Iblee',
     sottotitolo:'Ore 17:30 · Museo del Duomo',
     giorno:     '23',
     mese:       'Apr',

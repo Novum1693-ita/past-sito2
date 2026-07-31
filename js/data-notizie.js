@@ -11,8 +11,8 @@
 var NOTIZIE_PAST = [
 
   {
-    titolo:      'Nuovi orari di apertura dal 27 marzo',
-    anteprima:   'A partire dal 27 marzo i luoghi aderenti al progetto P.A.S.T. adottano nuovi orari primaverili.',
+    titolo:      'Orari di Apertura Luglio e Agosto 2026',
+    anteprima:   'A partire dal 1 agosto i luoghi culturali varieranno i propri orari',
     data:        '20 marzo 2025',
     badgeClasse: 'bn-annuncio',
     badgeTesto:  'Annuncio',
