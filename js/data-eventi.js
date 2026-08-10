@@ -13,23 +13,23 @@
 
 var EVENTI_PAST = [
 
-  {
-    titolo:     'Mostra delle Confraternite Iblee',
-    sottotitolo:'Ore 17:30 · Museo del Duomo',
-    giorno:     '23',
-    mese:       'Apr',
-    categoria:  'inaugurazione',
-    anteprima:  'Inaugurazione del nuovo allestimento permanente del Museo del Duomo di Ragusa.',
+{
+    titolo:     'Ragusa Pre-Terremoto',
+    sottotitolo:'ore 18:00 · Chiese S. Rocco, S. Filippo Neri, Santa Lucia/S. Maria dello Spasimo e S. F. all'Immacolata',
+    giorno:     'mercoledì e giovedì',
+    mese:       'Ago',
+    categoria:  'apertura',
+    anteprima:  'Apertura straordinaria delle chiese costruite prima del terremoto',
     badge:      [
-      { classe: 'badge-mostra',   testo: 'Inaugurazione' },
-      { classe: 'badge-gratuito', testo: 'Ingresso libero' }
+  
+      { classe: 'badge-spettacolo',  testo: 'Apertura Straordinaria' }
     ],
-    url: 'eventi/inaugurazione-museo-duomo.html'
+    url: 'eventi/Ragusa Pre-Terremoto.html'
   },
-
-  {
+  
+{
     titolo:     'San Giorgio, tra Arte e Leggenda',
-    sottotitolo:'Apertura serale · Duomo San Giorgio',
+    sottotitolo:'20:30-23:30 · Duomo San Giorgio',
     giorno:     '15 e 22',
     mese:       'Ago',
     categoria:  'apertura',
@@ -41,18 +41,19 @@ var EVENTI_PAST = [
   },
 
   {
-    titolo:     'DocuFilm San Giorgio',
-    sottotitolo:'Ore 20:30 · Proiezione documentario',
-    giorno:     '28',
-    mese:       'Mag',
-    categoria:  'proiezione',
-    anteprima:  'Proiezione del documentario dedicato alla storia del Duomo San Giorgio e del barocco ragusano.',
+    titolo:     'Mostra delle Confraternite Iblee',
+    sottotitolo:'21:00-22:00 · Chiesa S. Maria Maddalena',
+    giorno:     '19 e 26',
+    mese:       'Ago',
+    categoria:  'apertura',
+    anteprima:  'Apertura Straordinaria serale della Mostra delle Confraternite Iblee',
     badge:      [
-      { classe: 'badge-incontro',  testo: 'Documentario' },
-      { classe: 'badge-gratuito',  testo: 'Ingresso libero' }
+      { classe: 'badge-mostra',   testo: 'Mostra' },
+      { classe: 'badge-spettacolo', testo: 'Apertura serale' }
     ],
-    url: 'eventi/docufilm-san-giorgio.html'
+    url: 'eventi/Le Confraternite Iblee.html'
   },
+
 
   /* ── Modello per nuovo evento ──────────────────────────────
   {
