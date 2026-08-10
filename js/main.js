@@ -218,7 +218,7 @@ function avviaTickerDinamico() {
   var prefix = calcolaPrefix();
 
   /* Prende solo le prime 3 */
-  var items = notizie.slice(0, 3);
+  var items = notizie.slice(0, 4);
   var html = '';
 
   /* Duplica per effetto loop */
