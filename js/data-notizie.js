@@ -20,12 +20,20 @@ var NOTIZIE_PAST = [
   },
 
   {
-    titolo:      'Inaugurazione nuovo allestimento Museo del Duomo',
-    anteprima:   'Il 23 aprile viene inaugurato il nuovo allestimento permanente del Museo del Duomo di Ragusa.',
-    data:        '10 marzo 2025',
+    titolo:      'Variazioni Orari Apertura: 15 agosto',
+    anteprima:   'Sabato 15 agosto i luoghi culturali subiranno delle variazioni',
+    data:        '10 agosto 2026',
+    badgeClasse: 'bn-annuncio',
+    badgeTesto:  'Annuncio',
+    url:         'notizie/Variazione-Orari-Apertura.html'
+  },
+  {
+    titolo:      'San Giorgio-Tra Arte e Leggenda',
+    anteprima:   'Apertura Straordinaria del Portone ligneo del Duomo di San Giorgio',
+    data:        '10 agosto 2026',
     badgeClasse: 'bn-evento',
     badgeTesto:  'Evento',
-    url:         'notizie/inaugurazione-museo-duomo.html'
+    url:         'eventi/Sangiorgio-traarteeleggenda.html'
   },
 
   {
