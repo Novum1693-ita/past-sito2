@@ -24,7 +24,7 @@ var EVENTI_PAST = [
   
       { classe: 'badge-spettacolo',  testo: 'Apertura Straordinaria' }
     ],
-    url: 'eventi/Ragusa Pre-Terremoto.html'
+    url: 'eventi/Ragusa-Pre-Terremoto.html'
   },
   
 {
@@ -51,7 +51,7 @@ var EVENTI_PAST = [
       { classe: 'badge-mostra',   testo: 'Mostra' },
       { classe: 'badge-spettacolo', testo: 'Apertura serale' }
     ],
-    url: 'eventi/Le Confraternite Iblee.html'
+    url: 'eventi/Le-Confraternite-Iblee.html'
   },
 
 
