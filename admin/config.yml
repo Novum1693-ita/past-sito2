@@ -19,7 +19,7 @@ collections:
     label_singular: "Evento"
     folder: "_eventi"
     create: true
-    slug: "{{slug}}"
+    slug: "{{fields.titolo}}"
     extension: "json"
     format: "json"
     fields:
@@ -115,7 +115,7 @@ collections:
     label_singular: "Notizia"
     folder: "_notizie"
     create: true
-    slug: "{{slug}}"
+    slug: "{{fields.titolo}}"
     extension: "json"
     format: "json"
     fields:
@@ -357,3 +357,82 @@ collections:
           - label: "Copyright"
             name: "copyright"
             widget: "string"
+
+  # ── VITRUVIO CARD ──────────────────────────────────────────
+  - name: "sito_vitruvio"
+    label: "🎴 Vitruvio Card — Testi"
+    files:
+      - label: "Vitruvio Card"
+        name: "vitruvio-card"
+        file: "_sito/vitruvio-card.json"
+        fields:
+          - label: "Titolo pagina"
+            name: "titolo"
+            widget: "string"
+          - label: "Testo introduttivo"
+            name: "testo_intro"
+            widget: "text"
+          - label: "Card 1 — Nome"
+            name: "card1_nome"
+            widget: "string"
+          - label: "Card 1 — Testo"
+            name: "card1_testo"
+            widget: "text"
+          - label: "Card 1 — Widget ID Regiondo"
+            name: "card1_widget"
+            widget: "string"
+            required: false
+          - label: "Card 2 — Nome"
+            name: "card2_nome"
+            widget: "string"
+          - label: "Card 2 — Testo"
+            name: "card2_testo"
+            widget: "text"
+          - label: "Card 2 — Widget ID Regiondo"
+            name: "card2_widget"
+            widget: "string"
+            required: false
+          - label: "Card 3 — Nome"
+            name: "card3_nome"
+            widget: "string"
+          - label: "Card 3 — Testo"
+            name: "card3_testo"
+            widget: "text"
+          - label: "Card 3 — Widget ID Regiondo"
+            name: "card3_widget"
+            widget: "string"
+            required: false
+
+  # ── CONTATTI ───────────────────────────────────────────────
+  - name: "sito_contatti2"
+    label: "📬 Contatti — Dettagli"
+    files:
+      - label: "Contatti"
+        name: "contatti"
+        file: "_sito/contatti.json"
+        fields:
+          - label: "Titolo pagina"
+            name: "titolo"
+            widget: "string"
+          - label: "Indirizzo"
+            name: "indirizzo"
+            widget: "string"
+          - label: "Email"
+            name: "email"
+            widget: "string"
+          - label: "Sito web"
+            name: "sito"
+            widget: "string"
+            required: false
+          - label: "Link Instagram"
+            name: "instagram"
+            widget: "string"
+            required: false
+          - label: "Link Facebook"
+            name: "facebook"
+            widget: "string"
+            required: false
+          - label: "Come raggiungerci"
+            name: "come_arrivare"
+            widget: "text"
+            hint: "Usa \\n per andare a capo"

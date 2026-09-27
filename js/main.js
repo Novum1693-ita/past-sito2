@@ -128,6 +128,11 @@ async function caricaTicker() {
 
   var html = testi.map(function (t) { return '<span class="ticker-item">' + t + '</span>'; }).join('');
   track.innerHTML = html + html;
+  // Calcola la durata in base alla larghezza del contenuto
+  var larghezza = track.scrollWidth / 2;
+  var durata = Math.max(20, larghezza / 80); // ~80px/sec
+  track.style.animationDuration = durata + 's';
+  track.classList.add('running');
 }
 
 /* ──────────────────────────────────────────
@@ -233,15 +238,20 @@ async function caricaLuoghi() {
   for (var i = 0; i < idx.length; i++) { var l = await fetchJSON(base + '_luoghi/' + idx[i]); if (l) luoghi.push(l); }
 
   grid.innerHTML = luoghi.map(function (l) {
-    var tags = '<span class="luogo-tag">' + (l.categoria || '') + '</span>';
-    if (l.tag_extra) tags += ' <span class="luogo-tag">' + l.tag_extra + '</span>';
+    var imgStyle = l.immagine ? 'background-image:url(\'' + base + l.immagine.replace(/^\//,'') + '\');background-size:cover;background-position:center;' : '';
+    var colore = l.colore_principale || 'var(--blu-medio)';
     return '<a href="' + base + 'luoghi/' + l.slug + '.html" class="course-card" data-categoria="' + (l.categoria || '') + '">'
-      + '<div class="card-tag-row">' + tags + '</div>'
-      + '<h3 class="card-titolo">' + (l.titolo || '') + '</h3>'
-      + '<p class="card-desc">' + (l.descrizione_breve || '') + '</p>'
-      + '<div class="card-meta">'
-      + '<span class="card-orari">' + (l.orari || '') + '</span>'
-      + '<span class="card-prezzo">' + (l.prezzo || '') + '</span>'
-      + '</div><span class="card-cta">Scopri e prenota</span></a>';
+      + '<div class="course-thumb" style="' + imgStyle + '">'
+      + '<span class="course-badge" style="border-color:' + colore + ';color:' + colore + '">' + (l.categoria || '') + '</span>'
+      + '</div>'
+      + '<div class="course-body">'
+      + '<h3>' + (l.titolo || '') + '</h3>'
+      + '<p>' + (l.descrizione_breve || '') + '</p>'
+      + '<div class="course-meta">'
+      + '<span>' + (l.orari || '') + '</span>'
+      + '<span>' + (l.prezzo || '') + '</span>'
+      + '</div>'
+      + '<span class="book-link">Scopri e prenota</span>'
+      + '</div></a>';
   }).join('');
 }

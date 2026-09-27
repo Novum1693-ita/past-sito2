@@ -16,7 +16,7 @@
     <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
-    <ul class="nav-links">
+        <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li class="nav-dropdown">
         <a href="i-luoghi.html">I Luoghi <span class="dropdown-arrow">▾</span></a>
@@ -31,10 +31,10 @@
           <a href="luoghi/scale.html">Chiesa S. Maria delle Scale</a>
           <a href="luoghi/museo-cattedrale.html">Museo della Cattedrale</a>
           <a href="luoghi/cattedrale.html">Cattedrale S. Giovanni Battista</a>
-          <a href="mappa.html">📍 Mappa interattiva</a>
         </div>
       </li>
       <li><a href="le-card.html">Vitruvio Card</a></li>
+      <li><a href="mappa.html">Mappa</a></li>
       <li><a href="eventi.html">Eventi</a></li>
       <li><a href="notizie.html">Notizie</a></li>
       <li><a href="contatti.html">Contatti</a></li>
@@ -51,7 +51,7 @@
   </div>
   <div class="page-header">
     <div class="page-tag">Contatti</div>
-    <h1>Siamo a Ragusa</h1>
+    <h1 id="cont-titolo">Siamo a Ragusa</h1>
   </div>
   <div class="contacts-wrap">
     <div>
@@ -59,30 +59,29 @@
         <h3>Dove siamo</h3>
         <div class="contact-row">
           <div class="contact-icon">📍</div>
-          <div><div class="contact-label">Indirizzo</div><div class="contact-val">Via Salita Duomo 13, Ragusa Ibla — 97100</div></div>
+          <div><div class="contact-label">Indirizzo</div><div class="contact-val" id="cont-indirizzo">Via Salita Duomo 13, Ragusa Ibla — 97100</div></div>
         </div>
         <div class="contact-row">
           <div class="contact-icon">✉️</div>
-          <div><div class="contact-label">Email</div><div class="contact-val">info@novum1693.it</div></div>
+          <div><div class="contact-label">Email</div><div class="contact-val"><a id="cont-email" href="mailto:info@novum1693.it">info@novum1693.it</a></div></div>
         </div>
         <div class="contact-row">
           <div class="contact-icon">🌐</div>
-          <div><div class="contact-label">Sito</div><div class="contact-val">www.novum1693.it</div></div>
+          <div><div class="contact-label">Sito</div><div class="contact-val" id="cont-sito">www.novum1693.it</div></div>
         </div>
         <div class="social-row">
-          <a href="#" class="social-btn">Instagram</a>
-          <a href="#" class="social-btn">Facebook</a>
+          <a id="cont-instagram" href="#" class="social-btn">Instagram</a>
+          <a id="cont-facebook" href="#" class="social-btn">Facebook</a>
         </div>
       </div>
     </div>
     <div class="contact-block">
       <div class="map-placeholder">
         <div style="font-size:32px">📍</div>
-        <div>Via Salita Duomo 13, Ragusa Ibla</div>
-        <div style="font-size:10px;letter-spacing:1px;margin-top:4px">Sostituisci con iframe Google Maps</div>
+        <div id="cont-indirizzo2">Via Salita Duomo 13, Ragusa Ibla</div>
       </div>
       <h3 style="margin-top:2rem">Come raggiungerci</h3>
-      <p style="font-family:var(--font-sans);font-size:12px;color:rgba(245,240,232,0.5);line-height:2;margin-top:0.8rem">
+      <p id="cont-arrivare" style="font-family:var(--font-sans);font-size:12px;color:rgba(245,240,232,0.5);line-height:2;margin-top:0.8rem">
         🚗 Da Ragusa Superiore: seguire le indicazioni per Ragusa Ibla<br>
         🚌 Bus urbano linea 1 — fermata Piazza Pola<br>
         🅿️ Parcheggio gratuito in Via della Resistenza
@@ -124,5 +123,32 @@
   <script src="js/data-eventi.js"></script>
   <script src="js/data-notizie.js"></script>
   <script src="js/main.js"></script>
+  <script>
+  (async function() {
+    try {
+      var r = await fetch('_sito/contatti.json');
+      if (!r.ok) return;
+      var d = await r.json();
+      if (d.titolo) document.getElementById('cont-titolo').textContent = d.titolo;
+      if (d.indirizzo) { document.getElementById('cont-indirizzo').textContent = d.indirizzo; document.getElementById('cont-indirizzo2').textContent = d.indirizzo; }
+      if (d.email) { var el = document.getElementById('cont-email'); el.textContent = d.email; el.href = 'mailto:'+d.email; }
+      if (d.sito) document.getElementById('cont-sito').textContent = d.sito;
+      if (d.instagram) document.getElementById('cont-instagram').href = d.instagram;
+      if (d.facebook) document.getElementById('cont-facebook').href = d.facebook;
+      if (d.come_arrivare) document.getElementById('cont-arrivare').innerHTML = d.come_arrivare.replace(/\n/g,'<br>');
+    } catch(e) {}
+  })();
+  (async function() {
+    try {
+      var r = await fetch('_sito/footer.json');
+      if (!r.ok) return;
+      var d = await r.json();
+      var fi = document.querySelector('.footer-info');
+      var fc = document.querySelector('.footer-copy');
+      if (fi && d.email) fi.innerHTML = (d.indirizzo||'Ragusa') + ' &nbsp;·&nbsp; <a href="mailto:'+d.email+'">'+d.email+'</a> &nbsp;·&nbsp; <a href="privacy.html">Privacy policy</a>';
+      if (fc && d.copyright) fc.textContent = d.copyright;
+    } catch(e) {}
+  })();
+  </script>
 </body>
 </html>

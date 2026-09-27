@@ -16,7 +16,7 @@
     <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
-    <ul class="nav-links">
+        <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li class="nav-dropdown">
         <a href="i-luoghi.html">I Luoghi <span class="dropdown-arrow">▾</span></a>
@@ -31,10 +31,10 @@
           <a href="luoghi/scale.html">Chiesa S. Maria delle Scale</a>
           <a href="luoghi/museo-cattedrale.html">Museo della Cattedrale</a>
           <a href="luoghi/cattedrale.html">Cattedrale S. Giovanni Battista</a>
-          <a href="mappa.html">📍 Mappa interattiva</a>
         </div>
       </li>
       <li><a href="le-card.html">Vitruvio Card</a></li>
+      <li><a href="mappa.html">Mappa</a></li>
       <li><a href="eventi.html">Eventi</a></li>
       <li><a href="notizie.html">Notizie</a></li>
       <li><a href="contatti.html">Contatti</a></li>
@@ -51,23 +51,22 @@
   </div>
   <div class="page-header">
     <div class="page-tag">Vitruvio Card</div>
-    <h1>Cultura a portata<br>di mano</h1>
+    <h1 id="vc-titolo">Cultura a portata di mano</h1>
   </div>
   <div style="padding: 2rem 4rem; border-bottom: 1px solid var(--bordo);">
-    <p style="font-size:16px; color:rgba(245,240,232,0.7); line-height:1.8; max-width:720px;">
-      Le Vitruvio Card sono le carte culturali del progetto P.A.S.T. Ispirate ai tre ordini architettonici della tradizione classica — Dorico, Ionico e Corinzio — ogni card offre un livello diverso di accesso ai luoghi e agli eventi del territorio ragusano.
+    <p id="vc-intro" style="font-size:16px; color:rgba(245,240,232,0.7); line-height:1.8; max-width:720px;">
+      Le Vitruvio Card sono le carte culturali del progetto P.A.S.T.
     </p>
   </div>
-  <div class="cards-grid">
-
+  <div class="cards-grid" id="vc-grid">
     <a href="#" class="vitruvio-card">
       <div class="vitruvio-thumb" style="background: rgba(122,173,101,0.1);">
         <img src="img/Dorico.png" alt="Card Dorico" />
       </div>
       <div class="vitruvio-body">
-        <h3>Dorico Card</h3>
-        <p>Il livello base. Accesso a tutti i luoghi P.A.S.T. con tariffa agevolata e guida cartacea inclusa.</p>
-<booking-widget widget-id="c0321b60-2cdf-4ea1-b53c-4273150ea8ea"></booking-widget><script type="text/javascript" src="https://widgets.regiondo.net/booking/v1/booking-widget.min.js"></script>
+        <h3 id="vc1-nome">Dorico Card</h3>
+        <p id="vc1-testo">Il livello base.</p>
+        <div id="vc1-widget"></div>
       </div>
     </a>
     <a href="#" class="vitruvio-card">
@@ -75,9 +74,9 @@
         <img src="img/Ionico.png" alt="Card Ionico" />
       </div>
       <div class="vitruvio-body">
-        <h3>Ionico Card</h3>
-        <p>Accesso completo a tutti i luoghi più partecipazione agli eventi speciali e alle aperture serali.</p>
-<booking-widget widget-id="e0064b76-90aa-4dc8-be65-0075697eeeb1"></booking-widget><script type="text/javascript" src="https://widgets.regiondo.net/booking/v1/booking-widget.min.js"></script>
+        <h3 id="vc2-nome">Ionico Card</h3>
+        <p id="vc2-testo">Accesso completo.</p>
+        <div id="vc2-widget"></div>
       </div>
     </a>
     <a href="#" class="vitruvio-card">
@@ -85,9 +84,9 @@
         <img src="img/Corinzio.png" alt="Card Corinzio" />
       </div>
       <div class="vitruvio-body">
-        <h3>Corinzio Card</h3>
-        <p>Il livello premium. Tutti i vantaggi Ionico più visite guidate esclusive e accesso anticipato agli eventi.</p>
-<booking-widget widget-id="4a65326f-958a-484b-81c1-0b5dc97cd0a2"></booking-widget><script type="text/javascript" src="https://widgets.regiondo.net/booking/v1/booking-widget.min.js"></script>
+        <h3 id="vc3-nome">Corinzio Card</h3>
+        <p id="vc3-testo">Il livello premium.</p>
+        <div id="vc3-widget"></div>
       </div>
     </a>
   </div>
@@ -126,5 +125,25 @@
   <script src="js/data-eventi.js"></script>
   <script src="js/data-notizie.js"></script>
   <script src="js/main.js"></script>
+  <script>
+  (async function() {
+    try {
+      var r = await fetch('_sito/vitruvio-card.json');
+      if (!r.ok) return;
+      var d = await r.json();
+      if (d.titolo) document.getElementById('vc-titolo').textContent = d.titolo;
+      if (d.testo_intro) document.getElementById('vc-intro').textContent = d.testo_intro;
+      if (d.card1_nome) document.getElementById('vc1-nome').textContent = d.card1_nome;
+      if (d.card1_testo) document.getElementById('vc1-testo').textContent = d.card1_testo;
+      if (d.card1_widget) document.getElementById('vc1-widget').innerHTML = '<booking-widget widget-id="'+d.card1_widget+'"></booking-widget><script type="text/javascript" src="https://widgets.regiondo.net/booking/v1/booking-widget.min.js"><\/script>';
+      if (d.card2_nome) document.getElementById('vc2-nome').textContent = d.card2_nome;
+      if (d.card2_testo) document.getElementById('vc2-testo').textContent = d.card2_testo;
+      if (d.card2_widget) document.getElementById('vc2-widget').innerHTML = '<booking-widget widget-id="'+d.card2_widget+'"></booking-widget><script type="text/javascript" src="https://widgets.regiondo.net/booking/v1/booking-widget.min.js"><\/script>';
+      if (d.card3_nome) document.getElementById('vc3-nome').textContent = d.card3_nome;
+      if (d.card3_testo) document.getElementById('vc3-testo').textContent = d.card3_testo;
+      if (d.card3_widget) document.getElementById('vc3-widget').innerHTML = '<booking-widget widget-id="'+d.card3_widget+'"></booking-widget><script type="text/javascript" src="https://widgets.regiondo.net/booking/v1/booking-widget.min.js"><\/script>';
+    } catch(e) {}
+  })();
+  </script>
 </body>
 </html>
