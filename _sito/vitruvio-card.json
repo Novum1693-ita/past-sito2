@@ -1,13 +1,13 @@
 {
-  "titolo": "Cultura a portata di mano",
-  "testo_intro": "Le Vitruvio Card sono le carte culturali del progetto P.A.S.T. Ispirate ai tre ordini architettonici della tradizione classica — Dorico, Ionico e Corinzio — ogni card offre un livello diverso di accesso ai luoghi e agli eventi del territorio ragusano.",
-  "card1_nome": "Dorico Card",
-  "card1_testo": "Il livello base. Accesso a tutti i luoghi P.A.S.T. con tariffa agevolata e guida cartacea inclusa.",
-  "card1_widget": "c0321b60-2cdf-4ea1-b53c-4273150ea8ea",
-  "card2_nome": "Ionico Card",
   "card2_testo": "Accesso completo a tutti i luoghi più partecipazione agli eventi speciali e alle aperture serali.",
+  "card3_widget": "<booking-widget widget-id=\"4a65326f-958a-484b-81c1-0b5dc97cd0a2\"></booking-widget><script type=\"text/javascript\" src=\"https://widgets.regiondo.net/booking/v1/booking-widget.min.js\"></script>",
   "card2_widget": "e0064b76-90aa-4dc8-be65-0075697eeeb1",
-  "card3_nome": "Corinzio Card",
   "card3_testo": "Il livello premium. Tutti i vantaggi Ionico più visite guidate esclusive e accesso anticipato agli eventi.",
-  "card3_widget": "4a65326f-958a-484b-81c1-0b5dc97cd0a2"
+  "card1_widget": "c0321b60-2cdf-4ea1-b53c-4273150ea8ea",
+  "testo_intro": "Le Vitruvio Card sono le carte culturali del progetto P.A.S.T. Ispirate ai tre ordini architettonici della tradizione classica — Dorico, Ionico e Corinzio — ogni card offre un livello diverso di accesso ai luoghi e agli eventi del territorio ragusano.",
+  "titolo": "Cultura a portata di mano",
+  "card3_nome": "Corinzio Card",
+  "card2_nome": "Ionico Card",
+  "card1_nome": "Dorico Card",
+  "card1_testo": "Il livello base. Accesso a tutti i luoghi P.A.S.T. con tariffa agevolata e guida cartacea inclusa."
 }
