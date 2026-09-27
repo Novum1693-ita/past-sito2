@@ -11,8 +11,8 @@
   "indirizzo": "Piazza Duomo, Ragusa Ibla",
   "lat": "36.92560",
   "lng": "14.74510",
-  "link_regiondo": "https://www.regiondo.it",
   "colore_principale": "#003550",
   "colore_secondario": "#457289",
-  "immagine": "/img/i luoghi/museo-duomo.png"
+  "immagine": "/img/i luoghi/museo-duomo.png",
+  "widgets_regiondo": []
 }

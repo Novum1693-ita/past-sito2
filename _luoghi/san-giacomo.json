@@ -11,8 +11,8 @@
   "indirizzo": "Giardini Iblei, Ragusa Ibla",
   "lat": "36.92650",
   "lng": "14.74320",
-  "link_regiondo": "https://www.regiondo.it",
   "colore_principale": "#912b1f",
   "colore_secondario": "#d6d8ca",
-  "immagine": "/img/i luoghi/san-giacomo.png"
+  "immagine": "/img/i luoghi/san-giacomo.png",
+  "widgets_regiondo": []
 }

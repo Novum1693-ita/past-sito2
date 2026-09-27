@@ -11,8 +11,8 @@
   "indirizzo": "Piazza San Giovanni, Ragusa",
   "lat": "36.92370",
   "lng": "14.74650",
-  "link_regiondo": "",
   "colore_principale": "#bb1424",
   "colore_secondario": "#e8e4d7",
-  "immagine": "/img/i luoghi/cattedrale.png"
+  "immagine": "/img/i luoghi/cattedrale.png",
+  "widgets_regiondo": []
 }

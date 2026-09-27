@@ -11,8 +11,8 @@
   "indirizzo": "Via del Purgatorio, Ragusa Ibla",
   "lat": "36.92540",
   "lng": "14.74430",
-  "link_regiondo": "https://www.regiondo.it",
   "colore_principale": "#4a7a50",
   "colore_secondario": "#b1d8b7",
-  "immagine": "/img/i luoghi/purgatorio.png"
+  "immagine": "/img/i luoghi/purgatorio.png",
+  "widgets_regiondo": []
 }

@@ -11,8 +11,8 @@
   "indirizzo": "Piazza San Giovanni, Ragusa",
   "lat": "36.92390",
   "lng": "14.74620",
-  "link_regiondo": "https://www.regiondo.it",
   "colore_principale": "#444444",
   "colore_secondario": "#c0c2b4",
-  "immagine": "/img/i luoghi/museo-cattedrale.png"
+  "immagine": "/img/i luoghi/museo-cattedrale.png",
+  "widgets_regiondo": []
 }

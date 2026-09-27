@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DocuFilm San Giorgio — P.A.S.T.</title>
-  <meta name="description" content="P.A.S.T. — Patrimonio Arte Storia Territorio. Progetto di valorizzazione culturale di Ragusa." />
-  <link rel="icon" href="../img/logo.png" type="image/png" />
+  <title id="page-title">Evento — P.A.S.T.</title>
+  <meta name="description" content="P.A.S.T. — valorizzazione culturale di Ragusa." />
+  <link rel="icon" href="../img/logo.jpeg" type="image/jpeg" />
   <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
@@ -16,7 +16,7 @@
     <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
-        <ul class="nav-links">
+    <ul class="nav-links">
       <li><a href="../index.html">Home</a></li>
       <li class="nav-dropdown">
         <a href="../i-luoghi.html">I Luoghi <span class="dropdown-arrow">▾</span></a>
@@ -49,52 +49,53 @@
     <div class="ticker-label"><span class="ticker-dot"></span>Ultima ora</div>
     <div class="ticker-window"><div class="ticker-track" id="ticker-track"></div></div>
   </div>
-  <div class="luogo-hero" style="background: linear-gradient(160deg, var(--blu-scuro), var(--sfondo));">
+
+  <div class="luogo-hero" id="evento-hero" style="background: linear-gradient(160deg, var(--blu-scuro), var(--sfondo));">
     <div class="luogo-hero-overlay"></div>
     <div class="luogo-hero-content">
-      <span class="badge-tipo badge-incontro">Documentario</span> <span class="badge-tipo badge-gratuito">Ingresso libero</span>
-      <h1 style="margin-top:0.8rem">DocuFilm San Giorgio</h1>
+      <span class="badge-tipo" id="evento-badge">Evento</span>
+      <h1 id="evento-titolo" style="margin-top:0.8rem">Caricamento...</h1>
       <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:0.8rem">
-        <span style="font-family:var(--font-sans);font-size:11px;color:rgba(245,240,232,0.7)">📅 28 Maggio 2025</span>
-        <span style="font-family:var(--font-sans);font-size:11px;color:rgba(245,240,232,0.7)">🕐 20:30</span>
-        <span style="font-family:var(--font-sans);font-size:11px;color:rgba(245,240,232,0.7)">📍 Piazza Duomo, Ragusa Ibla</span>
+        <span id="evento-data-span" style="font-family:var(--font-sans);font-size:11px;color:rgba(245,240,232,0.7)"></span>
+        <span id="evento-ora-span" style="font-family:var(--font-sans);font-size:11px;color:rgba(245,240,232,0.7)"></span>
+        <span id="evento-luogo-span" style="font-family:var(--font-sans);font-size:11px;color:rgba(245,240,232,0.7)"></span>
       </div>
     </div>
   </div>
+
   <div class="luogo-layout">
     <div class="luogo-descrizione">
       <h2>L'evento</h2>
-      <p>Proiezione in piazza del documentario dedicato alla storia del Duomo San Giorgio e del barocco ragusano. Un viaggio visivo tra arte, architettura e territorio.</p>
-      <p>Per ulteriori informazioni e aggiornamenti segui i nostri canali social o scrivi a info@novum1693.it.</p>
+      <div id="evento-descrizione"></div>
+      <div id="evento-immagine"></div>
       <a href="../eventi.html" class="back-link">← Torna al calendario</a>
     </div>
     <div class="luogo-sidebar">
       <div class="sidebar-card">
         <div class="sidebar-card-header">
-          <div class="prezzo">Ingresso libero</div>
-          <div class="prezzo-sub">Proiezione all'aperto</div>
+          <div class="prezzo" id="evento-prezzo">—</div>
+          <div class="prezzo-sub" id="evento-sub-prezzo"></div>
         </div>
         <div class="sidebar-card-body">
-          <div class="info-row"><div class="etichetta">Data</div><div class="valore">28 Maggio 2025</div></div>
-          <div class="info-row"><div class="etichetta">Orario</div><div class="valore">20:30</div></div>
-          <div class="info-row"><div class="etichetta">Luogo</div><div class="valore">Piazza Duomo, Ragusa Ibla</div></div>
-      <a href="../contatti.html" class="btn-prenota-grande" style="margin-top:1.5rem">Info e dettagli</a>
-      <p class="nota-prenotazione">Ingresso libero — nessuna prenotazione</p>
+          <div id="evento-info"></div>
+          <div id="evento-booking"></div>
+          <p class="nota-prenotazione">Per info: <a href="mailto:novum1693@gmail.com">novum1693@gmail.com</a></p>
         </div>
       </div>
     </div>
   </div>
+
   <div class="sponsor-bar">
-    <div class="sponsor-bar-label">Progetto nato dalla collaborazione di:</div>
+    <div class="sponsor-bar-label">In collaborazione con:</div>
     <div class="sponsor-track">
       <a href="https://www.diocesidiragusa.it" target="_blank" rel="noopener" class="sponsor-item">
         <img src="../img/loghi/logo-diocesi.png" alt="Diocesi di Ragusa" />
       </a>
-      <a href="https://www.novum1693.it" target="_blank" rel="noopener" class="sponsor-item">
-        <img src="../img/loghi/logo-novum.png" alt="Novum 1693 Cantiere Culturale" />
-      </a>
       <a href="https://www.comune.ragusa.gov.it" target="_blank" rel="noopener" class="sponsor-item">
         <img src="../img/loghi/logo-comune.png" alt="Comune di Ragusa" />
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=100091998016746" target="_blank" rel="noopener" class="sponsor-item">
+        <img src="../img/loghi/logo-novum.png" alt="Novum 1693 Cantiere Culturale" />
       </a>
     </div>
   </div>
@@ -102,12 +103,12 @@
     <a href="../index.html" class="footer-logo">
       <img src="../img/logo.png" alt="P.A.S.T." />
     </a>
-    <div class="footer-info">
-      Via Salita Duomo 13, Ragusa &nbsp;·&nbsp;
-      <a href="mailto:info@novum1693.it">info@novum1693.it</a> &nbsp;·&nbsp;
+    <div class="footer-info" id="footer-info">
+      Ragusa &nbsp;·&nbsp;
+      <a href="mailto:novum1693@gmail.com">novum1693@gmail.com</a> &nbsp;·&nbsp;
       <a href="../privacy.html">Privacy policy</a>
     </div>
-    <div class="footer-copy">© 2025 Guardiani del Tempo</div>
+    <div class="footer-copy" id="footer-copy">© 2026 GDT</div>
   </footer>
   <div class="cookie-banner" id="cookie-banner">
     <div class="cookie-testo">Utilizziamo solo cookie tecnici necessari al funzionamento del sito. Leggi la nostra <a href="../privacy.html">Privacy Policy</a>.</div>
@@ -119,5 +120,115 @@
   <script src="../js/data-eventi.js"></script>
   <script src="../js/data-notizie.js"></script>
   <script src="../js/main.js"></script>
+  <script>
+  (async function() {
+    // Ricava lo slug dal nome del file (es: san-giorgio-arte-leggenda.html → san-giorgio-arte-leggenda)
+    var slug = window.location.pathname.split('/').pop().replace('.html','');
+    var base = '../';
+
+    try {
+      var r = await fetch(base + '_eventi/' + slug + '.json');
+      if (!r.ok) return;
+      var d = await r.json();
+
+      // Titolo pagina
+      if (d.titolo) {
+        document.getElementById('page-title').textContent = d.titolo + ' — P.A.S.T.';
+        document.getElementById('evento-titolo').textContent = d.titolo;
+      }
+
+      // Badge categoria
+      var badgeMap = {
+        'inaugurazione': 'badge-mostra',
+        'apertura':      'badge-spettacolo',
+        'proiezione':    'badge-spettacolo',
+        'incontro':      'badge-incontro',
+        'workshop':      'badge-workshop',
+        'altro':         'badge-incontro'
+      };
+      var badgeEl = document.getElementById('evento-badge');
+      if (d.categoria) {
+        badgeEl.className = 'badge-tipo ' + (badgeMap[d.categoria] || 'badge-incontro');
+        badgeEl.textContent = d.categoria.charAt(0).toUpperCase() + d.categoria.slice(1);
+      }
+
+      // Hero meta
+      if (d.data_completa) document.getElementById('evento-data-span').textContent = '📅 ' + d.data_completa;
+      if (d.orario)        document.getElementById('evento-ora-span').textContent  = '🕐 ' + d.orario;
+      if (d.luogo)         document.getElementById('evento-luogo-span').textContent = '📍 ' + d.luogo;
+
+      // Immagine hero
+      if (d.immagine) {
+        var hero = document.getElementById('evento-hero');
+        hero.style.backgroundImage = 'url(\'' + base + d.immagine.replace(/^\//,'') + '\')';
+        hero.style.backgroundSize = 'cover';
+        hero.style.backgroundPosition = 'center';
+      }
+
+      // Descrizione (markdown base → HTML)
+      if (d.descrizione) {
+        var html = d.descrizione
+          .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+          .replace(/^## (.+)$/gm,  '<h2>$1</h2>')
+          .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\*(.+?)\*/g,     '<em>$1</em>')
+          .replace(/\n\n/g, '</p><p>')
+          .replace(/\n/g, '<br>');
+        document.getElementById('evento-descrizione').innerHTML = '<p>' + html + '</p>';
+      }
+
+      // Immagine corpo
+      if (d.immagine) {
+        document.getElementById('evento-immagine').innerHTML =
+          '<img src="' + base + d.immagine.replace(/^\//,'') + '" alt="' + (d.titolo||'') + '" style="width:100%;max-width:500px;height:auto;display:block;margin:1.5rem auto;border:1px solid rgba(48,122,143,0.3);" />';
+      }
+
+      // Sidebar: prezzo
+      if (d.prezzo) document.getElementById('evento-prezzo').textContent = d.prezzo;
+      if (d.sub_prezzo) document.getElementById('evento-sub-prezzo').textContent = d.sub_prezzo;
+
+      // Sidebar: info
+      var info = '';
+      if (d.data_completa) info += '<div class="info-row"><div class="etichetta">Data</div><div class="valore">' + d.data_completa + '</div></div>';
+      if (d.orario)        info += '<div class="info-row"><div class="etichetta">Orario</div><div class="valore">' + d.orario + '</div></div>';
+      if (d.luogo)         info += '<div class="info-row"><div class="etichetta">Luogo</div><div class="valore">' + d.luogo + '</div></div>';
+      document.getElementById('evento-info').innerHTML = info;
+
+      // Widget prenotazione
+      var booking = document.getElementById('evento-booking');
+
+      // Supporta più widget Regiondo
+      var widgets = d.widgets_regiondo || [];
+      if (widgets.length > 0) {
+        var whtml = '';
+        widgets.forEach(function(w) {
+          if (!w.id) return;
+          if (w.etichetta) whtml += '<h4 style="margin:1.5rem 0 0.5rem;font-family:var(--font-sans);font-size:13px;text-transform:uppercase;letter-spacing:.08em;opacity:.6">' + w.etichetta + '</h4>';
+          whtml += '<booking-widget widget-id="' + w.id + '"></booking-widget>';
+        });
+        if (whtml) {
+          whtml += '<script type="text/javascript" src="https://widgets.regiondo.net/booking/v1/booking-widget.min.js"><\/script>';
+          booking.innerHTML = whtml;
+        }
+      } else if (d.tipo_prenotazione === 'eventbrite' && d.link_prenotazione) {
+        booking.innerHTML = '<a href="' + d.link_prenotazione + '" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:1rem">📅 Prenota su Eventbrite</a>';
+      } else if (d.tipo_prenotazione === 'free') {
+        booking.innerHTML = '<p class="nota-prenotazione" style="margin-top:1rem">Ingresso libero — nessuna prenotazione richiesta</p>';
+      }
+
+    } catch(e) { console.error(e); }
+
+    // Footer dal CMS
+    try {
+      var rf = await fetch(base + '_sito/footer.json');
+      if (!rf.ok) return;
+      var df = await rf.json();
+      var fi = document.getElementById('footer-info');
+      var fc = document.getElementById('footer-copy');
+      if (fi && df.indirizzo && df.email) fi.innerHTML = df.indirizzo + ' &nbsp;·&nbsp; <a href="mailto:' + df.email + '">' + df.email + '</a> &nbsp;·&nbsp; <a href="../privacy.html">Privacy policy</a>';
+      if (fc && df.copyright) fc.textContent = df.copyright;
+    } catch(e) {}
+  })();
+  </script>
 </body>
 </html>

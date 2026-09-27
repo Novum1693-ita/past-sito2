@@ -11,8 +11,8 @@
   "indirizzo": "Piazza Duomo, Ragusa Ibla",
   "lat": "36.92573",
   "lng": "14.74493",
-  "link_regiondo": "https://www.regiondo.it",
   "colore_principale": "#E19f42",
   "colore_secondario": "#965801",
-  "immagine": "/img/i luoghi/san-giorgio.png"
+  "immagine": "/img/i luoghi/san-giorgio.png",
+  "widgets_regiondo": []
 }

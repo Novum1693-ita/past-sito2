@@ -11,8 +11,8 @@
   "indirizzo": "Via delle Scale, Ragusa",
   "lat": "36.92450",
   "lng": "14.74180",
-  "link_regiondo": "https://www.regiondo.it",
   "colore_principale": "#5384a0",
   "colore_secondario": "#b5dbf9",
-  "immagine": "/img/i luoghi/scale.png"
+  "immagine": "/img/i luoghi/scale.png",
+  "widgets_regiondo": []
 }

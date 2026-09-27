@@ -11,8 +11,8 @@
   "indirizzo": "Via Maddalena, Ragusa Ibla",
   "lat": "36.92710",
   "lng": "14.74400",
-  "link_regiondo": "https://www.regiondo.it",
   "colore_principale": "#c87830",
   "colore_secondario": "#ffbc86",
-  "immagine": "/img/i luoghi/maddalena.png"
+  "immagine": "/img/i luoghi/maddalena.png",
+  "widgets_regiondo": []
 }

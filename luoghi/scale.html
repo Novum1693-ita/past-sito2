@@ -175,13 +175,18 @@
     info += '<div class="info-row"><div class="etichetta">Progetto</div><div class="valore">P.A.S.T.</div></div>';
     document.getElementById('luogo-info').innerHTML = info;
 
-    // Widget Regiondo
-    if (dati.link_regiondo && dati.link_regiondo.includes('regiondo')) {
-      var wid = dati.link_regiondo.match(/([a-f0-9\-]{36})/);
-      if (wid) {
-        document.getElementById('luogo-booking').innerHTML =
-          '<booking-widget widget-id="' + wid[0] + '"></booking-widget>' +
-          '<script type="text/javascript" src="https://widgets.regiondo.net/booking/v1/booking-widget.min.js"><\/script>';
+    // Widget Regiondo (supporta più widget)
+    var widgets = dati.widgets_regiondo || [];
+    if (widgets.length > 0) {
+      var html = '';
+      widgets.forEach(function(w) {
+        if (!w.id) return;
+        if (w.etichetta) html += '<h4 style="margin:1.5rem 0 0.5rem;font-family:var(--font-sans);font-size:13px;text-transform:uppercase;letter-spacing:.08em;opacity:.6">' + w.etichetta + '</h4>';
+        html += '<booking-widget widget-id="' + w.id + '"></booking-widget>';
+      });
+      if (html) {
+        html += '<script type="text/javascript" src="https://widgets.regiondo.net/booking/v1/booking-widget.min.js"><\/script>';
+        document.getElementById('luogo-booking').innerHTML = html;
       }
     }
   })();

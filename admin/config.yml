@@ -82,10 +82,24 @@ collections:
           - { label: "Eventbrite", value: "eventbrite" }
           - { label: "Regiondo", value: "regiondo" }
           - { label: "Ingresso libero (nessuna prenotazione)", value: "free" }
-      - label: "Link prenotazione"
+      - label: "Link prenotazione (Eventbrite)"
         name: "link_prenotazione"
         widget: "string"
         required: false
+      - label: "Widget Regiondo (uno o più)"
+        name: "widgets_regiondo"
+        widget: "list"
+        required: false
+        hint: "Aggiungi uno o più widget Regiondo per questo evento"
+        fields:
+          - label: "Etichetta (es: Biglietto intero)"
+            name: "etichetta"
+            widget: "string"
+            required: false
+          - label: "Widget ID (UUID)"
+            name: "id"
+            widget: "string"
+            hint: "Es: cc29ea83-e3f8-48be-9edb-47d86097e8d8"
       - label: "Badge 1"
         name: "badge1"
         widget: "select"
@@ -200,10 +214,20 @@ collections:
         name: "lng"
         widget: "string"
         hint: "Es: 14.74493"
-      - label: "Link prenotazione Regiondo"
-        name: "link_regiondo"
-        widget: "string"
+      - label: "Widget Regiondo (uno o più)"
+        name: "widgets_regiondo"
+        widget: "list"
         required: false
+        hint: "Aggiungi uno o più widget Regiondo per questo luogo"
+        fields:
+          - label: "Etichetta (es: Biglietto intero)"
+            name: "etichetta"
+            widget: "string"
+            required: false
+          - label: "Widget ID (UUID)"
+            name: "id"
+            widget: "string"
+            hint: "Es: 991f34e0-1d51-4770-a87a-fed912d81c7d"
       - label: "Colore principale"
         name: "colore_principale"
         widget: "color"

@@ -11,8 +11,8 @@
   "indirizzo": "Via del Monastero, Ragusa Ibla",
   "lat": "36.92480",
   "lng": "14.74280",
-  "link_regiondo": "https://www.regiondo.it",
   "colore_principale": "#44331f",
   "colore_secondario": "#b69e82",
-  "immagine": "/img/i luoghi/obsculta.png"
+  "immagine": "/img/i luoghi/obsculta.png",
+  "widgets_regiondo": []
 }

@@ -11,8 +11,8 @@
   "indirizzo": "Via dell'Itria, Ragusa Ibla",
   "lat": "36.92680",
   "lng": "14.74460",
-  "link_regiondo": "https://www.regiondo.it",
   "colore_principale": "#c97a80",
   "colore_secondario": "#ff686d",
-  "immagine": "/img/i luoghi/itria.png"
+  "immagine": "/img/i luoghi/itria.png",
+  "widgets_regiondo": []
 }
