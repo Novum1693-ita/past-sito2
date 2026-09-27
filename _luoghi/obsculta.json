@@ -1,0 +1,18 @@
+{
+  "titolo": "Museo Benedettino Obsculta",
+  "slug": "obsculta",
+  "categoria": "Musei",
+  "tag_extra": "",
+  "descrizione_breve": "Un museo unico che racchiude il valore della regola di San Benedetto e la storia della fondazione del monastero.",
+  "descrizione": "Obsculta — dal latino «ascolta» — è il primo invito della Regola di San Benedetto. Il museo, ricavato negli spazi dell'antico monastero benedettino, propone un percorso immersivo attraverso la storia della comunità religiosa e i valori che ne hanno ispirato la vita per secoli. Collezioni di arte sacra, manoscritti e oggetti liturgici di rara bellezza.",
+  "orari": "Lun–Sab 10:00–13:00 / Lun, Mer, Ven, Sab 16:30–18:30",
+  "prezzo": "€ 4,00",
+  "prezzo_ridotto": "€ 3,00",
+  "indirizzo": "Via del Monastero, Ragusa Ibla",
+  "lat": "36.92480",
+  "lng": "14.74280",
+  "link_regiondo": "https://www.regiondo.it",
+  "colore_principale": "#44331f",
+  "colore_secondario": "#b69e82",
+  "immagine": "/img/i luoghi/obsculta.png"
+}

@@ -1,0 +1,18 @@
+{
+  "titolo": "Chiesa di Santa Maria delle Scale",
+  "slug": "scale",
+  "categoria": "Chiese",
+  "tag_extra": "",
+  "descrizione_breve": "Costruita tra il vecchio e il nuovo Ragusa, custodisce un importante portale gotico-catalano.",
+  "descrizione": "La Chiesa di Santa Maria delle Scale occupa un posto unico nella topografia di Ragusa: si trova esattamente sul confine tra la città alta (Ragusa) e la città bassa (Ibla), collegata da una lunga scalinata panoramica. Il suo portale gotico-catalano, sopravvissuto al terremoto del 1693, è una rarità architettonica di grande valore storico.",
+  "orari": "Tutti i giorni 10:30–16:30 — Martedì chiuso",
+  "prezzo": "€ 2,00",
+  "prezzo_ridotto": "€ 1,00",
+  "indirizzo": "Via delle Scale, Ragusa",
+  "lat": "36.92450",
+  "lng": "14.74180",
+  "link_regiondo": "https://www.regiondo.it",
+  "colore_principale": "#5384a0",
+  "colore_secondario": "#b5dbf9",
+  "immagine": "/img/i luoghi/scale.png"
+}

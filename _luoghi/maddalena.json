@@ -1,0 +1,18 @@
+{
+  "titolo": "Chiesa di Santa Maria Maddalena",
+  "slug": "maddalena",
+  "categoria": "Chiese",
+  "tag_extra": "",
+  "descrizione_breve": "Chiesa dedicata alla figura di Maria Maddalena. Ospita una mostra permanente sulle confraternite iblee.",
+  "descrizione": "La Chiesa di Santa Maria Maddalena è uno degli spazi più suggestivi di Ragusa Ibla. Recentemente restaurata, ospita una mostra permanente dedicata alle confraternite iblee — associazioni laicali che hanno segnato la vita religiosa e sociale del territorio per secoli. Un luogo che unisce arte, fede e storia locale.",
+  "orari": "Tutti i giorni 10:30–16:30 — Mercoledì chiuso",
+  "prezzo": "€ 2,00",
+  "prezzo_ridotto": "€ 1,00",
+  "indirizzo": "Via Maddalena, Ragusa Ibla",
+  "lat": "36.92710",
+  "lng": "14.74400",
+  "link_regiondo": "https://www.regiondo.it",
+  "colore_principale": "#c87830",
+  "colore_secondario": "#ffbc86",
+  "immagine": "/img/i luoghi/maddalena.png"
+}

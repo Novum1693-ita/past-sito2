@@ -17,9 +17,9 @@
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="index.html">Home</a></li>
       <li class="nav-dropdown">
-        <a href="I-luoghi.html">I Luoghi <span class="dropdown-arrow">▾</span></a>
+        <a href="i-luoghi.html">I Luoghi <span class="dropdown-arrow">▾</span></a>
         <div class="dropdown-menu">
           <a href="luoghi/san-giacomo.html">Chiesa di San Giacomo Apostolo</a>
           <a href="luoghi/maddalena.html">Chiesa S. Maria Maddalena</a>
@@ -31,16 +31,17 @@
           <a href="luoghi/scale.html">Chiesa S. Maria delle Scale</a>
           <a href="luoghi/museo-cattedrale.html">Museo della Cattedrale</a>
           <a href="luoghi/cattedrale.html">Cattedrale S. Giovanni Battista</a>
+          <a href="mappa.html">📍 Mappa interattiva</a>
         </div>
       </li>
-      <li><a href="Le-Card.html">Vitruvio Card</a></li>
-      <li><a href="eventi.html">Eventi </a></li>
+      <li><a href="le-card.html">Vitruvio Card</a></li>
+      <li><a href="eventi.html">Eventi</a></li>
       <li><a href="notizie.html">Notizie</a></li>
       <li><a href="contatti.html">Contatti</a></li>
       <li class="lang-switch">
-        <a href="index.html" class="lang-btn active">IT</a>
+        <a href="index.html" class="lang-btn">IT</a>
         <span class="lang-sep">·</span>
-        <a href="en/index.html" class="lang-btn ">EN</a>
+        <a href="en/index.html" class="lang-btn">EN</a>
       </li>
     </ul>
   </nav>
@@ -50,31 +51,31 @@
   </div>
   <section class="hero">
     <div class="hero-content">
-      <div class="hero-sovratitolo">Piano Aperture Strategiche Turistiche · Ragusa</div>
-      <h1>P.A.S.T.<br><em>Molte tessere,<br>un solo puzzle.</em></h1>
-      <p>Un piano che nasce dall'esigenza di valorizzare la storia, la cultura e la fede del territorio ragusano.</p>
-      <a href="eventi.html" class="btn-primary">Prossimi eventi</a>
-      <a href="I-luoghi.html" class="btn-outline">I luoghi</a>
+      <div class="hero-sovratitolo" id="hero-sovratitolo">Piano Aperture Strategiche Turistiche · Ragusa</div>
+      <h1 id="hero-titolo">P.A.S.T.<br><em id="hero-sottotitolo">Molte tessere,<br>un solo puzzle.</em></h1>
+      <p id="hero-testo">Un piano che nasce dall'esigenza di valorizzare la storia, la cultura e la fede del territorio ragusano.</p>
+      <a href="eventi.html" class="btn-primary" id="hero-btn1">Prossimi eventi</a>
+      <a href="i-luoghi.html" class="btn-outline" id="hero-btn2">I luoghi</a>
     </div>
   </section>
 
   <div class="home-cards">
-    <a href="I-luoghi.html" class="home-card">
+    <a href="i-luoghi.html" class="home-card">
       <div class="card-numero">I.</div>
-      <h3>I Luoghi</h3>
-      <p>Chiese, musei e monumenti del barocco ragusano. Scopri la storia e prenota la tua visita.</p>
+      <h3 id="card1-titolo">I Luoghi</h3>
+      <p id="card1-testo">Chiese, musei e monumenti del barocco ragusano. Scopri la storia e prenota la tua visita.</p>
       <span class="card-link">Esplora i luoghi</span>
     </a>
     <a href="eventi.html" class="home-card">
       <div class="card-numero">II.</div>
-      <h3>Mostre &amp; Eventi</h3>
-      <p>Inaugurazioni, aperture serali, proiezioni e conferenze. Un calendario sempre vivo.</p>
+      <h3 id="card2-titolo">Mostre &amp; Eventi</h3>
+      <p id="card2-testo">Inaugurazioni, aperture serali, proiezioni e conferenze. Un calendario sempre vivo.</p>
       <span class="card-link">Vedi il calendario</span>
     </a>
     <a href="chi-siamo.html" class="home-card">
       <div class="card-numero">III.</div>
-      <h3>Il Piano</h3>
-      <p>Nato dalla collaborazione tra Diocesi, Comune e associazioni culturali del territorio.</p>
+      <h3 id="card3-titolo">Il Piano</h3>
+      <p id="card3-testo">Nato dalla collaborazione tra Diocesi, Comune e associazioni culturali del territorio.</p>
       <span class="card-link">Chi siamo</span>
     </a>
   </div>
@@ -85,7 +86,7 @@
       <a href="eventi.html" class="sezione-link">Calendario completo →</a>
     </div>
     <!-- Gli eventi vengono caricati da js/data-eventi.js -->
-    <div class="eventi-row" id="eventi-row-dinamico">
+    <div class="eventi-row" id="eventi-home-grid">
       <!-- Fallback se JS non carica -->
       <a href="eventi.html" class="event-chip">
         <div class="event-date"><span class="day">—</span><span class="mon">Presto</span></div>
@@ -131,5 +132,40 @@
   <script src="js/data-eventi.js"></script>
   <script src="js/data-notizie.js"></script>
   <script src="js/main.js"></script>
+  <script>
+  // Carica testi home dal CMS
+  (async function() {
+    try {
+      var r = await fetch('_sito/home.json');
+      if (!r.ok) return;
+      var d = await r.json();
+      if (d.hero_sovratitolo) document.getElementById('hero-sovratitolo').textContent = d.hero_sovratitolo;
+      if (d.hero_sottotitolo) document.getElementById('hero-sottotitolo').textContent = d.hero_sottotitolo;
+      if (d.hero_testo) document.getElementById('hero-testo').textContent = d.hero_testo;
+      if (d.hero_btn1_testo) document.getElementById('hero-btn1').textContent = d.hero_btn1_testo;
+      if (d.hero_btn2_testo) document.getElementById('hero-btn2').textContent = d.hero_btn2_testo;
+      if (d.card1_titolo) document.getElementById('card1-titolo').textContent = d.card1_titolo;
+      if (d.card1_testo) document.getElementById('card1-testo').textContent = d.card1_testo;
+      if (d.card2_titolo) document.getElementById('card2-titolo').textContent = d.card2_titolo;
+      if (d.card2_testo) document.getElementById('card2-testo').textContent = d.card2_testo;
+      if (d.card3_titolo) document.getElementById('card3-titolo').textContent = d.card3_titolo;
+      if (d.card3_testo) document.getElementById('card3-testo').textContent = d.card3_testo;
+    } catch(e) {}
+  })();
+  // Carica footer dal CMS
+  (async function() {
+    try {
+      var r = await fetch('_sito/footer.json');
+      if (!r.ok) return;
+      var d = await r.json();
+      var fi = document.querySelector('.footer-info');
+      var fc = document.querySelector('.footer-copy');
+      if (fi && d.indirizzo && d.email) {
+        fi.innerHTML = d.indirizzo + ' &nbsp;·&nbsp; <a href="mailto:' + d.email + '">' + d.email + '</a> &nbsp;·&nbsp; <a href="privacy.html">Privacy policy</a>';
+      }
+      if (fc && d.copyright) fc.textContent = d.copyright;
+    } catch(e) {}
+  })();
+  </script>
 </body>
 </html>

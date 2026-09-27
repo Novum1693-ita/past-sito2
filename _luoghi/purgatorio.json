@@ -1,0 +1,18 @@
+{
+  "titolo": "Chiesa Anime Sante del Purgatorio",
+  "slug": "purgatorio",
+  "categoria": "Chiese",
+  "tag_extra": "Campanili",
+  "descrizione_breve": "Una delle più suggestive chiese di Ragusa Ibla, con un repertorio iconografico dedicato ai defunti.",
+  "descrizione": "La Chiesa delle Anime Sante del Purgatorio è uno degli spazi più intensi e carichi di significato di Ragusa Ibla. Il suo apparato iconografico — tra scheletri, teschi e figure dell'aldilà — riflette la profonda devozione popolare per i defunti che ha caratterizzato la religiosità barocca siciliana. Un luogo che colpisce per la forza espressiva delle sue opere.",
+  "orari": "Sab–Dom 10:00–13:00",
+  "prezzo": "€ 2,00",
+  "prezzo_ridotto": "€ 1,00",
+  "indirizzo": "Via del Purgatorio, Ragusa Ibla",
+  "lat": "36.92540",
+  "lng": "14.74430",
+  "link_regiondo": "https://www.regiondo.it",
+  "colore_principale": "#4a7a50",
+  "colore_secondario": "#b1d8b7",
+  "immagine": "/img/i luoghi/purgatorio.png"
+}

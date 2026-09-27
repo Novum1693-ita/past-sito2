@@ -1,9 +1,5 @@
 /* ============================================================
-   P.A.S.T. — main.js
-   ============================================================
-   Per aggiornare EVENTI: modifica js/data-eventi.js
-   Per aggiornare NOTIZIE: modifica js/data-notizie.js
-   Non toccare questo file salvo per modifiche strutturali.
+   P.A.S.T. — main.js  (sistema JSON unificato)
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -18,18 +14,15 @@ document.addEventListener('DOMContentLoaded', function () {
   var toggle = document.getElementById('nav-toggle');
   var navLinks = document.querySelector('.nav-links');
   if (toggle && navLinks) {
-    toggle.addEventListener('click', function () {
-      navLinks.classList.toggle('aperto');
-    });
+    toggle.addEventListener('click', function () { navLinks.classList.toggle('aperto'); });
   }
 
-  /* ── Dropdown mobile (click invece di hover) ── */
+  /* ── Dropdown mobile ── */
   if (window.innerWidth <= 768) {
     document.querySelectorAll('.nav-dropdown > a').forEach(function (a) {
       a.addEventListener('click', function (e) {
         e.preventDefault();
-        var li = this.parentElement;
-        li.classList.toggle('aperto');
+        this.parentElement.classList.toggle('aperto');
       });
     });
   }
@@ -40,17 +33,14 @@ document.addEventListener('DOMContentLoaded', function () {
     setTimeout(function () { banner.classList.add('visibile'); }, 900);
   }
   function nascondi() {
-    if (banner) {
-      banner.classList.remove('visibile');
-      setTimeout(function () { banner.style.display = 'none'; }, 400);
-    }
+    if (banner) { banner.classList.remove('visibile'); setTimeout(function () { banner.style.display = 'none'; }, 400); }
   }
   var btnA = document.getElementById('cookie-accetta');
   var btnR = document.getElementById('cookie-rifiuta');
   if (btnA) btnA.addEventListener('click', function () { localStorage.setItem('cookie_consenso', 'accettato'); nascondi(); });
   if (btnR) btnR.addEventListener('click', function () { localStorage.setItem('cookie_consenso', 'rifiutato'); nascondi(); });
 
-  /* ── Filtri luoghi ed eventi ── */
+  /* ── Filtri (categorie) ── */
   document.querySelectorAll('.filter-pill').forEach(function (f) {
     f.addEventListener('click', function () {
       document.querySelectorAll('.filter-pill').forEach(function (x) { x.classList.remove('active'); });
@@ -62,189 +52,196 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  /* ── Form prenotazione ──
-     Sostituisci INSERISCI_ENDPOINT_FORMSPREE con il tuo URL da formspree.io */
+  /* ── Form prenotazione ── */
   var form = document.getElementById('form-prenotazione');
   if (form) {
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
       var d = {
-        nome:    document.getElementById('f-nome').value.trim(),
-        email:   document.getElementById('f-email').value.trim(),
-        luogo:   document.getElementById('f-luogo').value,
-        data:    document.getElementById('f-data') ? document.getElementById('f-data').value : '',
-        num:     document.getElementById('f-num') ? document.getElementById('f-num').value : '1',
-        note:    document.getElementById('f-note') ? document.getElementById('f-note').value.trim() : '',
+        nome:  document.getElementById('f-nome').value.trim(),
+        email: document.getElementById('f-email').value.trim(),
+        luogo: document.getElementById('f-luogo').value,
+        data:  document.getElementById('f-data') ? document.getElementById('f-data').value : '',
+        num:   document.getElementById('f-num') ? document.getElementById('f-num').value : '1',
+        note:  document.getElementById('f-note') ? document.getElementById('f-note').value.trim() : '',
       };
       if (!d.nome || !d.email || !d.luogo) { alert('Compila nome, email e luogo.'); return; }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) { alert('Email non valida.'); return; }
+      var btn = form.querySelector('button[type=submit]');
+      var orig = btn ? btn.textContent : '';
+      if (btn) { btn.textContent = 'Invio in corso…'; btn.disabled = true; }
       try {
-        var r = await fetch('INSERISCI_ENDPOINT_FORMSPREE', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+        var r = await fetch('https://formspree.io/f/INSERISCI_ID', {
+          method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
           body: JSON.stringify(d)
         });
-        if (r.ok) { mostraSuccesso(); form.reset(); }
-        else alert('Errore invio. Riprova o contattaci via email.');
-      } catch (e) {
-        console.warn('Endpoint non configurato:', d);
-        mostraSuccesso(); form.reset();
-      }
+        if (r.ok) {
+          var conf = document.getElementById('form-conferma');
+          if (conf) { form.style.display = 'none'; conf.style.display = 'block'; }
+          else { alert('Richiesta inviata! Ti ricontatteremo presto.'); form.reset(); }
+        } else { alert('Errore nell\'invio. Riprova o contattaci via email.'); }
+      } catch (err) { alert('Errore di rete. Controlla la connessione.'); }
+      finally { if (btn) { btn.textContent = orig; btn.disabled = false; } }
     });
   }
 
-  /* ── Precompila il luogo dal localStorage ── */
-  precompilaLuogoDaUrl();
-
-  /* ── Carica eventi dinamici in home se presenti ── */
-  caricaEventiHome();
-
-  /* ── Carica eventi nella pagina eventi se presenti ── */
-  caricaGrigliaEventi();
-
-  /* ── Carica notizie nella pagina notizie se presenti ── */
-  caricaNotizie();
-
-  /* ── Ticker ── */
-  avviaTickerDinamico();
+  /* ── Avvia caricamenti dinamici ── */
+  caricaTicker();
+  if (document.getElementById('eventi-home-grid')) caricaEventiHome();
+  if (document.getElementById('eventi-grid'))      caricaEventiPagina();
+  if (document.getElementById('notizie-grid'))     caricaNotizie();
+  if (document.getElementById('luoghi-grid'))      caricaLuoghi();
 
 });
 
-/* ════════════════════════════════════════════════════════════
-   FUNZIONI DI SUPPORTO
-   ════════════════════════════════════════════════════════════ */
-
-function mostraSuccesso() {
-  var m = document.getElementById('success-msg');
-  if (m) {
-    m.style.display = 'block';
-    setTimeout(function () { m.style.display = 'none'; }, 6000);
-    m.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
+/* ── Percorso base (root o sottocartella) ── */
+function basePath() {
+  var d = window.location.pathname.split('/').length - 2;
+  return d > 0 ? '../'.repeat(d) : '';
 }
 
-function precompilaLuogoDaUrl() {
-  var luogo = localStorage.getItem('luogo_preselezionato');
-  if (luogo) {
-    var sel = document.getElementById('f-luogo');
-    if (sel) {
-      for (var o of sel.options) {
-        if (o.text === luogo) { sel.value = o.value; break; }
-      }
-    }
-    localStorage.removeItem('luogo_preselezionato');
-  }
+async function fetchJSON(url) {
+  try { var r = await fetch(url); return r.ok ? await r.json() : null; }
+  catch (e) { return null; }
 }
 
-/* ════════════════════════════════════════════════════════════
-   CARICAMENTO DINAMICO DA FILE DATI
-   Legge i dati da js/data-eventi.js e js/data-notizie.js
-   ════════════════════════════════════════════════════════════ */
-
-function caricaEventiHome() {
-  var container = document.getElementById('eventi-row-dinamico');
-  if (!container || typeof EVENTI_PAST === 'undefined') return;
-
-  /* Mostra solo i primi 3 eventi */
-  var eventiDaMostrare = EVENTI_PAST.slice(0, 3);
-  var html = '';
-  var prefix = calcolaPrefix();
-
-  eventiDaMostrare.forEach(function (e) {
-    html += '<a href="' + prefix + e.url + '" class="event-chip">' +
-      '<div class="event-date"><span class="day">' + e.giorno + '</span><span class="mon">' + e.mese + '</span></div>' +
-      '<div class="event-info"><h4>' + e.titolo + '</h4><p>' + e.sottotitolo + '</p></div>' +
-      '</a>';
-  });
-  container.innerHTML = html;
-}
-
-function caricaGrigliaEventi() {
-  var container = document.getElementById('eventi-griglia-dinamica');
-  if (!container || typeof EVENTI_PAST === 'undefined') return;
-
-  var prefix = calcolaPrefix();
-  var html = '';
-
-  EVENTI_PAST.forEach(function (e) {
-    var badges = '';
-    e.badge.forEach(function (b) {
-      badges += '<span class="badge-tipo ' + b.classe + '">' + b.testo + '</span> ';
-    });
-    html += '<a href="' + prefix + e.url + '" class="evento-card" data-categoria="' + e.categoria + '">' +
-      '<div class="evento-card-header">' +
-        '<div class="evento-data-grande"><span class="giorno">' + e.giorno + '</span><span class="mese">' + e.mese + '</span></div>' +
-        '<div class="evento-card-meta"><h3>' + e.titolo + '</h3><p>' + e.sottotitolo + '</p></div>' +
-      '</div>' +
-      '<div class="evento-card-body">' +
-        badges +
-        '<p>' + e.anteprima + '</p>' +
-        '<span class="evento-link">Scopri e prenota</span>' +
-      '</div>' +
-      '</a>';
-  });
-  container.innerHTML = html;
-}
-
-function caricaNotizie() {
-  var container = document.getElementById('notizie-lista-dinamica');
-  if (!container || typeof NOTIZIE_PAST === 'undefined') return;
-
-  var prefix = calcolaPrefix();
-  var html = '';
-
-  NOTIZIE_PAST.forEach(function (n) {
-    html += '<a href="' + prefix + n.url + '" class="notizia-card">' +
-      '<div class="notizia-card-body">' +
-        '<div class="notizia-meta">' +
-          '<span class="notizia-data">' + n.data + '</span>' +
-          '<span class="badge-notizia ' + n.badgeClasse + '">' + n.badgeTesto + '</span>' +
-        '</div>' +
-        '<h3>' + n.titolo + '</h3>' +
-        '<p>' + n.anteprima + '</p>' +
-        '<span class="notizia-leggi">Leggi tutto</span>' +
-      '</div>' +
-      '</a>';
-  });
-  container.innerHTML = html;
-}
-
-function avviaTickerDinamico() {
+/* ──────────────────────────────────────────
+   TICKER
+────────────────────────────────────────── */
+async function caricaTicker() {
   var track = document.getElementById('ticker-track');
   if (!track) return;
+  var base = basePath();
+  var testi = [];
 
-  /* Usa NOTIZIE_PAST se disponibili, altrimenti usa il fallback */
-  var notizie = (typeof NOTIZIE_PAST !== 'undefined') ? NOTIZIE_PAST : TICKER_FALLBACK;
-  var prefix = calcolaPrefix();
+  var idx = await fetchJSON(base + '_notizie/index.json');
+  if (idx && idx.length > 0) {
+    for (var i = 0; i < Math.min(idx.length, 5); i++) {
+      var n = await fetchJSON(base + '_notizie/' + idx[i]);
+      if (n && n.titolo) testi.push(n.titolo);
+    }
+  }
+  if (testi.length === 0 && typeof NOTIZIE_PAST !== 'undefined') {
+    testi = NOTIZIE_PAST.slice(0, 5).map(function (n) { return n.titolo; });
+  }
+  if (testi.length === 0) testi = ['P.A.S.T. — Patrimonio Arte Storia Territorio · Ragusa Ibla'];
 
-  /* Prende solo le prime 3 */
-  var items = notizie.slice(0, 4);
-  var html = '';
-
-  /* Duplica per effetto loop */
-  [items, items].forEach(function (g) {
-    g.forEach(function (n) {
-      html += '<a class="ticker-item" href="' + prefix + n.url + '">' + n.titolo + '</a>';
-    });
-  });
-
-  track.innerHTML = html;
-  requestAnimationFrame(function () {
-    var w = track.scrollWidth / 2;
-    track.style.animationDuration = Math.max(20, w / 75) + 's';
-    track.classList.add('running');
-  });
+  var html = testi.map(function (t) { return '<span class="ticker-item">' + t + '</span>'; }).join('');
+  track.innerHTML = html + html;
 }
 
-/* Calcola il prefisso per i percorsi in base alla profondità della pagina */
-function calcolaPrefix() {
-  var parts = window.location.pathname.split('/').filter(Boolean);
-  return parts.length > 1 ? '../'.repeat(parts.length - 1) : '';
+/* ──────────────────────────────────────────
+   EVENTI
+────────────────────────────────────────── */
+async function caricaListaEventi(base) {
+  var idx = await fetchJSON(base + '_eventi/index.json');
+  if ((!idx || idx.length === 0) && typeof EVENTI_PAST !== 'undefined') return EVENTI_PAST;
+  if (!idx || idx.length === 0) return [];
+  var ev = [];
+  for (var i = 0; i < idx.length; i++) { var e = await fetchJSON(base + '_eventi/' + idx[i]); if (e) ev.push(e); }
+  return ev;
 }
 
-/* Fallback ticker se data-notizie.js non è caricato */
-var TICKER_FALLBACK = [
-  { titolo: 'Benvenuti nel portale P.A.S.T.', url: 'notizie.html' },
-  { titolo: 'Scopri i luoghi culturali di Ragusa', url: 'I-luoghi.html' },
-  { titolo: 'Vitruvio Card — cultura a portata di mano', url: 'Le-Card.html' },
-];
+function renderCardEvento(ev, base) {
+  var badges = '';
+  if (ev.badge && Array.isArray(ev.badge)) {
+    badges = ev.badge.map(function (b) { return '<span class="badge ' + b.classe + '">' + b.testo + '</span>'; }).join('');
+  } else if (ev.badge1) {
+    badges = '<span class="badge ' + ev.badge1 + '">' + (ev.categoria || '') + '</span>';
+  }
+  var url = ev.url ? (base + ev.url) : 'eventi.html';
+  return '<article class="evento-card" data-categoria="' + (ev.categoria || '') + '">'
+    + '<div class="evento-data"><span class="evento-giorno">' + (ev.giorno || '&mdash;') + '</span>'
+    + '<span class="evento-mese">' + (ev.mese || '') + '</span></div>'
+    + '<div class="evento-corpo"><div class="evento-badges">' + badges + '</div>'
+    + '<h3 class="evento-titolo">' + (ev.titolo || '') + '</h3>'
+    + '<p class="evento-sottotitolo">' + (ev.sottotitolo || '') + '</p>'
+    + '<p class="evento-anteprima">' + (ev.anteprima || '') + '</p>'
+    + '<a href="' + url + '" class="evento-link">Scopri &rarr;</a></div></article>';
+}
+
+async function caricaEventiHome() {
+  var grid = document.getElementById('eventi-home-grid');
+  if (!grid) return;
+  var base = basePath();
+  var eventi = await caricaListaEventi(base);
+  if (!eventi || eventi.length === 0) {
+    grid.innerHTML = '<div class="evento-card" style="grid-column:1/-1;text-align:center;padding:2rem;">'
+      + '<p class="evento-data"><span class="evento-giorno">&mdash;</span><span class="evento-mese">Presto</span></p>'
+      + '<h3 class="evento-titolo">Nuovi eventi in arrivo</h3>'
+      + '<p class="evento-anteprima">Consulta il calendario completo</p>'
+      + '<a href="eventi.html" class="evento-link">Calendario &rarr;</a></div>';
+    return;
+  }
+  grid.innerHTML = eventi.slice(0, 3).map(function (ev) { return renderCardEvento(ev, base); }).join('');
+}
+
+async function caricaEventiPagina() {
+  var grid = document.getElementById('eventi-grid');
+  if (!grid) return;
+  var base = basePath();
+  var eventi = await caricaListaEventi(base);
+  if (!eventi || eventi.length === 0) {
+    grid.innerHTML = '<p style="text-align:center;padding:2rem;opacity:.6;">Nessun evento disponibile al momento.</p>';
+    return;
+  }
+  grid.innerHTML = eventi.map(function (ev) { return renderCardEvento(ev, base); }).join('');
+}
+
+/* ──────────────────────────────────────────
+   NOTIZIE
+────────────────────────────────────────── */
+function renderCardNotizia(n) {
+  return '<article class="notizia-card">'
+    + '<div class="notizia-meta"><span class="notizia-badge">' + (n.badge_testo || n.categoria || 'Notizia') + '</span>'
+    + '<span class="notizia-data">' + (n.data || '') + '</span></div>'
+    + '<h3 class="notizia-titolo">' + (n.titolo || '') + '</h3>'
+    + '<p class="notizia-anteprima">' + (n.anteprima || '') + '</p>'
+    + '</article>';
+}
+
+async function caricaNotizie() {
+  var grid = document.getElementById('notizie-grid');
+  if (!grid) return;
+  var base = basePath();
+  var idx = await fetchJSON(base + '_notizie/index.json');
+
+  if ((!idx || idx.length === 0) && typeof NOTIZIE_PAST !== 'undefined') {
+    grid.innerHTML = NOTIZIE_PAST.map(renderCardNotizia).join('');
+    return;
+  }
+  if (!idx || idx.length === 0) {
+    grid.innerHTML = '<p style="text-align:center;padding:2rem;opacity:.6;">Nessuna notizia disponibile.</p>';
+    return;
+  }
+  var notizie = [];
+  for (var i = 0; i < idx.length; i++) { var n = await fetchJSON(base + '_notizie/' + idx[i]); if (n) notizie.push(n); }
+  grid.innerHTML = notizie.map(renderCardNotizia).join('');
+}
+
+/* ──────────────────────────────────────────
+   LUOGHI (i-luoghi.html)
+────────────────────────────────────────── */
+async function caricaLuoghi() {
+  var grid = document.getElementById('luoghi-grid');
+  if (!grid) return;
+  var base = basePath();
+  var idx = await fetchJSON(base + '_luoghi/index.json');
+  if (!idx || idx.length === 0) return;
+
+  var luoghi = [];
+  for (var i = 0; i < idx.length; i++) { var l = await fetchJSON(base + '_luoghi/' + idx[i]); if (l) luoghi.push(l); }
+
+  grid.innerHTML = luoghi.map(function (l) {
+    var tags = '<span class="luogo-tag">' + (l.categoria || '') + '</span>';
+    if (l.tag_extra) tags += ' <span class="luogo-tag">' + l.tag_extra + '</span>';
+    return '<a href="' + base + 'luoghi/' + l.slug + '.html" class="course-card" data-categoria="' + (l.categoria || '') + '">'
+      + '<div class="card-tag-row">' + tags + '</div>'
+      + '<h3 class="card-titolo">' + (l.titolo || '') + '</h3>'
+      + '<p class="card-desc">' + (l.descrizione_breve || '') + '</p>'
+      + '<div class="card-meta">'
+      + '<span class="card-orari">' + (l.orari || '') + '</span>'
+      + '<span class="card-prezzo">' + (l.prezzo || '') + '</span>'
+      + '</div><span class="card-cta">Scopri e prenota</span></a>';
+  }).join('');
+}

@@ -1,0 +1,13 @@
+[build]
+  functions = "netlify/functions"
+
+# Trigger automatico: quando Netlify finisce un deploy,
+# chiama la function per aggiornare gli index.json
+[[plugins]]
+  package = "@netlify/plugin-functions-install-core"
+
+# Redirect opzionale per l'admin CMS
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200

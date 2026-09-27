@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mappa dei Luoghi — P.A.S.T.</title>
+  <meta name="description" content="Mappa interattiva dei luoghi culturali del progetto P.A.S.T. a Ragusa Ibla." />
+  <link rel="icon" href="img/logo.png" type="image/png" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .mappa-top { border-bottom: 1px solid var(--bordo); background: var(--sfondo); }
+
+    .mappa-filtri {
+      padding: 0.9rem 2.5rem;
+      display: flex; align-items: center;
+      gap: 0; flex-wrap: wrap;
+      border-bottom: 1px solid var(--bordo);
+    }
+    .mappa-filtri-label {
+      font-family: var(--font-sans); font-size: 9px;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: rgba(245,240,232,0.4); margin-right: 1rem; flex-shrink: 0;
+    }
+
+    .mappa-legenda {
+      padding: 0.8rem 2.5rem;
+      display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+    }
+    .mappa-legenda-label {
+      font-family: var(--font-sans); font-size: 9px;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: rgba(245,240,232,0.4); flex-shrink: 0;
+    }
+    .legenda-voce {
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--font-sans); font-size: 10px;
+      color: rgba(245,240,232,0.6);
+    }
+    .legenda-cerchio {
+      width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+    }
+    .lc-unico  { background: #abd6e3; box-shadow: 0 0 0 2px #307a8f; }
+    .lc-museo  { background: #c9a96e; box-shadow: 0 0 0 2px #8a6f3e; }
+    .lc-chiesa { background: rgba(245,240,232,0.5); box-shadow: 0 0 0 2px rgba(245,240,232,0.3); }
+
+    /* Elenco orizzontale */
+    .mappa-elenco {
+      display: flex; overflow-x: auto;
+      border-bottom: 1px solid var(--bordo);
+      scrollbar-width: thin; scrollbar-color: var(--bordo) transparent;
+    }
+    .mappa-elenco::-webkit-scrollbar { height: 3px; }
+    .mappa-elenco::-webkit-scrollbar-thumb { background: var(--bordo); }
+
+    .luogo-chip {
+      display: flex; align-items: center; gap: 8px;
+      padding: 0.85rem 1.3rem;
+      border-right: 1px solid var(--bordo);
+      cursor: pointer; transition: background var(--transizione);
+      text-decoration: none; white-space: nowrap; flex-shrink: 0;
+      border-bottom: 2px solid transparent;
+    }
+    .luogo-chip:hover { background: rgba(48,122,143,0.1); }
+    .luogo-chip.attivo {
+      background: rgba(48,122,143,0.18);
+      border-bottom-color: var(--blu);
+    }
+    .chip-icona { font-size: 14px; }
+    .chip-info h4 {
+      font-family: var(--font-sans); font-size: 10px; font-weight: 500;
+      color: var(--bianco); margin: 0; letter-spacing: 0.3px;
+    }
+    .chip-info p {
+      font-family: var(--font-sans); font-size: 9px;
+      color: rgba(245,240,232,0.4); margin: 0;
+    }
+
+    /* Mappa + card info sovrapposta */
+    .mappa-wrap {
+      position: relative;
+      height: 520px;
+      border-bottom: 1px solid var(--bordo);
+    }
+    .mappa-wrap iframe {
+      width: 100%; height: 100%; border: none; display: block;
+    }
+
+    /* Card info luogo — sovrapposta in alto a sinistra sulla mappa */
+    .mappa-info-card {
+      display: none;
+      position: absolute;
+      top: 1.2rem; left: 1.2rem;
+      background: var(--sfondo);
+      border: 1px solid var(--blu);
+      padding: 1.2rem 1.4rem;
+      min-width: 260px; max-width: 320px;
+      z-index: 1000;
+    }
+    .mappa-info-card.visibile { display: block; }
+    .mappa-info-card h3 {
+      font-family: var(--font-display);
+      font-size: 17px; font-weight: 400;
+      color: var(--bianco); margin: 0 24px 4px 0; line-height: 1.3;
+    }
+    .mappa-info-card .info-orari {
+      font-family: var(--font-sans); font-size: 10px;
+      color: rgba(245,240,232,0.5); margin: 0 0 4px;
+      letter-spacing: 0.3px; line-height: 1.6;
+    }
+    .mappa-info-card .info-prezzo {
+      font-family: var(--font-display);
+      font-size: 18px; font-weight: 300;
+      color: var(--blu-chiaro); margin: 0 0 10px;
+    }
+    .mappa-info-card .btn-vai {
+      display: inline-block; background: var(--blu);
+      color: var(--bianco); padding: 7px 18px;
+      font-family: var(--font-sans); font-size: 9px;
+      letter-spacing: 2px; text-transform: uppercase;
+      text-decoration: none; transition: background var(--transizione);
+    }
+    .mappa-info-card .btn-vai:hover { background: var(--blu-scuro); }
+    .mappa-info-chiudi {
+      position: absolute; top: 8px; right: 10px;
+      background: none; border: none;
+      color: rgba(245,240,232,0.4); font-size: 18px; cursor: pointer;
+    }
+    .mappa-info-chiudi:hover { color: var(--bianco); }
+
+    /* Nota Google Maps */
+    .mappa-nota {
+      padding: 0.7rem 2.5rem;
+      font-family: var(--font-sans); font-size: 9px;
+      color: rgba(245,240,232,0.3); letter-spacing: 0.3px;
+      border-top: 1px solid var(--bordo);
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .mappa-filtri, .mappa-legenda, .mappa-nota { padding: 0.8rem 1.2rem; }
+      .mappa-wrap { height: 400px; }
+      .mappa-legenda { gap: 1rem; }
+      .mappa-info-card { min-width: 220px; max-width: 260px; }
+    }
+    @media (max-width: 480px) {
+      .mappa-wrap { height: 320px; }
+      .mappa-info-card { left: 0.6rem; top: 0.6rem; min-width: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo"><img src="img/logo.png" alt="P.A.S.T." /></a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li class="nav-dropdown">
+        <a href="i-luoghi.html">I Luoghi <span class="dropdown-arrow">▾</span></a>
+        <div class="dropdown-menu">
+          <a href="luoghi/san-giacomo.html">Chiesa di San Giacomo Apostolo</a>
+          <a href="luoghi/maddalena.html">Chiesa S. Maria Maddalena</a>
+          <a href="luoghi/obsculta.html">Museo Benedettino Obsculta</a>
+          <a href="luoghi/san-giorgio.html">Chiesa Madre San Giorgio</a>
+          <a href="luoghi/museo-del-duomo.html">Museo del Duomo</a>
+          <a href="luoghi/purgatorio.html">Chiesa Anime Sante Purgatorio</a>
+          <a href="luoghi/itria.html">Chiesa S. Maria dell'Itria</a>
+          <a href="luoghi/scale.html">Chiesa S. Maria delle Scale</a>
+          <a href="luoghi/museo-cattedrale.html">Museo della Cattedrale</a>
+          <a href="luoghi/cattedrale.html">Cattedrale S. Giovanni Battista</a>
+          <a href="mappa.html">📍 Mappa interattiva</a>
+        </div>
+      </li>
+      <li><a href="le-card.html">Vitruvio Card</a></li>
+      <li><a href="eventi.html">Eventi</a></li>
+      <li><a href="notizie.html">Notizie</a></li>
+      <li><a href="contatti.html">Contatti</a></li>
+      <li class="lang-switch">
+        <a href="index.html" class="lang-btn">IT</a>
+        <span class="lang-sep">·</span>
+        <a href="en/index.html" class="lang-btn">EN</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="ticker-bar">
+    <div class="ticker-label"><span class="ticker-dot"></span>Ultima ora</div>
+    <div class="ticker-window"><div class="ticker-track" id="ticker-track"></div></div>
+  </div>
+
+  <div class="page-header">
+    <div class="page-tag">Orientati a Ragusa Ibla</div>
+    <h1>Mappa dei luoghi</h1>
+  </div>
+
+  <!-- BARRA IN ALTO: FILTRI + LEGENDA -->
+  <div class="mappa-top">
+    <div class="mappa-filtri">
+      <span class="mappa-filtri-label">Filtra</span>
+      <button class="filter-pill active" data-filtro="tutti" onclick="filtra(this)">Tutti (10)</button>
+      <button class="filter-pill" data-filtro="unico" onclick="filtra(this)">Unicità (1)</button>
+      <button class="filter-pill" data-filtro="museo" onclick="filtra(this)">Musei (3)</button>
+      <button class="filter-pill" data-filtro="chiesa" onclick="filtra(this)">Chiese (6)</button>
+    </div>
+    <div class="mappa-legenda">
+      <span class="mappa-legenda-label">Legenda</span>
+      <div class="legenda-voce"><div class="legenda-cerchio lc-unico"></div>Unicità</div>
+      <div class="legenda-voce"><div class="legenda-cerchio lc-museo"></div>Musei</div>
+      <div class="legenda-voce"><div class="legenda-cerchio lc-chiesa"></div>Chiese</div>
+      <div class="legenda-voce" style="margin-left:auto;">
+        <span style="font-family:var(--font-sans);font-size:9px;color:rgba(245,240,232,0.3);">
+          Clicca un luogo nell'elenco per i dettagli
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ELENCO ORIZZONTALE -->
+  <div class="mappa-elenco" id="elenco-luoghi">
+    <a class="luogo-chip" data-id="san-giorgio" data-tipo="unico" href="luoghi/san-giorgio.html" onclick="seleziona(event,'san-giorgio')">
+      <div class="chip-icona">⛪</div>
+      <div class="chip-info"><h4>Duomo San Giorgio</h4><p>Unicità · € 3,00</p></div>
+    </a>
+    <a class="luogo-chip" data-id="museo-del-duomo" data-tipo="museo" href="luoghi/museo-del-duomo.html" onclick="seleziona(event,'museo-del-duomo')">
+      <div class="chip-icona">🏛</div>
+      <div class="chip-info"><h4>Museo del Duomo</h4><p>Museo · € 3,00</p></div>
+    </a>
+    <a class="luogo-chip" data-id="san-giacomo" data-tipo="chiesa" href="luoghi/san-giacomo.html" onclick="seleziona(event,'san-giacomo')">
+      <div class="chip-icona">⛪</div>
+      <div class="chip-info"><h4>San Giacomo</h4><p>Chiesa · € 2,00</p></div>
+    </a>
+    <a class="luogo-chip" data-id="maddalena" data-tipo="chiesa" href="luoghi/maddalena.html" onclick="seleziona(event,'maddalena')">
+      <div class="chip-icona">⛪</div>
+      <div class="chip-info"><h4>S.M. Maddalena</h4><p>Chiesa · € 2,00</p></div>
+    </a>
+    <a class="luogo-chip" data-id="obsculta" data-tipo="museo" href="luoghi/obsculta.html" onclick="seleziona(event,'obsculta')">
+      <div class="chip-icona">🏛</div>
+      <div class="chip-info"><h4>Obsculta</h4><p>Museo · € 4,00</p></div>
+    </a>
+    <a class="luogo-chip" data-id="museo-cattedrale" data-tipo="museo" href="luoghi/museo-cattedrale.html" onclick="seleziona(event,'museo-cattedrale')">
+      <div class="chip-icona">🏛</div>
+      <div class="chip-info"><h4>Museo Cattedrale</h4><p>Museo · € 3,00</p></div>
+    </a>
+    <a class="luogo-chip" data-id="cattedrale" data-tipo="chiesa" href="luoghi/cattedrale.html" onclick="seleziona(event,'cattedrale')">
+      <div class="chip-icona">⛪</div>
+      <div class="chip-info"><h4>Cattedrale S. Giovanni</h4><p>Chiesa · Gratuito</p></div>
+    </a>
+    <a class="luogo-chip" data-id="purgatorio" data-tipo="chiesa" href="luoghi/purgatorio.html" onclick="seleziona(event,'purgatorio')">
+      <div class="chip-icona">⛪</div>
+      <div class="chip-info"><h4>Anime Purgatorio</h4><p>Chiesa · € 2,00</p></div>
+    </a>
+    <a class="luogo-chip" data-id="itria" data-tipo="chiesa" href="luoghi/itria.html" onclick="seleziona(event,'itria')">
+      <div class="chip-icona">⛪</div>
+      <div class="chip-info"><h4>S.M. dell'Itria</h4><p>Chiesa · € 2,00</p></div>
+    </a>
+    <a class="luogo-chip" data-id="scale" data-tipo="chiesa" href="luoghi/scale.html" onclick="seleziona(event,'scale')">
+      <div class="chip-icona">⛪</div>
+      <div class="chip-info"><h4>S.M. delle Scale</h4><p>Chiesa · € 2,00</p></div>
+    </a>
+  </div>
+
+  <!-- MAPPA GOOGLE + CARD INFO -->
+  <div class="mappa-wrap">
+    <iframe id="mappa-iframe"
+      src="https://www.google.com/maps/d/embed?mid=1S449ICv_CNpwOx4PlJXmTKXuxqRYaKo&ll=36.926022543157686%2C14.738625899999978&z=17"
+      allowfullscreen="" loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="Mappa dei luoghi P.A.S.T. a Ragusa Ibla">
+    </iframe>
+
+    <!-- Card info — appare cliccando un chip -->
+    <div class="mappa-info-card" id="info-card">
+      <button class="mappa-info-chiudi" onclick="chiudiInfo()" aria-label="Chiudi">×</button>
+      <h3 id="info-nome"></h3>
+      <p class="info-orari" id="info-orari"></p>
+      <p class="info-prezzo" id="info-prezzo"></p>
+      <a href="#" id="info-link" class="btn-vai">Vai alla scheda →</a>
+    </div>
+  </div>
+
+  <div class="mappa-nota">
+    📍 La mappa mostra i luoghi P.A.S.T. di Ragusa Ibla. Clicca gli spilli su Google Maps per aprirli direttamente.
+  </div>
+
+  <!-- SPONSOR -->
+  <div class="sponsor-bar">
+    <div class="sponsor-bar-label">Progetto nato dalla collaborazione di:</div>
+    <div class="sponsor-track">
+      <a href="https://www.diocesidiragusa.it" target="_blank" rel="noopener" class="sponsor-item">
+        <img src="img/loghi/logo-diocesi.png" alt="Diocesi di Ragusa" />
+      </a>
+      <a href="https://www.novum1693.it" target="_blank" rel="noopener" class="sponsor-item">
+        <img src="img/loghi/logo-novum.png" alt="Novum 1693 Cantiere Culturale" />
+      </a>
+      <a href="https://www.comune.ragusa.gov.it" target="_blank" rel="noopener" class="sponsor-item">
+        <img src="img/loghi/logo-comune.png" alt="Comune di Ragusa" />
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <a href="index.html" class="footer-logo"><img src="img/logo.png" alt="P.A.S.T." /></a>
+    <div class="footer-info">
+      Via Salita Duomo 13, Ragusa &nbsp;·&nbsp;
+      <a href="mailto:info@novum1693.it">info@novum1693.it</a> &nbsp;·&nbsp;
+      <a href="privacy.html">Privacy policy</a>
+    </div>
+    <div class="footer-copy">© 2025 Guardiani del Tempo</div>
+  </footer>
+
+  <div class="cookie-banner" id="cookie-banner">
+    <div class="cookie-testo">Utilizziamo solo cookie tecnici necessari. Leggi la nostra <a href="privacy.html">Privacy Policy</a>.</div>
+    <div class="cookie-azioni">
+      <button class="btn-cookie-rifiuta" id="cookie-rifiuta">Solo necessari</button>
+      <button class="btn-cookie-accetta" id="cookie-accetta">Accetto</button>
+    </div>
+  </div>
+
+  <script src="js/data-eventi.js"></script>
+  <script src="js/data-notizie.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+  /* ── Dati luoghi con coordinate per zoom Google Maps ── */
+  var LUOGHI = {
+    'san-giorgio':      { nome:'Chiesa Madre e Duomo San Giorgio',   orari:'Tutti i giorni 9:00–19:00',       prezzo:'€ 3,00',    link:'luoghi/san-giorgio.html',      lat:36.92573, lng:14.74493 },
+    'museo-del-duomo':  { nome:'Museo del Duomo',                    orari:'Lun–Sab 10:00–13:00 / 16:00–19:00', prezzo:'€ 3,00', link:'luoghi/museo-del-duomo.html',  lat:36.92560, lng:14.74510 },
+    'san-giacomo':      { nome:'Chiesa di San Giacomo Apostolo',      orari:'Tutti i giorni 10:30–17:30',      prezzo:'€ 2,00',    link:'luoghi/san-giacomo.html',      lat:36.92650, lng:14.74320 },
+    'maddalena':        { nome:'Chiesa di Santa Maria Maddalena',     orari:'Tutti i giorni 10:00–17:00',      prezzo:'€ 2,00',    link:'luoghi/maddalena.html',        lat:36.92710, lng:14.74400 },
+    'obsculta':         { nome:'Museo Benedettino Obsculta',          orari:'Mar–Dom 9:30–17:00',              prezzo:'€ 4,00',    link:'luoghi/obsculta.html',         lat:36.92480, lng:14.74280 },
+    'museo-cattedrale': { nome:'Museo della Cattedrale',              orari:'Mar–Sab 10:00–17:00',             prezzo:'€ 3,00',    link:'luoghi/museo-cattedrale.html', lat:36.92390, lng:14.74620 },
+    'cattedrale':       { nome:'Cattedrale San Giovanni Battista',    orari:'Tutti i giorni 8:00–19:00',       prezzo:'Gratuito',  link:'luoghi/cattedrale.html',       lat:36.92370, lng:14.74650 },
+    'purgatorio':       { nome:'Chiesa Anime Sante del Purgatorio',   orari:'Sab–Dom 10:00–13:00',             prezzo:'€ 2,00',    link:'luoghi/purgatorio.html',       lat:36.92540, lng:14.74430 },
+    'itria':            { nome:"Chiesa di Santa Maria dell'Itria",    orari:'Tutti i giorni 10:00–17:00',      prezzo:'€ 2,00',    link:'luoghi/itria.html',            lat:36.92680, lng:14.74460 },
+    'scale':            { nome:'Chiesa di Santa Maria delle Scale',   orari:'Tutti i giorni 10:00–17:00',      prezzo:'€ 2,00',    link:'luoghi/scale.html',            lat:36.92450, lng:14.74180 },
+  };
+
+  /* Cliccando un chip: mostra card + sposta la mappa Google sul luogo */
+  function seleziona(e, id) {
+    e.preventDefault();
+    var l = LUOGHI[id];
+    if (!l) return;
+
+    /* Evidenzia chip */
+    document.querySelectorAll('.luogo-chip').forEach(function(c) { c.classList.remove('attivo'); });
+    var chip = document.querySelector('.luogo-chip[data-id="' + id + '"]');
+    if (chip) {
+      chip.classList.add('attivo');
+      chip.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+    }
+
+    /* Aggiorna card info */
+    document.getElementById('info-nome').textContent   = l.nome;
+    document.getElementById('info-orari').textContent  = l.orari;
+    document.getElementById('info-prezzo').textContent = l.prezzo;
+    document.getElementById('info-link').href          = l.link;
+    document.getElementById('info-card').classList.add('visibile');
+
+    /* Ricarica iframe Google Maps centrato sul luogo con zoom 18 */
+    var iframe = document.getElementById('mappa-iframe');
+    iframe.src = 'https://maps.google.com/maps?q=' + l.lat + ',' + l.lng
+      + '&z=18&output=embed&hl=it';
+  }
+
+  function chiudiInfo() {
+    document.getElementById('info-card').classList.remove('visibile');
+    document.querySelectorAll('.luogo-chip').forEach(function(c) { c.classList.remove('attivo'); });
+    /* Ripristina la mappa originale */
+    document.getElementById('mappa-iframe').src =
+      'https://www.google.com/maps/d/embed?mid=1S449ICv_CNpwOx4PlJXmTKXuxqRYaKo&ll=36.926022543157686%2C14.738625899999978&z=17';
+  }
+
+  function filtra(pill) {
+    document.querySelectorAll('.mappa-filtri .filter-pill').forEach(function(p) { p.classList.remove('active'); });
+    pill.classList.add('active');
+    var tipo = pill.dataset.filtro;
+    document.querySelectorAll('.luogo-chip').forEach(function(c) {
+      c.style.display = (tipo === 'tutti' || c.dataset.tipo === tipo) ? 'flex' : 'none';
+    });
+    chiudiInfo();
+  }
+  </script>
+
+</body>
+</html>

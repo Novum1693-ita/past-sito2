@@ -1,0 +1,18 @@
+{
+  "titolo": "Chiesa di San Giacomo Apostolo",
+  "slug": "san-giacomo",
+  "categoria": "Chiese",
+  "tag_extra": "",
+  "descrizione_breve": "Al centro dei Giardini Iblei, una chiesa dal fascino discreto con opere di pregio raramente accessibili al pubblico.",
+  "descrizione": "La Chiesa di San Giacomo Apostolo si trova nel cuore dei Giardini Iblei, uno dei luoghi più amati da residenti e visitatori. Costruita in stile barocco, custodisce opere d'arte di grande interesse storico e artistico, normalmente non accessibili al pubblico. Il progetto P.A.S.T. ne garantisce l'apertura regolare.",
+  "orari": "Tutti i giorni 10:30–16:30 — Sabato chiuso",
+  "prezzo": "€ 2,00",
+  "prezzo_ridotto": "€ 1,00",
+  "indirizzo": "Giardini Iblei, Ragusa Ibla",
+  "lat": "36.92650",
+  "lng": "14.74320",
+  "link_regiondo": "https://www.regiondo.it",
+  "colore_principale": "#912b1f",
+  "colore_secondario": "#d6d8ca",
+  "immagine": "/img/i luoghi/san-giacomo.png"
+}

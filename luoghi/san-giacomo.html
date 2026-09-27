@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Home — P.A.S.T.</title>
-  <meta name="description" content="P.A.S.T. — Piano Aperture Strategiche Turistivhe. Piano di valorizzazione culturale di Ragusa." />
-  <link rel="icon" href="img/logo.jpeg" type="image/jpeg" />
+  <title id="page-title">Luogo — P.A.S.T.</title>
+  <meta name="description" content="P.A.S.T. — valorizzazione culturale di Ragusa." />
+  <link rel="icon" href="../img/logo.jpeg" type="image/jpeg" />
   <link rel="stylesheet" href="../css/style.css" />
+  <style id="luogo-colors"></style>
 </head>
 <body>
   <nav class="navbar">
@@ -17,9 +18,9 @@
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links">
-      <li><a href="../index.html" class="active">Home</a></li>
+      <li><a href="../index.html">Home</a></li>
       <li class="nav-dropdown">
-        <a href="../I-luoghi.html">I Luoghi <span class="dropdown-arrow">▾</span></a>
+        <a href="../i-luoghi.html">I Luoghi <span class="dropdown-arrow">▾</span></a>
         <div class="dropdown-menu">
           <a href="../luoghi/san-giacomo.html">Chiesa di San Giacomo Apostolo</a>
           <a href="../luoghi/maddalena.html">Chiesa S. Maria Maddalena</a>
@@ -31,75 +32,52 @@
           <a href="../luoghi/scale.html">Chiesa S. Maria delle Scale</a>
           <a href="../luoghi/museo-cattedrale.html">Museo della Cattedrale</a>
           <a href="../luoghi/cattedrale.html">Cattedrale S. Giovanni Battista</a>
+          <a href="../mappa.html">📍 Mappa interattiva</a>
         </div>
       </li>
-      <li><a href="../Le-Card.html">Vitruvio Card</a></li>
-      <li><a href="../eventi.html">Eventi </a></li>
+      <li><a href="../le-card.html">Vitruvio Card</a></li>
+      <li><a href="../eventi.html">Eventi</a></li>
       <li><a href="../notizie.html">Notizie</a></li>
       <li><a href="../contatti.html">Contatti</a></li>
       <li class="lang-switch">
-        <a href="../index.html" class="lang-btn active">IT</a>
+        <a href="../index.html" class="lang-btn">IT</a>
         <span class="lang-sep">·</span>
-        <a href="../en/index.html" class="lang-btn ">EN</a>
+        <a href="../en/index.html" class="lang-btn">EN</a>
       </li>
     </ul>
-  </nav>  <div class="ticker-bar">
+  </nav>
+  <div class="ticker-bar">
     <div class="ticker-label"><span class="ticker-dot"></span>Ultima ora</div>
     <div class="ticker-window"><div class="ticker-track" id="ticker-track"></div></div>
   </div>
-  <div class="luogo-hero" style="background-image: url('../img/I luoghi/san-giacomo.png')">
+
+  <!-- HERO dinamico -->
+  <div class="luogo-hero" id="luogo-hero">
     <div class="luogo-hero-overlay"></div>
     <div class="luogo-hero-content">
-      <span class="badge-categoria">Chiesa</span>
-      <h1>Chiesa di San Giacomo Apostolo</h1>
+      <span class="badge-categoria" id="luogo-badge">—</span>
+      <h1 id="luogo-titolo">Caricamento...</h1>
     </div>
   </div>
+
   <div class="luogo-layout">
-    <div class="luogo-descrizione">
-      <h1>LA CHIESA</h1>
-      <p>La Chiesa di San giacomo sorge con molta probabilità nel XIII secolo per iniziativa degli spagnoli presenti a Ragusa. Nel XVI secolo viene ricostruita in stile manierista e queste strutture sono tutt’ora visibili nella navata centrale che ha resistito al terremoto del 1693. Nello stesso periodo vi si stabilì una confraternita intitolata a San Giacomo con lo scopo del mutuo soccorso tra i confrati e la Beneficenza nel provato bisogno; nel 1700 ottenne il titolo di arciconfraternita. Nei primi anni dopo il terremoto è stata ristrutturata con l’aggiunta di un secondo ordine e di un soffitto ligneo dipinto, con probabilità ad opera del pittore Chiaramontano Simone Ventura, che nel 1757 lo dipinse anche nella cappella maggiore con la raffigurazione di una finta cupola. </p>
-  <h1>VISITA </h1>   
-<h2>Gli Orari</h2>
-<h3>Fruizione Turistica Culturale </h3>
-<p>Da Marzo a Giugno e da Settembre a Ottobre - Dalle 10:30 alle 17:30 - Venerdì Chiuso</p>
-<p>Luglio, Agosto e Novembre - Dalle 10:30 alle 16:30 - Sabato Chiuso </p>
-<h2>La Preghiera e le Celebrazioni Eucaristiche</h2>
-<p> La preghiera è sempre possibile e gratuitamente chiedendo al custode di turno la possibilità di farlo. Ricordando che la preghiera si fa in silenzio e senza l'utilizzo di dispositivi elettronici </p>
-<p>Da Marzo a Giugno e da Settembre a Novembre <br> 
-Santa messa: ogni venerdì alle 17:30</p>
-<h3>LE TARIFFE</h3>
-<h2>Biglietto intero - 2.00€ </h2>
-<h2>Biglietto ridotto - 1.00€ </h2>
-<p> 🧩Residenti nel Comune di Ragusa<br>
-🧩minori dai 10 ai 18 anni non compiuti<br>
-🧩gruppi superiori alle 15 persone </p>
-<h2>Biglietto gratuito</h2>
-<p>🧩 minori di 10 anni<br>
-🧩 Membri di ordini o congregazioni religiose e clero diocesano<br>
-🧩 Accompagnatori e Insegnanti (1 ogni 15 membri)<br>
-🧩 Guide Turistiche<br>
-🧩 Disabili, e qualira ne avessero necessità, ai loro accompagnatori (massimo 2)<br>
-🧩 Over 80 anni
-</p>
-      <a href="../I-luoghi.html" class="back-link">← Torna a tutti i luoghi</a>
+    <div class="luogo-descrizione" id="luogo-descrizione">
+      <!-- contenuto caricato da JS -->
     </div>
     <div class="luogo-sidebar">
       <div class="sidebar-card">
         <div class="sidebar-card-header">
-          <div class="prezzo">€ 2,00</div>
+          <div class="prezzo" id="luogo-prezzo">—</div>
         </div>
-        <div class="sidebar-card-body">
-          <div class="info-row"><div class="etichetta">Orari</div><div class="valore">Tutti i giorni 10:30–16:30 <br> Sabato Chiuso</div></div>
-          <div class="info-row"><div class="etichetta">Indirizzo</div><div class="valore">Giardini Iblei, Ragusa </div></div>
-        <!-- ↓ Sostituisci # con il link reale su Regiondo o Eventbrite -->
-<booking-widget widget-id="ede572b4-eddd-4eca-bb2b-daef7f3e6acb"></booking-widget><script type="text/javascript" src="https://widgets.regiondo.net/booking/v1/booking-widget.min.js"></script>
-        <p class="nota-prenotazione">Per gruppi: <a href="../prenota.html">richiedi visita guidata</a></p>
+        <div class="sidebar-card-body" id="luogo-info">
+          <!-- info caricate da JS -->
         </div>
+        <div id="luogo-booking"></div>
       </div>
     </div>
-  
   </div>
-   <div class="sponsor-bar">
+
+  <div class="sponsor-bar">
     <div class="sponsor-bar-label">In collaborazione con:</div>
     <div class="sponsor-track">
       <a href="https://www.diocesidiragusa.it" target="_blank" rel="noopener" class="sponsor-item">
@@ -108,22 +86,24 @@ Santa messa: ogni venerdì alle 17:30</p>
       <a href="https://www.comune.ragusa.gov.it" target="_blank" rel="noopener" class="sponsor-item">
         <img src="../img/loghi/logo-comune.png" alt="Comune di Ragusa" />
       </a>
-      <a href=https://www.facebook.com/profile.php?id=100091998016746"" target="_blank" rel="noopener" class="sponsor-item">
+      <a href="https://www.facebook.com/profile.php?id=100091998016746" target="_blank" rel="noopener" class="sponsor-item">
         <img src="../img/loghi/logo-novum.png" alt="Novum 1693 Cantiere Culturale" />
       </a>
     </div>
   </div>
+
   <footer>
     <a href="../index.html" class="footer-logo">
       <img src="../img/logo.png" alt="P.A.S.T." />
     </a>
-    <div class="footer-info">
+    <div class="footer-info" id="footer-info">
       Ragusa &nbsp;·&nbsp;
       <a href="mailto:novum1693@gmail.com">novum1693@gmail.com</a> &nbsp;·&nbsp;
       <a href="../privacy.html">Privacy policy</a>
     </div>
-    <div class="footer-copy">© 2026 GDT</div>
+    <div class="footer-copy" id="footer-copy">© 2026 GDT</div>
   </footer>
+
   <div class="cookie-banner" id="cookie-banner">
     <div class="cookie-testo">Utilizziamo solo cookie tecnici necessari al funzionamento del sito. Leggi la nostra <a href="../privacy.html">Privacy Policy</a>.</div>
     <div class="cookie-azioni">
@@ -131,8 +111,80 @@ Santa messa: ogni venerdì alle 17:30</p>
       <button class="btn-cookie-accetta" id="cookie-accetta">Accetto</button>
     </div>
   </div>
+
   <script src="../js/data-eventi.js"></script>
   <script src="../js/data-notizie.js"></script>
   <script src="../js/main.js"></script>
+  <script>
+  // Carica dati luogo dal JSON corrispondente
+  (async function() {
+    var slug = window.location.pathname.split('/').pop().replace('.html','');
+    var base = '../';
+    var dati = null;
+    try {
+      var r = await fetch(base + '_luoghi/' + slug + '.json');
+      if (r.ok) dati = await r.json();
+    } catch(e) {}
+
+    if (!dati) { document.getElementById('luogo-titolo').textContent = 'Luogo non trovato'; return; }
+
+    // Titolo pagina
+    document.getElementById('page-title').textContent = (dati.titolo || 'Luogo') + ' — P.A.S.T.';
+    document.getElementById('luogo-titolo').textContent = dati.titolo || '';
+    document.getElementById('luogo-badge').textContent = dati.categoria || '';
+
+    // Hero immagine
+    if (dati.immagine) {
+      document.getElementById('luogo-hero').style.backgroundImage = "url('" + base + dati.immagine.replace(/^\//,'') + "')";
+    }
+
+    // Colori custom
+    if (dati.colore_principale || dati.colore_secondario) {
+      var c1 = dati.colore_principale || '#E19f42';
+      var c2 = dati.colore_secondario || '#965801';
+      document.getElementById('luogo-colors').textContent =
+        ':root { --luogo-primario: ' + c1 + '; --luogo-secondario: ' + c2 + '; }' +
+        '.badge-categoria, .btn-primary { background: ' + c1 + '; }' +
+        '.sidebar-card-header { background: ' + c1 + '; }' +
+        '.luogo-hero-overlay { background: linear-gradient(to bottom, ' + c2 + '33, ' + c2 + 'cc); }';
+    }
+
+    // Descrizione (supporta markdown base)
+    var desc = dati.descrizione || '';
+    // Converti markdown semplice in HTML
+    desc = desc.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+    desc = desc.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+    desc = desc.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+    desc = desc.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    desc = desc.replace(/\*(.+?)\*/g, '<em>$1</em>');
+    desc = desc.replace(/\n\n/g, '</p><p>');
+    desc = '<p>' + desc + '</p>';
+
+    document.getElementById('luogo-descrizione').innerHTML =
+      desc +
+      '<a href="../i-luoghi.html" class="back-link">← Torna a tutti i luoghi</a>';
+
+    // Prezzo sidebar
+    document.getElementById('luogo-prezzo').textContent = dati.prezzo || 'Ingresso libero';
+
+    // Info sidebar
+    var info = '';
+    if (dati.orari) info += '<div class="info-row"><div class="etichetta">Orari</div><div class="valore">' + dati.orari + '</div></div>';
+    if (dati.prezzo_ridotto) info += '<div class="info-row"><div class="etichetta">Ridotto</div><div class="valore">' + dati.prezzo_ridotto + '</div></div>';
+    if (dati.indirizzo) info += '<div class="info-row"><div class="etichetta">Indirizzo</div><div class="valore">' + dati.indirizzo + '</div></div>';
+    info += '<div class="info-row"><div class="etichetta">Progetto</div><div class="valore">P.A.S.T.</div></div>';
+    document.getElementById('luogo-info').innerHTML = info;
+
+    // Widget Regiondo
+    if (dati.link_regiondo && dati.link_regiondo.includes('regiondo')) {
+      var wid = dati.link_regiondo.match(/([a-f0-9\-]{36})/);
+      if (wid) {
+        document.getElementById('luogo-booking').innerHTML =
+          '<booking-widget widget-id="' + wid[0] + '"></booking-widget>' +
+          '<script type="text/javascript" src="https://widgets.regiondo.net/booking/v1/booking-widget.min.js"><\/script>';
+      }
+    }
+  })();
+  </script>
 </body>
 </html>

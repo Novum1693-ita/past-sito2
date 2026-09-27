@@ -1,0 +1,18 @@
+{
+  "titolo": "Chiesa di Santa Maria dell'Itria",
+  "slug": "itria",
+  "categoria": "Chiese",
+  "tag_extra": "",
+  "descrizione_breve": "Nota per il suo campanile maiolicato, è uno dei simboli visivi più riconoscibili di Ragusa Ibla.",
+  "descrizione": "La Chiesa di Santa Maria dell'Itria è famosa in tutto il mondo per il suo caratteristico campanile rivestito di maioliche policrome — uno dei simboli più fotografati e riconoscibili di Ragusa Ibla. L'interno conserva opere di devozione mariana di grande interesse storico e artistico, in un ambiente raccolto e spiritualmente intenso.",
+  "orari": "Tutti i giorni 10:30–16:30 — Giovedì chiuso",
+  "prezzo": "€ 2,00",
+  "prezzo_ridotto": "€ 1,00",
+  "indirizzo": "Via dell'Itria, Ragusa Ibla",
+  "lat": "36.92680",
+  "lng": "14.74460",
+  "link_regiondo": "https://www.regiondo.it",
+  "colore_principale": "#c97a80",
+  "colore_secondario": "#ff686d",
+  "immagine": "/img/i luoghi/itria.png"
+}

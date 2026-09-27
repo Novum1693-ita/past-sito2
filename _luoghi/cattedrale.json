@@ -1,0 +1,18 @@
+{
+  "titolo": "Cattedrale San Giovanni Battista",
+  "slug": "cattedrale",
+  "categoria": "Chiese",
+  "tag_extra": "Campanili",
+  "descrizione_breve": "La Cattedrale della Diocesi di Ragusa, con la sua imponente facciata barocca e i preziosi interni.",
+  "descrizione": "La Cattedrale di San Giovanni Battista è la chiesa madre della città di Ragusa e sede della diocesi. Ricostruita dopo il terremoto del 1693 nello stile barocco che caratterizza tutto il centro storico, conserva opere d'arte di grande valore e un campanile che domina il panorama cittadino. L'ingresso è gratuito.",
+  "orari": "Tutti i giorni 8:00–19:00",
+  "prezzo": "Gratuito",
+  "prezzo_ridotto": "",
+  "indirizzo": "Piazza San Giovanni, Ragusa",
+  "lat": "36.92370",
+  "lng": "14.74650",
+  "link_regiondo": "",
+  "colore_principale": "#bb1424",
+  "colore_secondario": "#e8e4d7",
+  "immagine": "/img/i luoghi/cattedrale.png"
+}

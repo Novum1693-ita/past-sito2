@@ -1,0 +1,18 @@
+{
+  "titolo": "Museo della Cattedrale",
+  "slug": "museo-cattedrale",
+  "categoria": "Musei",
+  "tag_extra": "",
+  "descrizione_breve": "Collezione di arte sacra e oggetti liturgici che ripercorrono la storia della diocesi ragusana.",
+  "descrizione": "Il Museo della Cattedrale conserva una preziosa collezione di arte sacra, paramenti liturgici, argenterie e dipinti che documentano secoli di vita religiosa della diocesi di Ragusa. Un percorso che accompagna il visitatore dalla fondazione della diocesi fino ai giorni nostri, tra capolavori del barocco siciliano e testimonianze di fede popolare.",
+  "orari": "Mar–Sab 10:00–17:00 — Domenica chiuso",
+  "prezzo": "€ 3,00",
+  "prezzo_ridotto": "€ 2,00",
+  "indirizzo": "Piazza San Giovanni, Ragusa",
+  "lat": "36.92390",
+  "lng": "14.74620",
+  "link_regiondo": "https://www.regiondo.it",
+  "colore_principale": "#444444",
+  "colore_secondario": "#c0c2b4",
+  "immagine": "/img/i luoghi/museo-cattedrale.png"
+}

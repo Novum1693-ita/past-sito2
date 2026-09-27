@@ -1,0 +1,18 @@
+{
+  "titolo": "Museo del Duomo",
+  "slug": "museo-del-duomo",
+  "categoria": "Musei",
+  "tag_extra": "",
+  "descrizione_breve": "Un museo che racchiude la storia della città e del Duomo di Ragusa pre e post terremoto del 1693.",
+  "descrizione": "Il Museo del Duomo raccoglie reperti, documenti e opere d'arte che testimoniano la storia di Ragusa prima e dopo il devastante terremoto del 1693. Un percorso unico che porta il visitatore a scoprire com'era la città prima della ricostruzione barocca e come è rinata dopo.",
+  "orari": "Tutti i giorni 10:00–13:00 / 16:00–19:00",
+  "prezzo": "€ 3,00",
+  "prezzo_ridotto": "€ 2,00",
+  "indirizzo": "Piazza Duomo, Ragusa Ibla",
+  "lat": "36.92560",
+  "lng": "14.74510",
+  "link_regiondo": "https://www.regiondo.it",
+  "colore_principale": "#003550",
+  "colore_secondario": "#457289",
+  "immagine": "/img/i luoghi/museo-duomo.png"
+}
