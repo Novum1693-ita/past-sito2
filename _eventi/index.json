@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "titolo": "Novum prova",
+    "sottotitolo": "scrittura prova evento",
+    "giorno": "23",
+    "mese": "Ott",
+    "categoria": "incontro",
+    "anteprima": "prova evento",
+    "badge1": "badge-incontro",
+    "badge2": "badge-gratuito",
+    "immagine": "/img/uploads/whatsapp-image-2026-08-07-at-15.11.44.jpeg",
+    "url": "eventi/novum-prova.html"
+  }
+]
