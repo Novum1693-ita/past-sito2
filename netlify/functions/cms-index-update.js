@@ -17,7 +17,6 @@ const REPO  = process.env.GITHUB_REPO;
 const TOKEN = process.env.GITHUB_TOKEN;
 const BRANCH = 'main';
 
-// Fa una richiesta HTTPS a GitHub API
 function ghRequest(method, path, body) {
   return new Promise((resolve, reject) => {
     const data = body ? JSON.stringify(body) : null;
@@ -47,7 +46,6 @@ function ghRequest(method, path, body) {
   });
 }
 
-// Legge un file dal repo GitHub, restituisce { content, sha }
 async function getFile(filePath) {
   const res = await ghRequest('GET', '/contents/' + filePath + '?ref=' + BRANCH);
   if (res.status === 404) return { content: null, sha: null };
@@ -56,7 +54,6 @@ async function getFile(filePath) {
   return { content, sha: res.data.sha };
 }
 
-// Aggiorna o crea un file nel repo
 async function putFile(filePath, content, sha, message) {
   const body = {
     message,
@@ -71,26 +68,47 @@ async function putFile(filePath, content, sha, message) {
   return res;
 }
 
-// Aggiorna l'index.json per una collezione
+const INDEX_FIELDS = {
+  '_eventi': ['titolo', 'sottotitolo', 'giorno', 'mese', 'categoria', 'anteprima', 'badge1', 'badge2', 'immagine', 'url'],
+  '_notizie': ['titolo', 'anteprima', 'data', 'badge_testo', 'categoria'],
+  '_luoghi': ['titolo', 'slug', 'categoria', 'tag_extra', 'descrizione_breve', 'orari', 'prezzo', 'immagine', 'colore_principale'],
+};
+
 async function aggiornaIndex(folder) {
-  // Legge la lista dei file nella cartella
   const res = await ghRequest('GET', '/contents/' + folder + '?ref=' + BRANCH);
   if (res.status !== 200) return;
-  
-  // Filtra solo i .json escludendo index.json
-  const files = res.data
-    .filter(f => f.name.endsWith('.json') && f.name !== 'index.json')
-    .map(f => f.name)
-    .sort();
 
-  const newContent = JSON.stringify(files, null, 2);
-  
-  // Legge il vecchio index.json
+  const jsonFiles = res.data
+    .filter(f => f.name.endsWith('.json') && f.name !== 'index.json')
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  const fields = INDEX_FIELDS[folder] || [];
+  const oggetti = await Promise.all(jsonFiles.map(async (f) => {
+    try {
+      const { content } = await getFile(folder + '/' + f.name);
+      if (!content) return null;
+      const dati = JSON.parse(content);
+      if (folder === '_eventi' && !dati.url) {
+        dati.url = 'eventi/' + f.name.replace('.json', '.html');
+      }
+      const obj = {};
+      fields.forEach(k => { if (dati[k] !== undefined) obj[k] = dati[k]; });
+      if (folder === '_eventi' && dati.url) obj.url = dati.url;
+      return obj;
+    } catch(e) { return null; }
+  }));
+
+  const items = oggetti.filter(Boolean);
+  const newContent = JSON.stringify(items, null, 2);
+
   const { content: oldContent, sha } = await getFile(folder + '/index.json');
-  
-  // Aggiorna solo se cambiato
-  if (oldContent && JSON.stringify(JSON.parse(oldContent)) === JSON.stringify(files)) {
-    return { folder, unchanged: true };
+
+  if (oldContent) {
+    try {
+      if (JSON.stringify(JSON.parse(oldContent)) === JSON.stringify(items)) {
+        return { folder, unchanged: true };
+      }
+    } catch(e) {}
   }
 
   await putFile(
@@ -99,16 +117,14 @@ async function aggiornaIndex(folder) {
     sha,
     'auto: aggiorna ' + folder + '/index.json [skip ci]'
   );
-  return { folder, files };
+  return { folder, count: items.length };
 }
 
 exports.handler = async (event) => {
-  // Accetta solo POST con payload Netlify CMS
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  // Verifica variabili d'ambiente
   if (!TOKEN || !OWNER || !REPO) {
     console.error('Mancano le variabili GITHUB_TOKEN, GITHUB_OWNER o GITHUB_REPO');
     return { statusCode: 500, body: 'Configurazione mancante' };
