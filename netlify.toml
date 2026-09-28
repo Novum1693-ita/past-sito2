@@ -11,3 +11,10 @@
   from = "/admin"
   to = "/admin/index.html"
   status = 200
+
+# Pagine luogo dinamiche: ogni nuovo luogo aggiunto dal CMS
+# viene servito dalla pagina template universale
+[[redirects]]
+  from = "/luoghi/:slug"
+  to = "/luoghi/_luogo.html"
+  status = 200

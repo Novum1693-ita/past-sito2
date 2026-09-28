@@ -1,0 +1,22 @@
+{
+  "partner": [
+    {
+      "nome": "Diocesi di Ragusa",
+      "url": "https://www.diocesidiragusa.it",
+      "logo": "img/loghi/logo-diocesi.png",
+      "colori_originali": true
+    },
+    {
+      "nome": "Comune di Ragusa",
+      "url": "https://www.comune.ragusa.gov.it",
+      "logo": "img/loghi/logo-comune.png",
+      "colori_originali": true
+    },
+    {
+      "nome": "Novum 1693 Cantiere Culturale",
+      "url": "https://www.facebook.com/profile.php?id=100091998016746",
+      "logo": "img/loghi/logo-novum.png",
+      "colori_originali": true
+    }
+  ]
+}

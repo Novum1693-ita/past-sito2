@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title id="page-title">Luogo — P.A.S.T.</title>
-  <meta name="description" content="P.A.S.T. — valorizzazione culturale di Ragusa." />
+  <meta name="description" id="page-desc" content="P.A.S.T. — valorizzazione culturale di Ragusa." />
   <link rel="icon" href="../img/logo.jpeg" type="image/jpeg" />
   <link rel="stylesheet" href="../css/style.css" />
   <style id="luogo-colors"></style>
@@ -18,7 +18,7 @@
     <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
-        <ul class="nav-links">
+    <ul class="nav-links">
       <li><a href="../index.html">Home</a></li>
       <li class="nav-dropdown">
         <a href="../i-luoghi.html">I Luoghi <span class="dropdown-arrow">▾</span></a>
@@ -96,26 +96,38 @@
   <script src="../js/data-notizie.js"></script>
   <script src="../js/main.js"></script>
   <script>
-  // Carica dati luogo dal JSON corrispondente
+  // Legge lo slug dall'URL: /luoghi/nome-luogo → "nome-luogo"
   (async function() {
-    var slug = window.location.pathname.split('/').pop().replace('.html','');
+    var parts = window.location.pathname.split('/').filter(Boolean);
+    var slug = parts[parts.length - 1].replace('.html', '');
     var base = '../';
+
     var dati = null;
     try {
       var r = await fetch(base + '_luoghi/' + slug + '.json');
       if (r.ok) dati = await r.json();
     } catch(e) {}
 
-    if (!dati) { document.getElementById('luogo-titolo').textContent = 'Luogo non trovato'; return; }
+    if (!dati) {
+      document.getElementById('luogo-titolo').textContent = 'Luogo non trovato';
+      document.title = 'Luogo non trovato — P.A.S.T.';
+      return;
+    }
 
-    // Titolo pagina
+    // Titolo e meta
     document.getElementById('page-title').textContent = (dati.titolo || 'Luogo') + ' — P.A.S.T.';
+    document.title = (dati.titolo || 'Luogo') + ' — P.A.S.T.';
+    if (dati.descrizione_breve) {
+      document.getElementById('page-desc').setAttribute('content', dati.descrizione_breve);
+    }
+
     document.getElementById('luogo-titolo').textContent = dati.titolo || '';
     document.getElementById('luogo-badge').textContent = dati.categoria || '';
 
-    // Hero immagine
-    if (dati.immagine) {
-      document.getElementById('luogo-hero').style.backgroundImage = "url('" + base + dati.immagine.replace(/^\//,'') + "')";
+    // Hero immagine (immagine = hero banner)
+    var heroImg = dati.immagine || '';
+    if (heroImg) {
+      document.getElementById('luogo-hero').style.backgroundImage = "url('" + base + heroImg.replace(/^\//,'') + "')";
     }
 
     // Colori custom
@@ -129,9 +141,8 @@
         '.luogo-hero-overlay { background: linear-gradient(to bottom, ' + c2 + '33, ' + c2 + 'cc); }';
     }
 
-    // Descrizione (supporta markdown base)
+    // Descrizione (markdown semplice → HTML)
     var desc = dati.descrizione || '';
-    // Converti markdown semplice in HTML
     desc = desc.replace(/^### (.+)$/gm, '<h3>$1</h3>');
     desc = desc.replace(/^## (.+)$/gm, '<h2>$1</h2>');
     desc = desc.replace(/^# (.+)$/gm, '<h1>$1</h1>');
@@ -140,9 +151,13 @@
     desc = desc.replace(/\n\n/g, '</p><p>');
     desc = '<p>' + desc + '</p>';
 
+    // Immagine corpo (foto nel testo)
+    if (dati.immagine_corpo) {
+      desc += '<img src="' + base + dati.immagine_corpo.replace(/^\//,'') + '" alt="' + (dati.titolo||'') + '" style="width:100%;max-width:600px;border-radius:8px;margin:1.5rem 0;" />';
+    }
+
     document.getElementById('luogo-descrizione').innerHTML =
-      desc +
-      '<a href="../i-luoghi.html" class="back-link">← Torna a tutti i luoghi</a>';
+      desc + '<a href="../i-luoghi.html" class="back-link">← Torna a tutti i luoghi</a>';
 
     // Prezzo sidebar
     document.getElementById('luogo-prezzo').textContent = dati.prezzo || 'Ingresso libero';
@@ -155,7 +170,7 @@
     info += '<div class="info-row"><div class="etichetta">Progetto</div><div class="valore">P.A.S.T.</div></div>';
     document.getElementById('luogo-info').innerHTML = info;
 
-    // Widget Regiondo (supporta più widget)
+    // Widget Regiondo
     var widgets = dati.widgets_regiondo || [];
     if (widgets.length > 0) {
       var html = '';
@@ -164,9 +179,7 @@
         if (w.etichetta) html += '<h4 style="margin:1.5rem 0 0.5rem;font-family:var(--font-sans);font-size:13px;text-transform:uppercase;letter-spacing:.08em;opacity:.6">' + w.etichetta + '</h4>';
         html += '<booking-widget widget-id="' + w.id + '"></booking-widget>';
       });
-      if (html) {
-        document.getElementById('luogo-booking').innerHTML = html;
-      }
+      if (html) document.getElementById('luogo-booking').innerHTML = html;
     }
   })();
   </script>

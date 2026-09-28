@@ -21,18 +21,7 @@
       <li><a href="../index.html">Home</a></li>
       <li class="nav-dropdown">
         <a href="../i-luoghi.html">I Luoghi <span class="dropdown-arrow">▾</span></a>
-        <div class="dropdown-menu">
-          <a href="../luoghi/san-giacomo.html">Chiesa di San Giacomo Apostolo</a>
-          <a href="../luoghi/maddalena.html">Chiesa S. Maria Maddalena</a>
-          <a href="../luoghi/obsculta.html">Museo Benedettino Obsculta</a>
-          <a href="../luoghi/san-giorgio.html">Chiesa Madre San Giorgio</a>
-          <a href="../luoghi/museo-del-duomo.html">Museo del Duomo</a>
-          <a href="../luoghi/purgatorio.html">Chiesa Anime Sante Purgatorio</a>
-          <a href="../luoghi/itria.html">Chiesa S. Maria dell'Itria</a>
-          <a href="../luoghi/scale.html">Chiesa S. Maria delle Scale</a>
-          <a href="../luoghi/museo-cattedrale.html">Museo della Cattedrale</a>
-          <a href="../luoghi/cattedrale.html">Cattedrale S. Giovanni Battista</a>
-        </div>
+        <div class="dropdown-menu" id="luoghi-dropdown"></div>
       </li>
       <li><a href="../le-card.html">Vitruvio Card</a></li>
       <li><a href="../mappa.html">Mappa</a></li>
@@ -86,19 +75,9 @@
     </div>
   </div>
 
-  <div class="sponsor-bar">
+  <div class="sponsor-bar" id="sponsor-bar">
     <div class="sponsor-bar-label">In collaborazione con:</div>
-    <div class="sponsor-track">
-      <a href="https://www.diocesidiragusa.it" target="_blank" rel="noopener" class="sponsor-item">
-        <img src="../img/loghi/logo-diocesi.png" alt="Diocesi di Ragusa" />
-      </a>
-      <a href="https://www.comune.ragusa.gov.it" target="_blank" rel="noopener" class="sponsor-item">
-        <img src="../img/loghi/logo-comune.png" alt="Comune di Ragusa" />
-      </a>
-      <a href="https://www.facebook.com/profile.php?id=100091998016746" target="_blank" rel="noopener" class="sponsor-item">
-        <img src="../img/loghi/logo-novum.png" alt="Novum 1693 Cantiere Culturale" />
-      </a>
-    </div>
+    <div class="sponsor-track" id="sponsor-track"></div>
   </div>
   <footer>
     <a href="../index.html" class="footer-logo">
@@ -158,10 +137,11 @@
       if (d.orario)        document.getElementById('evento-ora-span').textContent  = '🕐 ' + d.orario;
       if (d.luogo)         document.getElementById('evento-luogo-span').textContent = '📍 ' + d.luogo;
 
-      // Immagine hero
-      if (d.immagine) {
+      // Immagine hero (usa immagine_hero se disponibile, altrimenti immagine)
+      var heroImg = d.immagine_hero || d.immagine;
+      if (heroImg) {
         var hero = document.getElementById('evento-hero');
-        hero.style.backgroundImage = 'url(\'' + base + d.immagine.replace(/^\//,'') + '\')';
+        hero.style.backgroundImage = 'url(\'' + base + heroImg.replace(/^\//,'') + '\')';
         hero.style.backgroundSize = 'cover';
         hero.style.backgroundPosition = 'center';
       }
@@ -178,8 +158,13 @@
         document.getElementById('evento-descrizione').innerHTML = '<p>' + html + '</p>';
       }
 
-      // Immagine corpo
-      if (d.immagine) {
+      // Immagine corpo (usa immagine_corpo se disponibile, altrimenti immagine solo se non usata come hero)
+      var corpoImg = d.immagine_corpo || (!d.immagine_hero ? null : null);
+      if (corpoImg) {
+        document.getElementById('evento-immagine').innerHTML =
+          '<img src="' + base + corpoImg.replace(/^\//,'') + '" alt="' + (d.titolo||'') + '" style="width:100%;max-width:500px;height:auto;display:block;margin:1.5rem auto;border:1px solid rgba(48,122,143,0.3);" />';
+      } else if (d.immagine && !d.immagine_hero) {
+        // Retrocompatibilità: se c'è solo immagine (vecchio formato), usala anche nel corpo
         document.getElementById('evento-immagine').innerHTML =
           '<img src="' + base + d.immagine.replace(/^\//,'') + '" alt="' + (d.titolo||'') + '" style="width:100%;max-width:500px;height:auto;display:block;margin:1.5rem auto;border:1px solid rgba(48,122,143,0.3);" />';
       }

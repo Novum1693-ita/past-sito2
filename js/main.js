@@ -87,6 +87,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ── Avvia caricamenti dinamici ── */
   caricaTicker();
+  caricaPartner();
+  caricaGenerale();
+  caricaNavbar();
   if (document.getElementById('eventi-home-grid')) caricaEventiHome();
   if (document.getElementById('eventi-grid'))      caricaEventiPagina();
   if (document.getElementById('notizie-grid'))     caricaNotizie();
@@ -114,12 +117,17 @@ async function caricaTicker() {
   var base = basePath();
   var testi = [];
 
+  // Testi fissi dal CMS (_sito/ticker.json)
+  var tickerCMS = await fetchJSON(base + '_sito/ticker.json');
+  if (tickerCMS && tickerCMS.testi && tickerCMS.testi.length > 0) {
+    tickerCMS.testi.forEach(function(t){ if (t) testi.push(t); });
+  }
+
+  // Notizie automatiche
   var idx = await fetchJSON(base + '_notizie/index.json');
   if (idx && idx.length > 0) {
-    // index.json può essere array di oggetti (nuovo) o array di stringhe (vecchio)
     var campione = idx.slice(0, 5);
     if (typeof campione[0] === 'string') {
-      // vecchio formato: fetch singoli file in parallelo
       var results = await Promise.all(campione.map(function(f){ return fetchJSON(base + '_notizie/' + f); }));
       results.forEach(function(n){ if (n && n.titolo) testi.push(n.titolo); });
     } else {
@@ -133,11 +141,49 @@ async function caricaTicker() {
 
   var html = testi.map(function (t) { return '<span class="ticker-item">' + t + '</span>'; }).join('');
   track.innerHTML = html + html;
-  // Calcola la durata in base alla larghezza del contenuto
   var larghezza = track.scrollWidth / 2;
-  var durata = Math.max(20, larghezza / 80); // ~80px/sec
+  var durata = Math.max(20, larghezza / 80);
   track.style.animationDuration = durata + 's';
   track.classList.add('running');
+}
+
+/* ──────────────────────────────────────────
+   IMPOSTAZIONI GENERALI
+────────────────────────────────────────── */
+async function caricaGenerale() {
+  var base = basePath();
+  var d = await fetchJSON(base + '_sito/generale.json');
+  if (!d) return;
+
+  // Nascondi pulsante EN se disabilitato
+  if (d.mostra_en === false) {
+    document.querySelectorAll('.lang-switch').forEach(function(el){ el.style.display = 'none'; });
+  }
+
+  // Aggiorna footer con dati generali (solo se non già aggiornato da altro script)
+  var fi = document.getElementById('footer-info');
+  if (fi && d.indirizzo && d.email) {
+    fi.innerHTML = d.indirizzo + ' &nbsp;·&nbsp; <a href="mailto:' + d.email + '">' + d.email + '</a> &nbsp;·&nbsp; <a href="' + base + 'privacy.html">Privacy policy</a>';
+  }
+}
+
+/* ──────────────────────────────────────────
+   PARTNER / SPONSOR BAR
+────────────────────────────────────────── */
+async function caricaPartner() {
+  var track = document.getElementById('sponsor-track');
+  if (!track) return;
+  var base = basePath();
+  var dati = await fetchJSON(base + '_sito/partner.json');
+  if (!dati || !dati.partner || dati.partner.length === 0) return;
+
+  var html = dati.partner.map(function(p) {
+    var imgStyle = p.colori_originali === false ? 'filter:brightness(0) invert(1);' : '';
+    var link = p.url ? ('<a href="' + p.url + '" target="_blank" rel="noopener" class="sponsor-item">') : '<span class="sponsor-item">';
+    var chiudi = p.url ? '</a>' : '</span>';
+    return link + '<img src="' + base + p.logo.replace(/^\//,'') + '" alt="' + (p.nome||'') + '" style="' + imgStyle + '" />' + chiudi;
+  }).join('');
+  track.innerHTML = html;
 }
 
 /* ──────────────────────────────────────────
@@ -234,6 +280,25 @@ async function caricaNotizie() {
     notizie = results.filter(Boolean);
   }
   grid.innerHTML = notizie.map(renderCardNotizia).join('');
+}
+
+/* ──────────────────────────────────────────
+   NAVBAR DINAMICA (dropdown I Luoghi)
+────────────────────────────────────────── */
+async function caricaNavbar() {
+  var menu = document.getElementById('luoghi-dropdown');
+  if (!menu) return;
+  var base = basePath();
+  var idx = await fetchJSON(base + '_luoghi/index.json');
+  if (!idx || idx.length === 0) return;
+  var luoghi = (typeof idx[0] === 'object') ? idx : [];
+  if (luoghi.length === 0) {
+    var results = await Promise.all(idx.map(function(f){ return fetchJSON(base + '_luoghi/' + f); }));
+    luoghi = results.filter(Boolean);
+  }
+  menu.innerHTML = luoghi.map(function(l) {
+    return '<a href="' + base + 'luoghi/' + (l.slug || '') + '.html">' + (l.titolo || l.slug) + '</a>';
+  }).join('');
 }
 
 /* ──────────────────────────────────────────
