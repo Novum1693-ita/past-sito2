@@ -1,25 +1,5 @@
 [
   {
-    "titolo": "ciao",
-    "sottotitolo": "ciao",
-    "giorno": "ciao",
-    "mese": "ciao",
-    "categoria": "apertura",
-    "anteprima": "ciao ciao",
-    "badge1": "badge-mostra",
-    "badge2": null,
-    "url": "eventi/ciao.html"
-  },
-  {
-    "titolo": "prova",
-    "sottotitolo": "prova",
-    "giorno": "prova",
-    "mese": "prova",
-    "categoria": "apertura",
-    "anteprima": "prova",
-    "url": "eventi/map-sottotitolo-prova-giorno-prova-mese-prova-data_completa-prova-prezzo-prova-luogo-prova-descrizione-provaprova-tipo_prenotazione-regiondo-titolo-prova-categoria-apertura-orario-prova.html"
-  },
-  {
     "titolo": "Ragusa Pre-Terremoto",
     "sottotitolo": "ore 18:00 · Chiese S. Rocco, S. Filippo Neri, Santa Lucia/S. Maria dello Spasimo e S. F. all'Immacolata",
     "giorno": "mercoledì e giovedì",
