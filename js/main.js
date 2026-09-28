@@ -116,9 +116,14 @@ async function caricaTicker() {
 
   var idx = await fetchJSON(base + '_notizie/index.json');
   if (idx && idx.length > 0) {
-    for (var i = 0; i < Math.min(idx.length, 5); i++) {
-      var n = await fetchJSON(base + '_notizie/' + idx[i]);
-      if (n && n.titolo) testi.push(n.titolo);
+    // index.json può essere array di oggetti (nuovo) o array di stringhe (vecchio)
+    var campione = idx.slice(0, 5);
+    if (typeof campione[0] === 'string') {
+      // vecchio formato: fetch singoli file in parallelo
+      var results = await Promise.all(campione.map(function(f){ return fetchJSON(base + '_notizie/' + f); }));
+      results.forEach(function(n){ if (n && n.titolo) testi.push(n.titolo); });
+    } else {
+      campione.forEach(function(n){ if (n && n.titolo) testi.push(n.titolo); });
     }
   }
   if (testi.length === 0 && typeof NOTIZIE_PAST !== 'undefined') {
@@ -142,9 +147,11 @@ async function caricaListaEventi(base) {
   var idx = await fetchJSON(base + '_eventi/index.json');
   if ((!idx || idx.length === 0) && typeof EVENTI_PAST !== 'undefined') return EVENTI_PAST;
   if (!idx || idx.length === 0) return [];
-  var ev = [];
-  for (var i = 0; i < idx.length; i++) { var e = await fetchJSON(base + '_eventi/' + idx[i]); if (e) ev.push(e); }
-  return ev;
+  // Se index.json contiene già oggetti completi, usali direttamente (1 fetch)
+  if (typeof idx[0] === 'object') return idx;
+  // Altrimenti carica in parallelo (vecchio formato con nomi file)
+  var results = await Promise.all(idx.map(function(f){ return fetchJSON(base + '_eventi/' + f); }));
+  return results.filter(Boolean);
 }
 
 function renderCardEvento(ev, base) {
@@ -220,7 +227,12 @@ async function caricaNotizie() {
     return;
   }
   var notizie = [];
-  for (var i = 0; i < idx.length; i++) { var n = await fetchJSON(base + '_notizie/' + idx[i]); if (n) notizie.push(n); }
+  if (typeof idx[0] === 'object') {
+    notizie = idx;
+  } else {
+    var results = await Promise.all(idx.map(function(f){ return fetchJSON(base + '_notizie/' + f); }));
+    notizie = results.filter(Boolean);
+  }
   grid.innerHTML = notizie.map(renderCardNotizia).join('');
 }
 
@@ -234,8 +246,12 @@ async function caricaLuoghi() {
   var idx = await fetchJSON(base + '_luoghi/index.json');
   if (!idx || idx.length === 0) return;
 
-  var luoghi = [];
-  for (var i = 0; i < idx.length; i++) { var l = await fetchJSON(base + '_luoghi/' + idx[i]); if (l) luoghi.push(l); }
+  // index.json contiene già tutti i dati → 1 sola fetch
+  var luoghi = (typeof idx[0] === 'object') ? idx : [];
+  if (luoghi.length === 0) {
+    var results = await Promise.all(idx.map(function(f){ return fetchJSON(base + '_luoghi/' + f); }));
+    luoghi = results.filter(Boolean);
+  }
 
   grid.innerHTML = luoghi.map(function (l) {
     var imgStyle = l.immagine ? 'background-image:url(\'' + base + l.immagine.replace(/^\//,'') + '\');background-size:cover;background-position:center;' : '';

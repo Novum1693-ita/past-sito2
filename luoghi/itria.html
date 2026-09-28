@@ -8,6 +8,7 @@
   <link rel="icon" href="../img/logo.jpeg" type="image/jpeg" />
   <link rel="stylesheet" href="../css/style.css" />
   <style id="luogo-colors"></style>
+  <script type="text/javascript" src="https://widgets.regiondo.net/booking/v1/booking-widget.min.js"></script>
 </head>
 <body>
   <nav class="navbar">
@@ -185,7 +186,6 @@
         html += '<booking-widget widget-id="' + w.id + '"></booking-widget>';
       });
       if (html) {
-        html += '<script type="text/javascript" src="https://widgets.regiondo.net/booking/v1/booking-widget.min.js"><\/script>';
         document.getElementById('luogo-booking').innerHTML = html;
       }
     }
