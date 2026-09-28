@@ -1,36 +1,25 @@
 [
   {
-    "titolo": "Chiesa Madre e Duomo San Giorgio",
-    "slug": "san-giorgio",
-    "categoria": "Unicità",
-    "tag_extra": "Chiese",
-    "descrizione_breve": "Capolavoro del barocco siciliano di Rosario Gagliardi. Scopri la sua sacrestia monumentale e la sua balconata interna",
-    "orari": "Tutti i giorni 10:00–19:00",
+    "titolo": "Cattedrale San Giovanni Battista",
+    "slug": "cattedrale",
+    "categoria": "Chiese",
+    "tag_extra": "Campanili",
+    "descrizione_breve": "La Cattedrale della Diocesi di Ragusa, con la sua imponente facciata barocca e i preziosi interni.",
+    "orari": "Tutti i giorni 8:00–19:00",
     "prezzo": "Gratuito",
-    "immagine": "/img/i luoghi/san-giorgio.png",
-    "colore_principale": "#E19f42"
+    "immagine": "/img/i luoghi/cattedrale.png",
+    "colore_principale": "#bb1424"
   },
   {
-    "titolo": "Museo del Duomo",
-    "slug": "museo-del-duomo",
-    "categoria": "Musei",
-    "tag_extra": "",
-    "descrizione_breve": "Un museo che racchiude la storia della città e del Duomo di Ragusa pre e post terremoto del 1693.",
-    "orari": "Tutti i giorni 10:00–13:00 / 16:00–19:00",
-    "prezzo": "€ 3,00",
-    "immagine": "/img/i luoghi/museo-duomo.png",
-    "colore_principale": "#003550"
-  },
-  {
-    "titolo": "Chiesa di San Giacomo Apostolo",
-    "slug": "san-giacomo",
+    "titolo": "Chiesa di Santa Maria dell'Itria",
+    "slug": "itria",
     "categoria": "Chiese",
     "tag_extra": "",
-    "descrizione_breve": "Al centro dei Giardini Iblei, una chiesa dal fascino discreto con opere di pregio raramente accessibili al pubblico.",
-    "orari": "Tutti i giorni 10:30–16:30 — Sabato chiuso",
+    "descrizione_breve": "Nota per il suo campanile maiolicato, è uno dei simboli visivi più riconoscibili di Ragusa Ibla.",
+    "orari": "Tutti i giorni 10:30–16:30 — Giovedì chiuso",
     "prezzo": "€ 2,00",
-    "immagine": "/img/i luoghi/san-giacomo.png",
-    "colore_principale": "#912b1f"
+    "immagine": "/img/i luoghi/itria.png",
+    "colore_principale": "#c97a80"
   },
   {
     "titolo": "Chiesa di Santa Maria Maddalena",
@@ -44,17 +33,6 @@
     "colore_principale": "#c87830"
   },
   {
-    "titolo": "Museo Benedettino Obsculta",
-    "slug": "obsculta",
-    "categoria": "Musei",
-    "tag_extra": "",
-    "descrizione_breve": "Un museo unico che racchiude il valore della regola di San Benedetto e la storia della fondazione del monastero.",
-    "orari": "Lun–Sab 10:00–13:00 / Lun, Mer, Ven, Sab 16:30–18:30",
-    "prezzo": "€ 4,00",
-    "immagine": "/img/i luoghi/obsculta.png",
-    "colore_principale": "#44331f"
-  },
-  {
     "titolo": "Museo della Cattedrale",
     "slug": "museo-cattedrale",
     "categoria": "Musei",
@@ -66,15 +44,26 @@
     "colore_principale": "#444444"
   },
   {
-    "titolo": "Cattedrale San Giovanni Battista",
-    "slug": "cattedrale",
-    "categoria": "Chiese",
-    "tag_extra": "Campanili",
-    "descrizione_breve": "La Cattedrale della Diocesi di Ragusa, con la sua imponente facciata barocca e i preziosi interni.",
-    "orari": "Tutti i giorni 8:00–19:00",
-    "prezzo": "Gratuito",
-    "immagine": "/img/i luoghi/cattedrale.png",
-    "colore_principale": "#bb1424"
+    "titolo": "Museo del Duomo",
+    "slug": "museo-del-duomo",
+    "categoria": "Musei",
+    "tag_extra": "",
+    "descrizione_breve": "Un museo che racchiude la storia della città e del Duomo di Ragusa pre e post terremoto del 1693.",
+    "orari": "Tutti i giorni 10:00–13:00 / 16:00–19:00",
+    "prezzo": "€ 3,00",
+    "immagine": "/img/i luoghi/museo-duomo.png",
+    "colore_principale": "#003550"
+  },
+  {
+    "titolo": "Museo Benedettino Obsculta",
+    "slug": "obsculta",
+    "categoria": "Musei",
+    "tag_extra": "",
+    "descrizione_breve": "Un museo unico che racchiude il valore della regola di San Benedetto e la storia della fondazione del monastero.",
+    "orari": "Lun–Sab 10:00–13:00 / Lun, Mer, Ven, Sab 16:30–18:30",
+    "prezzo": "€ 4,00",
+    "immagine": "/img/i luoghi/obsculta.png",
+    "colore_principale": "#44331f"
   },
   {
     "titolo": "Chiesa Anime Sante del Purgatorio",
@@ -88,15 +77,26 @@
     "colore_principale": "#4a7a50"
   },
   {
-    "titolo": "Chiesa di Santa Maria dell'Itria",
-    "slug": "itria",
+    "titolo": "Chiesa di San Giacomo Apostolo",
+    "slug": "san-giacomo",
     "categoria": "Chiese",
     "tag_extra": "",
-    "descrizione_breve": "Nota per il suo campanile maiolicato, è uno dei simboli visivi più riconoscibili di Ragusa Ibla.",
-    "orari": "Tutti i giorni 10:30–16:30 — Giovedì chiuso",
+    "descrizione_breve": "Al centro dei Giardini Iblei, una chiesa dal fascino discreto con opere di pregio raramente accessibili al pubblico.",
+    "orari": "Tutti i giorni 10:30–16:30 — Sabato chiuso",
     "prezzo": "€ 2,00",
-    "immagine": "/img/i luoghi/itria.png",
-    "colore_principale": "#c97a80"
+    "immagine": "/img/i luoghi/san-giacomo.png",
+    "colore_principale": "#912b1f"
+  },
+  {
+    "titolo": "Chiesa Madre e Duomo San Giorgio",
+    "slug": "san-giorgio",
+    "categoria": "Unicità",
+    "tag_extra": "Chiese",
+    "descrizione_breve": "Capolavoro del barocco siciliano di Rosario Gagliardi. Scopri la sua sacrestia monumentale e la sua balconata interna",
+    "orari": "Tutti i giorni 10:00–19:00",
+    "prezzo": "Gratuito",
+    "immagine": "/img/i luoghi/san-giorgio.png",
+    "colore_principale": "#E19f42"
   },
   {
     "titolo": "Chiesa di Santa Maria delle Scale",
