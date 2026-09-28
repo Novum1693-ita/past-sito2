@@ -178,10 +178,10 @@ async function caricaPartner() {
   if (!dati || !dati.partner || dati.partner.length === 0) return;
 
   var html = dati.partner.map(function(p) {
-    var imgStyle = p.colori_originali === false ? 'filter:brightness(0) invert(1);' : '';
+    var imgClass = p.colori_originali === false ? 'img-monocromo' : '';
     var link = p.url ? ('<a href="' + p.url + '" target="_blank" rel="noopener" class="sponsor-item">') : '<span class="sponsor-item">';
     var chiudi = p.url ? '</a>' : '</span>';
-    return link + '<img src="' + base + p.logo.replace(/^\//,'') + '" alt="' + (p.nome||'') + '" style="' + imgStyle + '" />' + chiudi;
+    return link + '<img src="' + base + p.logo.replace(/^\//,'') + '" alt="' + (p.nome||'') + '" class="' + imgClass + '" />' + chiudi;
   }).join('');
   track.innerHTML = html;
 }
@@ -203,19 +203,24 @@ async function caricaListaEventi(base) {
 function renderCardEvento(ev, base) {
   var badges = '';
   if (ev.badge && Array.isArray(ev.badge)) {
-    badges = ev.badge.map(function (b) { return '<span class="badge ' + b.classe + '">' + b.testo + '</span>'; }).join('');
+    badges = ev.badge.map(function (b) { return '<span class="badge-tipo ' + b.classe + '">' + b.testo + '</span>'; }).join('');
   } else if (ev.badge1) {
-    badges = '<span class="badge ' + ev.badge1 + '">' + (ev.categoria || '') + '</span>';
+    badges = '<span class="badge-tipo ' + ev.badge1 + '">' + (ev.categoria || '') + '</span>';
   }
   var url = ev.url ? (base + ev.url) : 'eventi.html';
   return '<article class="evento-card" data-categoria="' + (ev.categoria || '') + '">'
-    + '<div class="evento-data"><span class="evento-giorno">' + (ev.giorno || '&mdash;') + '</span>'
-    + '<span class="evento-mese">' + (ev.mese || '') + '</span></div>'
-    + '<div class="evento-corpo"><div class="evento-badges">' + badges + '</div>'
-    + '<h3 class="evento-titolo">' + (ev.titolo || '') + '</h3>'
-    + '<p class="evento-sottotitolo">' + (ev.sottotitolo || '') + '</p>'
-    + '<p class="evento-anteprima">' + (ev.anteprima || '') + '</p>'
-    + '<a href="' + url + '" class="evento-link">Scopri &rarr;</a></div></article>';
+    + '<div class="evento-card-header">'
+    + '<div class="evento-data-grande"><span class="giorno">' + (ev.giorno || '&mdash;') + '</span>'
+    + '<span class="mese">' + (ev.mese || '') + '</span></div>'
+    + '<div class="evento-card-meta">'
+    + '<div>' + badges + '</div>'
+    + '<h3>' + (ev.titolo || '') + '</h3>'
+    + '<p>' + (ev.sottotitolo || '') + '</p>'
+    + '</div></div>'
+    + '<div class="evento-card-body">'
+    + '<p>' + (ev.anteprima || '') + '</p>'
+    + '<a href="' + url + '" class="evento-link">Scopri</a>'
+    + '</div></article>';
 }
 
 async function caricaEventiHome() {

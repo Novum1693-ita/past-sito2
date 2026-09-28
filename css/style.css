@@ -1074,6 +1074,8 @@ a   { color: inherit; text-decoration: none; }
 .sponsor-item img {
   max-height: 48px; width: auto;
   object-fit: contain;
+}
+.sponsor-item img.img-monocromo {
   filter: brightness(0) invert(0.85);
 }
 .sponsor-nome {

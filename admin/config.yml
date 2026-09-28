@@ -669,3 +669,41 @@ collections:
             widget: "boolean"
             default: true
             hint: "Se disattivo, nasconde il pulsante EN dalla navbar"
+
+  # ── PAGINE INGLESE (creabili dal CMS) ──────────────────────
+  - name: "pagine_en"
+    label: "🇬🇧 Pagine in inglese"
+    label_singular: "Pagina EN"
+    folder: "_en"
+    create: true
+    slug: "{{fields.slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - label: "Slug (identificatore URL)"
+        name: "slug"
+        widget: "string"
+        hint: "Usa solo lettere minuscole e trattini — es: chi-siamo. La pagina sarà accessibile su /en/chi-siamo"
+      - label: "Titolo pagina (EN)"
+        name: "titolo"
+        widget: "string"
+        hint: "Titolo che appare nel browser e nell'intestazione"
+      - label: "Sottotitolo / tag"
+        name: "tag"
+        widget: "string"
+        required: false
+        hint: "Piccola etichetta sopra il titolo"
+      - label: "Contenuto (EN)"
+        name: "contenuto"
+        widget: "markdown"
+        hint: "Testo principale della pagina in inglese"
+      - label: "Immagine hero (opzionale)"
+        name: "immagine_hero"
+        widget: "image"
+        required: false
+        hint: "Immagine di sfondo del banner"
+      - label: "Pagina italiana corrispondente"
+        name: "it_url"
+        widget: "string"
+        required: false
+        hint: "Es: chi-siamo.html — per il bottone IT/EN"

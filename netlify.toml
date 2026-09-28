@@ -18,3 +18,10 @@
   from = "/luoghi/:slug"
   to = "/luoghi/_luogo.html"
   status = 200
+
+# Pagine EN dinamiche: ogni nuova pagina inglese creata dal CMS
+# viene servita dalla pagina template universale EN
+[[redirects]]
+  from = "/en/:slug"
+  to = "/en/_pagina.html"
+  status = 200

@@ -337,10 +337,11 @@
     document.getElementById('info-link').href          = l.link;
     document.getElementById('info-card').classList.add('visibile');
 
-    /* Ricarica iframe Google Maps centrato sul luogo con zoom 18 */
+    /* Ricentra la mappa My Maps sul luogo selezionato mantenendo i pin P.A.S.T. */
     var iframe = document.getElementById('mappa-iframe');
-    iframe.src = 'https://maps.google.com/maps?q=' + l.lat + ',' + l.lng
-      + '&z=18&output=embed&hl=it';
+    var mid = '1S449ICv_CNpwOx4PlJXmTKXuxqRYaKo';
+    iframe.src = 'https://www.google.com/maps/d/embed?mid=' + mid
+      + '&ll=' + l.lat + '%2C' + l.lng + '&z=19';
   }
 
   function chiudiInfo() {

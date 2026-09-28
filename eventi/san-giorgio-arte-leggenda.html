@@ -137,8 +137,8 @@
       if (d.orario)        document.getElementById('evento-ora-span').textContent  = '🕐 ' + d.orario;
       if (d.luogo)         document.getElementById('evento-luogo-span').textContent = '📍 ' + d.luogo;
 
-      // Immagine hero (usa immagine_hero se disponibile, altrimenti immagine)
-      var heroImg = d.immagine_hero || d.immagine;
+      // Immagine hero: usa solo immagine_hero (campo separato), NON la locandina
+      var heroImg = d.immagine_hero || '';
       if (heroImg) {
         var hero = document.getElementById('evento-hero');
         hero.style.backgroundImage = 'url(\'' + base + heroImg.replace(/^\//,'') + '\')';
@@ -158,15 +158,11 @@
         document.getElementById('evento-descrizione').innerHTML = '<p>' + html + '</p>';
       }
 
-      // Immagine corpo (usa immagine_corpo se disponibile, altrimenti immagine solo se non usata come hero)
-      var corpoImg = d.immagine_corpo || (!d.immagine_hero ? null : null);
+      // Immagine corpo: usa immagine_corpo se disponibile, altrimenti immagine (locandina)
+      var corpoImg = d.immagine_corpo || d.immagine || '';
       if (corpoImg) {
         document.getElementById('evento-immagine').innerHTML =
           '<img src="' + base + corpoImg.replace(/^\//,'') + '" alt="' + (d.titolo||'') + '" style="width:100%;max-width:500px;height:auto;display:block;margin:1.5rem auto;border:1px solid rgba(48,122,143,0.3);" />';
-      } else if (d.immagine && !d.immagine_hero) {
-        // Retrocompatibilità: se c'è solo immagine (vecchio formato), usala anche nel corpo
-        document.getElementById('evento-immagine').innerHTML =
-          '<img src="' + base + d.immagine.replace(/^\//,'') + '" alt="' + (d.titolo||'') + '" style="width:100%;max-width:500px;height:auto;display:block;margin:1.5rem auto;border:1px solid rgba(48,122,143,0.3);" />';
       }
 
       // Sidebar: prezzo

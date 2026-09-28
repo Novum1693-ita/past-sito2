@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="page-title">Page — P.A.S.T.</title>
+  <meta name="description" id="page-desc" content="P.A.S.T. — Heritage Art History Territory, Ragusa." />
+  <link rel="icon" href="../img/logo.jpeg" type="image/jpeg" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <a href="../index.html" class="logo">
+      <img src="../img/logo.png" alt="P.A.S.T." />
+    </a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li class="nav-dropdown">
+        <a href="../i-luoghi.html">Places <span class="dropdown-arrow">▾</span></a>
+        <div class="dropdown-menu" id="luoghi-dropdown"></div>
+      </li>
+      <li><a href="../le-card.html">Vitruvio Card</a></li>
+      <li><a href="../mappa.html">Map</a></li>
+      <li><a href="../eventi.html">Events</a></li>
+      <li><a href="../notizie.html">News</a></li>
+      <li><a href="../contatti.html">Contacts</a></li>
+      <li class="lang-switch">
+        <a href="#" id="nav-link-it" class="lang-btn">IT</a>
+        <span class="lang-sep">·</span>
+        <a href="#" class="lang-btn active">EN</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="ticker-bar">
+    <div class="ticker-label"><span class="ticker-dot"></span>Breaking news</div>
+    <div class="ticker-window"><div class="ticker-track" id="ticker-track"></div></div>
+  </div>
+
+  <!-- Hero -->
+  <div class="luogo-hero" id="pagina-hero" style="background: linear-gradient(160deg, var(--blu-scuro), var(--sfondo)); min-height: 260px;">
+    <div class="luogo-hero-overlay"></div>
+    <div class="luogo-hero-content">
+      <span class="badge-categoria" id="pagina-tag" style="display:none"></span>
+      <h1 id="pagina-titolo">Loading...</h1>
+    </div>
+  </div>
+
+  <!-- Contenuto -->
+  <div class="luogo-layout" style="max-width:860px;margin:0 auto;">
+    <div class="luogo-descrizione" id="pagina-contenuto" style="padding:3rem 2rem;">
+    </div>
+  </div>
+
+  <div class="sponsor-bar">
+    <div class="sponsor-bar-label">In partnership with:</div>
+    <div class="sponsor-track" id="sponsor-track"></div>
+  </div>
+
+  <footer>
+    <a href="../index.html" class="footer-logo">
+      <img src="../img/logo.png" alt="P.A.S.T." />
+    </a>
+    <div class="footer-info" id="footer-info">
+      Ragusa &nbsp;·&nbsp;
+      <a href="mailto:novum1693@gmail.com">novum1693@gmail.com</a> &nbsp;·&nbsp;
+      <a href="../privacy.html">Privacy policy</a>
+    </div>
+    <div class="footer-copy" id="footer-copy">© 2026 GDT</div>
+  </footer>
+
+  <div class="cookie-banner" id="cookie-banner">
+    <div class="cookie-testo">We only use technical cookies. Read our <a href="../privacy.html">Privacy Policy</a>.</div>
+    <div class="cookie-azioni">
+      <button class="btn-cookie-rifiuta" id="cookie-rifiuta">Only necessary</button>
+      <button class="btn-cookie-accetta" id="cookie-accetta">Accept</button>
+    </div>
+  </div>
+
+  <script src="../js/data-eventi.js"></script>
+  <script src="../js/data-notizie.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+  (async function() {
+    // Legge lo slug dall'URL: /en/nome-pagina → "nome-pagina"
+    var parts = window.location.pathname.split('/').filter(Boolean);
+    var slug = parts[parts.length - 1].replace('.html', '');
+    var base = '../';
+
+    var dati = null;
+    try {
+      var r = await fetch(base + '_en/' + slug + '.json');
+      if (r.ok) dati = await r.json();
+    } catch(e) {}
+
+    if (!dati) {
+      document.getElementById('pagina-titolo').textContent = 'Page not found';
+      document.title = 'Not found — P.A.S.T.';
+      return;
+    }
+
+    // Titolo
+    var titolo = dati.titolo || 'P.A.S.T.';
+    document.getElementById('page-title').textContent = titolo + ' — P.A.S.T.';
+    document.title = titolo + ' — P.A.S.T.';
+    document.getElementById('pagina-titolo').textContent = titolo;
+
+    // Tag
+    var tagEl = document.getElementById('pagina-tag');
+    if (dati.tag) {
+      tagEl.textContent = dati.tag;
+      tagEl.style.display = '';
+    }
+
+    // Hero immagine
+    if (dati.immagine_hero) {
+      var h = document.getElementById('pagina-hero');
+      h.style.backgroundImage = "url('" + base + dati.immagine_hero.replace(/^\//,'') + "')";
+      h.style.backgroundSize = 'cover';
+      h.style.backgroundPosition = 'center';
+    }
+
+    // Link IT/EN
+    if (dati.it_url) {
+      document.getElementById('nav-link-it').href = '../' + dati.it_url;
+    }
+
+    // Contenuto (markdown semplice → HTML)
+    var md = dati.contenuto || '';
+    md = md.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+    md = md.replace(/^## (.+)$/gm,  '<h2>$1</h2>');
+    md = md.replace(/^# (.+)$/gm,   '<h1>$1</h1>');
+    md = md.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    md = md.replace(/\*(.+?)\*/g,     '<em>$1</em>');
+    md = md.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2">$1</a>');
+    md = md.replace(/\n\n/g, '</p><p>');
+    md = md.replace(/\n/g, '<br>');
+    document.getElementById('pagina-contenuto').innerHTML =
+      '<p>' + md + '</p>'
+      + '<p style="margin-top:2rem"><a href="index.html" class="back-link">← Back to home</a></p>';
+  })();
+  </script>
+</body>
+</html>

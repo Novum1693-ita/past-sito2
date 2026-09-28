@@ -76,6 +76,7 @@ const INDEX_FIELDS = {
   '_eventi': ['titolo', 'sottotitolo', 'giorno', 'mese', 'categoria', 'anteprima', 'badge1', 'badge2', 'immagine', 'url'],
   '_notizie': ['titolo', 'anteprima', 'data', 'badge_testo', 'categoria'],
   '_luoghi': ['titolo', 'slug', 'categoria', 'tag_extra', 'descrizione_breve', 'orari', 'prezzo', 'immagine', 'colore_principale'],
+  '_en': ['slug', 'titolo', 'tag'],
 };
 
 // Aggiorna l'index.json per una collezione (formato oggetti completi)
@@ -150,6 +151,7 @@ exports.handler = async (event) => {
       aggiornaIndex('_eventi'),
       aggiornaIndex('_notizie'),
       aggiornaIndex('_luoghi'),
+      aggiornaIndex('_en'),
     ]);
     console.log('Index aggiornati:', risultati);
     return {
