@@ -760,19 +760,18 @@ a   { color: inherit; text-decoration: none; }
 /* ════════════════════════════════════════════════════════════
    CARD VITRUVIO
    ════════════════════════════════════════════════════════════ */
+.cards-grid-wrap {
+  padding: 2rem 4rem;
+}
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  padding: 2rem 4rem;
-  background: var(--sfondo);
+  gap: 1px; background: var(--bordo);
 }
 .vitruvio-card {
   background: var(--sfondo);
   overflow: hidden; display: block;
   transition: background var(--transizione);
-  border: 1px solid var(--bordo);
-  margin: -1px 0 0 -1px; /* collapse borders */
 }
 .vitruvio-card:hover { background: rgba(48,122,143,0.1); }
 .vitruvio-thumb {
@@ -1229,7 +1228,7 @@ footer {
   /* Padding ridotto */
   .page-header,
   .filter-bar,
-  .cards-grid,
+  .cards-grid-wrap,
   .eventi-home,
   .page-content,
   .luogo-descrizione,
