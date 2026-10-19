@@ -1,0 +1,28 @@
+[build]
+  command   = "node scripts/genera-indici.js"
+  functions = "netlify/functions"
+
+# Trigger automatico: quando Netlify finisce un deploy,
+# chiama la function per aggiornare gli index.json
+[[plugins]]
+  package = "@netlify/plugin-functions-install-core"
+
+# Redirect opzionale per l'admin CMS
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200
+
+# Pagine luogo dinamiche: ogni nuovo luogo aggiunto dal CMS
+# viene servito dalla pagina template universale
+[[redirects]]
+  from = "/luoghi/:slug"
+  to = "/luoghi/_luogo.html"
+  status = 200
+
+# Pagine EN dinamiche: ogni nuova pagina inglese creata dal CMS
+# viene servita dalla pagina template universale EN
+[[redirects]]
+  from = "/en/:slug"
+  to = "/en/_pagina.html"
+  status = 200

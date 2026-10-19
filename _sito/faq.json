@@ -1,0 +1,14 @@
+{
+  "attivo": false,
+  "titolo_sezione": "Domande frequenti",
+  "domande": [
+    {
+      "domanda": "Come posso prenotare una visita guidata?",
+      "risposta": "Puoi prenotare tramite il form sul sito o contattandoci direttamente via email."
+    },
+    {
+      "domanda": "I luoghi sono accessibili ai disabili?",
+      "risposta": "Molti dei luoghi aderenti al progetto sono dotati di accessi per persone con mobilità ridotta. Verificare singolarmente."
+    }
+  ]
+}

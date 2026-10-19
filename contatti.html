@@ -16,37 +16,21 @@
     <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
-    <ul class="nav-links">
+        <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="chi-siamo.html">Chi siamo</a></li>
       <li class="nav-dropdown">
-        <a href="I-luoghi.html">I Luoghi <span class="dropdown-arrow">▾</span></a>
-        <div class="dropdown-menu">
-          <a href="luoghi/museo-del-duomo.html">Museo del Duomo</a>
-          <a href="luoghi/san-giacomo.html">Chiesa di San Giacomo Apostolo</a>
-          <a href="luoghi/maddalena.html">Chiesa S. Maria Maddalena</a>
-          <a href="luoghi/obsculta.html">Museo Benedettino Obsculta</a>
-          <a href="luoghi/san-giorgio.html">Chiesa Madre San Giorgio</a>
-          <a href="luoghi/museo-cattedrale.html">Museo della Cattedrale</a>
-          <a href="luoghi/cattedrale.html">Cattedrale S. Giovanni Battista</a>
-          <a href="luoghi/purgatorio.html">Chiesa Anime Sante Purgatorio</a>
-          <a href="luoghi/itria.html">Chiesa S. Maria dell'Itria</a>
-          <a href="luoghi/scale.html">Chiesa S. Maria delle Scale</a>
-        </div>
+        <a href="i-luoghi.html">I Luoghi <span class="dropdown-arrow">▾</span></a>
+        <div class="dropdown-menu" id="luoghi-dropdown"></div>
       </li>
-      <li><a href="Le-Card.html">Vitruvio Card</a></li>
-      <li class="nav-dropdown">
-        <a href="eventi.html">Eventi <span class="dropdown-arrow">▾</span></a>
-        <div class="dropdown-menu" id="dropdown-eventi">
-          <a href="eventi.html">Tutti gli eventi →</a>
-        </div>
-      </li>
+      <li><a href="le-card.html">Card</a></li>
+      <li><a href="mappa.html">Mappa</a></li>
+      <li><a href="eventi.html">Eventi</a></li>
       <li><a href="notizie.html">Notizie</a></li>
-      <li><a href="contatti.html" class="active">Contatti</a></li>
+      <li><a href="contatti.html">Contatti</a></li>
       <li class="lang-switch">
-        <a href="index.html" class="lang-btn active">IT</a>
+        <a href="index.html" class="lang-btn">IT</a>
         <span class="lang-sep">·</span>
-        <a href="en/index.html" class="lang-btn ">EN</a>
+        <a href="en/index.html" class="lang-btn">EN</a>
       </li>
     </ul>
   </nav>
@@ -56,7 +40,7 @@
   </div>
   <div class="page-header">
     <div class="page-tag">Contatti</div>
-    <h1>Siamo a Ragusa</h1>
+    <h1 id="cont-titolo">Siamo a Ragusa</h1>
   </div>
   <div class="contacts-wrap">
     <div>
@@ -64,30 +48,29 @@
         <h3>Dove siamo</h3>
         <div class="contact-row">
           <div class="contact-icon">📍</div>
-          <div><div class="contact-label">Indirizzo</div><div class="contact-val">Via Salita Duomo 13, Ragusa Ibla — 97100</div></div>
+          <div><div class="contact-label">Indirizzo</div><div class="contact-val" id="cont-indirizzo">Via Salita Duomo 13, Ragusa Ibla — 97100</div></div>
         </div>
         <div class="contact-row">
           <div class="contact-icon">✉️</div>
-          <div><div class="contact-label">Email</div><div class="contact-val">info@novum1693.it</div></div>
+          <div><div class="contact-label">Email</div><div class="contact-val"><a id="cont-email" href="mailto:info@novum1693.it">info@novum1693.it</a></div></div>
         </div>
         <div class="contact-row">
           <div class="contact-icon">🌐</div>
-          <div><div class="contact-label">Sito</div><div class="contact-val">www.novum1693.it</div></div>
+          <div><div class="contact-label">Sito</div><div class="contact-val" id="cont-sito">www.novum1693.it</div></div>
         </div>
         <div class="social-row">
-          <a href="#" class="social-btn">Instagram</a>
-          <a href="#" class="social-btn">Facebook</a>
+          <a id="cont-instagram" href="#" class="social-btn">Instagram</a>
+          <a id="cont-facebook" href="#" class="social-btn">Facebook</a>
         </div>
       </div>
     </div>
     <div class="contact-block">
       <div class="map-placeholder">
         <div style="font-size:32px">📍</div>
-        <div>Via Salita Duomo 13, Ragusa Ibla</div>
-        <div style="font-size:10px;letter-spacing:1px;margin-top:4px">Sostituisci con iframe Google Maps</div>
+        <div id="cont-indirizzo2">Via Salita Duomo 13, Ragusa Ibla</div>
       </div>
       <h3 style="margin-top:2rem">Come raggiungerci</h3>
-      <p style="font-family:var(--font-sans);font-size:12px;color:rgba(245,240,232,0.5);line-height:2;margin-top:0.8rem">
+      <p id="cont-arrivare" style="font-family:var(--font-sans);font-size:12px;color:rgba(245,240,232,0.5);line-height:2;margin-top:0.8rem">
         🚗 Da Ragusa Superiore: seguire le indicazioni per Ragusa Ibla<br>
         🚌 Bus urbano linea 1 — fermata Piazza Pola<br>
         🅿️ Parcheggio gratuito in Via della Resistenza
@@ -96,28 +79,19 @@
   </div>
   <div class="sponsor-bar">
     <div class="sponsor-bar-label">Progetto nato dalla collaborazione di:</div>
-    <div class="sponsor-track">
-      <a href="https://www.diocesidiragusa.it" target="_blank" rel="noopener" class="sponsor-item">
-        <img src="img/loghi/logo-diocesi.png" alt="Diocesi di Ragusa" />
-      </a>
-      <a href="https://www.novum1693.it" target="_blank" rel="noopener" class="sponsor-item">
-        <img src="img/loghi/logo-novum.png" alt="Novum 1693 Cantiere Culturale" />
-      </a>
-      <a href="https://www.comune.ragusa.gov.it" target="_blank" rel="noopener" class="sponsor-item">
-        <img src="img/loghi/logo-comune.png" alt="Comune di Ragusa" />
-      </a>
-    </div>
+    <div class="sponsor-track" id="sponsor-track"></div>
   </div>
   <footer>
     <a href="index.html" class="footer-logo">
       <img src="img/logo.png" alt="P.A.S.T." />
     </a>
-    <div class="footer-info">
+    <div class="footer-info" id="footer-info">
       Via Salita Duomo 13, Ragusa &nbsp;·&nbsp;
       <a href="mailto:info@novum1693.it">info@novum1693.it</a> &nbsp;·&nbsp;
       <a href="privacy.html">Privacy policy</a>
     </div>
-    <div class="footer-copy">© 2025 Guardiani del Tempo</div>
+    <div class="footer-copy" id="footer-copyright">© 2025 Guardiani del Tempo</div>
+      <div class="footer-social" id="footer-social"></div>
   </footer>
   <div class="cookie-banner" id="cookie-banner">
     <div class="cookie-testo">Utilizziamo solo cookie tecnici necessari al funzionamento del sito. Leggi la nostra <a href="privacy.html">Privacy Policy</a>.</div>
@@ -129,5 +103,32 @@
   <script src="js/data-eventi.js"></script>
   <script src="js/data-notizie.js"></script>
   <script src="js/main.js"></script>
+  <script>
+  (async function() {
+    try {
+      var r = await fetch('_sito/contatti.json');
+      if (!r.ok) return;
+      var d = await r.json();
+      if (d.titolo) document.getElementById('cont-titolo').textContent = d.titolo;
+      if (d.indirizzo) { document.getElementById('cont-indirizzo').textContent = d.indirizzo; document.getElementById('cont-indirizzo2').textContent = d.indirizzo; }
+      if (d.email) { var el = document.getElementById('cont-email'); el.textContent = d.email; el.href = 'mailto:'+d.email; }
+      if (d.sito) document.getElementById('cont-sito').textContent = d.sito;
+      if (d.instagram) document.getElementById('cont-instagram').href = d.instagram;
+      if (d.facebook) document.getElementById('cont-facebook').href = d.facebook;
+      if (d.come_arrivare) document.getElementById('cont-arrivare').innerHTML = d.come_arrivare.replace(/\n/g,'<br>');
+    } catch(e) {}
+  })();
+  (async function() {
+    try {
+      var r = await fetch('_sito/footer.json');
+      if (!r.ok) return;
+      var d = await r.json();
+      var fi = document.querySelector('.footer-info');
+      var fc = document.querySelector('.footer-copy');
+      if (fi && d.email) fi.innerHTML = (d.indirizzo||'Ragusa') + ' &nbsp;·&nbsp; <a href="mailto:'+d.email+'">'+d.email+'</a> &nbsp;·&nbsp; <a href="privacy.html">Privacy policy</a>';
+      if (fc && d.copyright) fc.textContent = d.copyright;
+    } catch(e) {}
+  })();
+  </script>
 </body>
 </html>

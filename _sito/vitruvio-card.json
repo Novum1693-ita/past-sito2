@@ -1,0 +1,47 @@
+{
+  "titolo": "Card",
+  "titolo_en": "Cards",
+  "testo_intro": "Le card culturali del progetto P.A.S.T. Ispirate ai tre ordini architettonici della tradizione classica, ogni card offre un livello diverso di accesso ai luoghi e agli eventi del territorio ragusano.",
+  "testo_intro_en": "The cultural cards of the P.A.S.T. project. Inspired by the three architectural orders of classical tradition, each card offers a different level of access to the places and events of the Ragusa area.",
+  "sezioni": [
+    {
+      "pubblicata": true,
+      "titolo_sezione": "Vitruvio Card",
+      "titolo_sezione_en": "Vitruvio Cards",
+      "descrizione_sezione": "Le carte culturali ispirate agli ordini architettonici classici.",
+      "descrizione_sezione_en": "Cultural cards inspired by the classical architectural orders.",
+      "cards": [
+        {
+          "pubblicata": true,
+          "nome": "Dorico Card",
+          "nome_en": "Doric Card",
+          "testo": "Il livello base. Accesso a tutti i luoghi P.A.S.T. con tariffa agevolata e guida cartacea inclusa.",
+          "testo_en": "The base level. Access to all P.A.S.T. sites at a discounted rate, including a printed guide.",
+          "prezzo": "",
+          "widget_id": "c0321b60-2cdf-4ea1-b53c-4273150ea8ea",
+          "immagine": "img/Dorico.png"
+        },
+        {
+          "pubblicata": true,
+          "nome": "Ionico Card",
+          "nome_en": "Ionic Card",
+          "testo": "Accesso completo a tutti i luoghi più partecipazione agli eventi speciali e alle aperture serali.",
+          "testo_en": "Full access to all sites plus participation in special events and evening openings.",
+          "prezzo": "",
+          "widget_id": "e0064b76-90aa-4dc8-be65-0075697eeeb1",
+          "immagine": "img/Ionico.png"
+        },
+        {
+          "pubblicata": true,
+          "nome": "Corinzio Card",
+          "nome_en": "Corinthian Card",
+          "testo": "Il livello premium. Tutti i vantaggi Ionico più visite guidate esclusive e accesso anticipato agli eventi.",
+          "testo_en": "The premium level. All Ionic benefits plus exclusive guided tours and early access to events.",
+          "prezzo": "",
+          "widget_id": "4a65326f-958a-484b-81c1-0b5dc97cd0a2",
+          "immagine": "img/Corinzio.png"
+        }
+      ]
+    }
+  ]
+}

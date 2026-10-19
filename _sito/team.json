@@ -1,0 +1,13 @@
+{
+  "attivo": false,
+  "titolo_sezione": "Il team",
+  "membri": [
+    {
+      "nome": "Nome Cognome",
+      "ruolo": "Coordinatore",
+      "bio": "Breve descrizione del membro del team.",
+      "foto": "",
+      "email": ""
+    }
+  ]
+}

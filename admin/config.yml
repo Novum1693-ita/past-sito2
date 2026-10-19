@@ -19,31 +19,26 @@ collections:
     label_singular: "Evento"
     folder: "_eventi"
     create: true
-    slug: "{{slug}}"
+    slug: "{{fields.titolo}}"
     extension: "json"
     format: "json"
     fields:
-
       - label: "Titolo evento"
         name: "titolo"
         widget: "string"
         hint: "Es: Apertura straordinaria Duomo San Giorgio"
-
       - label: "Sottotitolo"
         name: "sottotitolo"
         widget: "string"
         hint: "Es: Ore 20:00 · Duomo San Giorgio"
-
       - label: "Giorno"
         name: "giorno"
         widget: "string"
         hint: "Solo il numero del giorno — es: 23"
-
       - label: "Mese"
         name: "mese"
         widget: "string"
         hint: "Abbreviazione 3 lettere — es: Apr, Mag, Giu"
-
       - label: "Categoria"
         name: "categoria"
         widget: "select"
@@ -54,40 +49,32 @@ collections:
           - { label: "Incontro / Conferenza", value: "incontro" }
           - { label: "Workshop", value: "workshop" }
           - { label: "Altro", value: "altro" }
-
       - label: "Testo anteprima"
         name: "anteprima"
         widget: "text"
         hint: "Breve descrizione visibile nella griglia eventi"
-
       - label: "Descrizione completa"
         name: "descrizione"
         widget: "markdown"
-
       - label: "Luogo"
         name: "luogo"
         widget: "string"
-
       - label: "Orario"
         name: "orario"
         widget: "string"
         hint: "Es: 20:00 – 23:00"
-
       - label: "Data completa"
         name: "data_completa"
         widget: "string"
         hint: "Es: 24 Aprile 2025"
-
       - label: "Prezzo / Ingresso"
         name: "prezzo"
         widget: "string"
         hint: "Es: € 5,00 — oppure: Ingresso libero"
-
       - label: "Sottotitolo prezzo"
         name: "sub_prezzo"
         widget: "string"
         required: false
-
       - label: "Tipo prenotazione"
         name: "tipo_prenotazione"
         widget: "select"
@@ -95,12 +82,24 @@ collections:
           - { label: "Eventbrite", value: "eventbrite" }
           - { label: "Regiondo", value: "regiondo" }
           - { label: "Ingresso libero (nessuna prenotazione)", value: "free" }
-
-      - label: "Link prenotazione"
+      - label: "Link prenotazione (Eventbrite)"
         name: "link_prenotazione"
         widget: "string"
         required: false
-
+      - label: "Widget Regiondo (uno o più)"
+        name: "widgets_regiondo"
+        widget: "list"
+        required: false
+        hint: "Aggiungi uno o più widget Regiondo per questo evento"
+        fields:
+          - label: "Etichetta (es: Biglietto intero)"
+            name: "etichetta"
+            widget: "string"
+            required: false
+          - label: "Widget ID (UUID)"
+            name: "id"
+            widget: "string"
+            hint: "Es: cc29ea83-e3f8-48be-9edb-47d86097e8d8"
       - label: "Badge 1"
         name: "badge1"
         widget: "select"
@@ -111,7 +110,6 @@ collections:
           - { label: "Spettacolo", value: "badge-spettacolo" }
           - { label: "Incontro", value: "badge-incontro" }
           - { label: "Ingresso libero", value: "badge-gratuito" }
-
       - label: "Badge 2 (opzionale)"
         name: "badge2"
         widget: "select"
@@ -120,10 +118,43 @@ collections:
           - { label: "Nessuno", value: "" }
           - { label: "Ingresso libero", value: "badge-gratuito" }
           - { label: "Workshop", value: "badge-workshop" }
-
-      - label: "Immagine di sfondo hero"
-        name: "immagine"
+      - label: "Immagine hero (banner grande in cima)"
+        name: "immagine_hero"
         widget: "image"
+        required: false
+        hint: "Foto usata come sfondo del banner in cima alla pagina evento"
+      - label: "Immagine nel corpo (locandina / foto)"
+        name: "immagine_corpo"
+        widget: "image"
+        required: false
+        hint: "Foto o locandina mostrata nel testo descrittivo"
+      - label: "URL pagina evento (generato automaticamente)"
+        name: "url"
+        widget: "string"
+        required: false
+        hint: "Lascia vuoto — viene generato dalla Netlify Function"
+      - label: "✅ Pubblicato (visibile sul sito)"
+        name: "pubblicato"
+        widget: "boolean"
+        default: true
+        hint: "Se disattivo, l'evento è salvato come bozza e non appare sul sito"
+      - label: "Note interne (solo admin)"
+        name: "note_interne"
+        widget: "text"
+        required: false
+        hint: "Visibile solo nell'admin — non appare mai sul sito"
+      - label: "Titolo evento (EN)"
+        name: "titolo_en"
+        widget: "string"
+        required: false
+        hint: "Titolo in inglese — lascia vuoto per mostrare quello italiano anche in EN"
+      - label: "Testo anteprima (EN)"
+        name: "anteprima_en"
+        widget: "text"
+        required: false
+      - label: "Descrizione completa (EN)"
+        name: "descrizione_en"
+        widget: "markdown"
         required: false
 
   # ── NOTIZIE ────────────────────────────────────────────────
@@ -132,28 +163,23 @@ collections:
     label_singular: "Notizia"
     folder: "_notizie"
     create: true
-    slug: "{{slug}}"
+    slug: "{{fields.titolo}}"
     extension: "json"
     format: "json"
     fields:
-
       - label: "Titolo notizia"
         name: "titolo"
         widget: "string"
-
       - label: "Testo anteprima"
         name: "anteprima"
         widget: "text"
-
       - label: "Contenuto completo"
         name: "contenuto"
         widget: "markdown"
-
       - label: "Data pubblicazione"
         name: "data"
         widget: "string"
         hint: "Es: 20 marzo 2025"
-
       - label: "Categoria"
         name: "badge_testo"
         widget: "select"
@@ -162,50 +188,1348 @@ collections:
           - { label: "Evento", value: "Evento" }
           - { label: "Luogo", value: "Luogo" }
           - { label: "Associazione", value: "Associazione" }
+      - label: "✅ Pubblicata (visibile sul sito)"
+        name: "pubblicata"
+        widget: "boolean"
+        default: true
+        hint: "Se disattivo, la notizia è salvata come bozza"
+      - label: "Titolo notizia (EN)"
+        name: "titolo_en"
+        widget: "string"
+        required: false
+      - label: "Testo anteprima (EN)"
+        name: "anteprima_en"
+        widget: "text"
+        required: false
+      - label: "Contenuto completo (EN)"
+        name: "contenuto_en"
+        widget: "markdown"
+        required: false
 
   # ── LUOGHI ─────────────────────────────────────────────────
   - name: "luoghi"
     label: "📍 Luoghi"
     label_singular: "Luogo"
     folder: "_luoghi"
-    create: false
+    create: true
+    slug: "{{fields.slug}}"
     extension: "json"
     format: "json"
     fields:
-
       - label: "Nome del luogo"
         name: "titolo"
         widget: "string"
-
-      - label: "Categoria"
+      - label: "Slug (identificatore URL)"
+        name: "slug"
+        widget: "string"
+        hint: "Usa solo lettere minuscole e trattini — es: san-giovanni. Determina l'URL della pagina."
+      - label: "Categoria principale"
         name: "categoria"
         widget: "select"
         options:
-          - { label: "Museo", value: "Musei" }
-          - { label: "Chiesa", value: "Chiese" }
+          - { label: "Chiese", value: "Chiese" }
+          - { label: "Musei", value: "Musei" }
+          - { label: "Palazzi", value: "Palazzi" }
+          - { label: "Siti Archeologici", value: "Siti Archeologici" }
+          - { label: "Campanili", value: "Campanili" }
           - { label: "Unicità", value: "Unicità" }
-
+          - { label: "Altro", value: "Altro" }
+        hint: "Determina il filtro sulla pagina I Luoghi"
+      - label: "Tag secondario (opzionale)"
+        name: "tag_extra"
+        widget: "string"
+        required: false
+        hint: "Es: Chiese — appare come secondo badge"
       - label: "Descrizione breve"
         name: "descrizione_breve"
         widget: "text"
-
+        hint: "Visibile nella griglia luoghi"
       - label: "Descrizione completa"
         name: "descrizione"
         widget: "markdown"
-
+        hint: "Testo completo della pagina dedicata al luogo"
       - label: "Orari di apertura"
         name: "orari"
         widget: "string"
-
-      - label: "Prezzo"
+      - label: "Prezzo intero"
         name: "prezzo"
         widget: "string"
-
+        hint: "Es: € 3,00 — oppure: Gratuito"
+      - label: "Prezzo ridotto"
+        name: "prezzo_ridotto"
+        widget: "string"
+        required: false
+        hint: "Es: € 1,50"
       - label: "Indirizzo"
         name: "indirizzo"
         widget: "string"
-
-      - label: "Link prenotazione Regiondo"
-        name: "link_regiondo"
+      - label: "Latitudine GPS"
+        name: "lat"
+        widget: "string"
+        hint: "Es: 36.92573"
+      - label: "Longitudine GPS"
+        name: "lng"
+        widget: "string"
+        hint: "Es: 14.74493"
+      - label: "Widget Regiondo (uno o più)"
+        name: "widgets_regiondo"
+        widget: "list"
+        required: false
+        hint: "Aggiungi uno o più widget Regiondo per questo luogo"
+        fields:
+          - label: "Etichetta (es: Biglietto intero)"
+            name: "etichetta"
+            widget: "string"
+            required: false
+          - label: "Widget ID (UUID)"
+            name: "id"
+            widget: "string"
+            hint: "Es: 991f34e0-1d51-4770-a87a-fed912d81c7d"
+      - label: "Colore principale"
+        name: "colore_principale"
+        widget: "color"
+        hint: "Colore hero e badge di questo luogo"
+      - label: "Colore secondario"
+        name: "colore_secondario"
+        widget: "color"
+        hint: "Colore overlay e accenti"
+      - label: "Immagine hero (banner grande in cima)"
+        name: "immagine"
+        widget: "image"
+        required: false
+        hint: "Immagine usata come sfondo del banner in cima alla pagina luogo"
+      - label: "Immagine nella descrizione (opzionale)"
+        name: "immagine_corpo"
+        widget: "image"
+        required: false
+        hint: "Foto aggiuntiva mostrata nel testo descrittivo"
+      - label: "✅ Pubblicato (visibile sul sito)"
+        name: "pubblicato"
+        widget: "boolean"
+        default: true
+        hint: "Se disattivo, il luogo è salvato come bozza e non appare sul sito"
+      - label: "Note interne (solo admin)"
+        name: "note_interne"
+        widget: "text"
+        required: false
+        hint: "Visibile solo nell'admin — non appare mai sul sito"
+      - label: "Durata visita consigliata"
+        name: "durata_visita"
+        widget: "select"
+        required: false
+        options:
+          - { label: "15 minuti", value: "15 min" }
+          - { label: "30 minuti", value: "30 min" }
+          - { label: "1 ora", value: "1 ora" }
+          - { label: "2 ore", value: "2 ore" }
+          - { label: "Mezza giornata", value: "Mezza giornata" }
+      - label: "♿ Accessibile in sedia a rotelle"
+        name: "accessibile_sedia"
+        widget: "boolean"
+        default: false
+      - label: "♿ Bagno accessibile"
+        name: "accessibile_bagno"
+        widget: "boolean"
+        default: false
+      - label: "🎧 Audioguida disponibile"
+        name: "audioguida"
+        widget: "boolean"
+        default: false
+      - label: "🤟 Lingua dei segni su richiesta"
+        name: "lingua_segni"
+        widget: "boolean"
+        default: false
+      - label: "Note accessibilità"
+        name: "note_accessibilita"
         widget: "string"
         required: false
+        hint: "Es: Rampa laterale, suonare il campanello"
+      - label: "Come arrivare / Parcheggio"
+        name: "come_arrivare"
+        widget: "text"
+        required: false
+        hint: "Indicazioni per raggiungere il luogo e dove parcheggiare"
+      - label: "Telefono diretto"
+        name: "telefono"
+        widget: "string"
+        required: false
+      - label: "Email diretta"
+        name: "email"
+        widget: "string"
+        required: false
+      - label: "Sito web ufficiale"
+        name: "sito_web"
+        widget: "string"
+        required: false
+        hint: "Es: https://www.diocesidiragusa.it"
+      - label: "Nome luogo (EN)"
+        name: "titolo_en"
+        widget: "string"
+        required: false
+        hint: "Lascia vuoto per usare il nome italiano anche in EN"
+      - label: "Descrizione breve (EN)"
+        name: "descrizione_breve_en"
+        widget: "text"
+        required: false
+      - label: "Descrizione completa (EN)"
+        name: "descrizione_en"
+        widget: "markdown"
+        required: false
+      - label: "Orari di apertura (EN)"
+        name: "orari_en"
+        widget: "string"
+        required: false
+      - label: "Come arrivare (EN)"
+        name: "come_arrivare_en"
+        widget: "text"
+        required: false
+
+  # ── TESTI SITO — HOME ──────────────────────────────────────
+  - name: "sito_home"
+    label: "🏠 Home — Testi e immagine"
+    files:
+      - label: "Home — Hero, card e immagine"
+        name: "home"
+        file: "_sito/home.json"
+        fields:
+          - label: "🖼️ Immagine di sfondo hero"
+            name: "hero_immagine"
+            widget: "image"
+            required: false
+            hint: "Lascia vuoto per usare lo sfondo predefinito del CSS"
+          - label: "Sovratitolo hero"
+            name: "hero_sovratitolo"
+            widget: "string"
+          - label: "Titolo hero (grande)"
+            name: "hero_titolo"
+            widget: "string"
+          - label: "Sottotitolo hero"
+            name: "hero_sottotitolo"
+            widget: "string"
+          - label: "Testo hero"
+            name: "hero_testo"
+            widget: "text"
+          - label: "Testo pulsante 1"
+            name: "hero_btn1_testo"
+            widget: "string"
+          - label: "Link pulsante 1"
+            name: "hero_btn1_link"
+            widget: "string"
+            hint: "Es: eventi.html"
+          - label: "Testo pulsante 2"
+            name: "hero_btn2_testo"
+            widget: "string"
+          - label: "Link pulsante 2"
+            name: "hero_btn2_link"
+            widget: "string"
+            hint: "Es: i-luoghi.html"
+          - label: "Card 1 — Titolo"
+            name: "card1_titolo"
+            widget: "string"
+          - label: "Card 1 — Testo"
+            name: "card1_testo"
+            widget: "text"
+          - label: "Card 2 — Titolo"
+            name: "card2_titolo"
+            widget: "string"
+          - label: "Card 2 — Testo"
+            name: "card2_testo"
+            widget: "text"
+          - label: "Card 3 — Titolo"
+            name: "card3_titolo"
+            widget: "string"
+          - label: "Card 3 — Testo"
+            name: "card3_testo"
+            widget: "text"
+
+  # ── TESTI SITO — CHI SIAMO ─────────────────────────────────
+  - name: "sito_chisiamo"
+    label: "👥 Chi siamo — Testi"
+    files:
+      - label: "Chi siamo"
+        name: "chi-siamo"
+        file: "_sito/chi-siamo.json"
+        fields:
+          - label: "Titolo pagina"
+            name: "titolo"
+            widget: "string"
+          - label: "Testo principale"
+            name: "testo"
+            widget: "markdown"
+          - label: "Partner 1 — Nome"
+            name: "partner1_nome"
+            widget: "string"
+          - label: "Partner 1 — Ruolo"
+            name: "partner1_ruolo"
+            widget: "string"
+          - label: "Partner 1 — URL"
+            name: "partner1_url"
+            widget: "string"
+          - label: "Partner 2 — Nome"
+            name: "partner2_nome"
+            widget: "string"
+          - label: "Partner 2 — Ruolo"
+            name: "partner2_ruolo"
+            widget: "string"
+          - label: "Partner 2 — URL"
+            name: "partner2_url"
+            widget: "string"
+          - label: "Partner 3 — Nome"
+            name: "partner3_nome"
+            widget: "string"
+          - label: "Partner 3 — Ruolo"
+            name: "partner3_ruolo"
+            widget: "string"
+          - label: "Partner 3 — URL"
+            name: "partner3_url"
+            widget: "string"
+
+  # ── TESTI SITO — CONTATTI ──────────────────────────────────
+  - name: "sito_contatti"
+    label: "📬 Contatti — Testi"
+    files:
+      - label: "Contatti"
+        name: "contatti"
+        file: "_sito/contatti.json"
+        fields:
+          - label: "Titolo pagina"
+            name: "titolo"
+            widget: "string"
+          - label: "Sottotitolo"
+            name: "sottotitolo"
+            widget: "string"
+          - label: "Email"
+            name: "email"
+            widget: "string"
+          - label: "Telefono"
+            name: "telefono"
+            widget: "string"
+            required: false
+          - label: "Indirizzo"
+            name: "indirizzo"
+            widget: "string"
+          - label: "Orari ufficio"
+            name: "orari_ufficio"
+            widget: "string"
+            required: false
+
+  # ── FOOTER ─────────────────────────────────────────────────
+  - name: "sito_footer"
+    label: "🔻 Footer"
+    files:
+      - label: "Footer"
+        name: "footer"
+        file: "_sito/footer.json"
+        fields:
+          - label: "Indirizzo"
+            name: "indirizzo"
+            widget: "string"
+          - label: "Email"
+            name: "email"
+            widget: "string"
+          - label: "Copyright"
+            name: "copyright"
+            widget: "string"
+
+  # ── LE CARD ─────────────────────────────────────────────────
+  - name: "sito_vitruvio"
+    label: "🎴 Card — Testi"
+    files:
+      - label: "Card"
+        name: "vitruvio-card"
+        file: "_sito/vitruvio-card.json"
+        fields:
+          - label: "Titolo pagina"
+            name: "titolo"
+            widget: "string"
+          - label: "Titolo pagina (EN)"
+            name: "titolo_en"
+            widget: "string"
+            required: false
+          - label: "Testo introduttivo"
+            name: "testo_intro"
+            widget: "text"
+          - label: "Testo introduttivo (EN)"
+            name: "testo_intro_en"
+            widget: "text"
+            required: false
+          - label: "Sezioni"
+            name: "sezioni"
+            widget: "list"
+            hint: "Organizza le card in sezioni tematiche (es. Vitruvio Card, Card Speciali…)"
+            fields:
+              - label: "✅ Sezione pubblicata"
+                name: "pubblicata"
+                widget: "boolean"
+                default: true
+              - label: "Titolo sezione"
+                name: "titolo_sezione"
+                widget: "string"
+                hint: "Es: Vitruvio Card"
+              - label: "Titolo sezione (EN)"
+                name: "titolo_sezione_en"
+                widget: "string"
+                required: false
+              - label: "Descrizione sezione (opzionale)"
+                name: "descrizione_sezione"
+                widget: "text"
+                required: false
+              - label: "Descrizione sezione (EN)"
+                name: "descrizione_sezione_en"
+                widget: "text"
+                required: false
+              - label: "Card in questa sezione"
+                name: "cards"
+                widget: "list"
+                hint: "Aggiungi, riordina e disattiva le card liberamente"
+                fields:
+                  - label: "✅ Pubblicata (visibile sul sito)"
+                    name: "pubblicata"
+                    widget: "boolean"
+                    default: true
+                  - label: "Nome card"
+                    name: "nome"
+                    widget: "string"
+                    hint: "Es: Dorico Card"
+                  - label: "Nome card (EN)"
+                    name: "nome_en"
+                    widget: "string"
+                    required: false
+                  - label: "Testo descrittivo"
+                    name: "testo"
+                    widget: "text"
+                  - label: "Testo descrittivo (EN)"
+                    name: "testo_en"
+                    widget: "text"
+                    required: false
+                  - label: "Prezzo (opzionale)"
+                    name: "prezzo"
+                    widget: "string"
+                    required: false
+                    hint: "Es: € 12,00 — lascia vuoto se il prezzo è nel widget Regiondo"
+                  - label: "Widget ID Regiondo"
+                    name: "widget_id"
+                    widget: "string"
+                    required: false
+                    hint: "UUID del widget Regiondo per l'acquisto"
+                  - label: "Immagine card (opzionale)"
+                    name: "immagine"
+                    widget: "image"
+                    required: false
+
+  # ── CONTATTI ───────────────────────────────────────────────
+  - name: "sito_contatti2"
+    label: "📬 Contatti — Dettagli"
+    files:
+      - label: "Contatti"
+        name: "contatti"
+        file: "_sito/contatti.json"
+        fields:
+          - label: "Titolo pagina"
+            name: "titolo"
+            widget: "string"
+          - label: "Indirizzo"
+            name: "indirizzo"
+            widget: "string"
+          - label: "Email"
+            name: "email"
+            widget: "string"
+          - label: "Sito web"
+            name: "sito"
+            widget: "string"
+            required: false
+          - label: "Link Instagram"
+            name: "instagram"
+            widget: "string"
+            required: false
+          - label: "Link Facebook"
+            name: "facebook"
+            widget: "string"
+            required: false
+          - label: "Come raggiungerci"
+            name: "come_arrivare"
+            widget: "text"
+            hint: "Usa \\n per andare a capo"
+
+  # ── PARTNER / SPONSOR ──────────────────────────────────────
+  - name: "sito_partner"
+    label: "🤝 Partner & Sponsor"
+    files:
+      - label: "Partner"
+        name: "partner"
+        file: "_sito/partner.json"
+        fields:
+          - label: "Partner"
+            name: "partner"
+            widget: "list"
+            hint: "Aggiungi tutti i partner che appaiono in fondo a ogni pagina"
+            fields:
+              - label: "Nome"
+                name: "nome"
+                widget: "string"
+              - label: "URL sito web"
+                name: "url"
+                widget: "string"
+                required: false
+                hint: "Es: https://www.diocesidiragusa.it"
+              - label: "Logo"
+                name: "logo"
+                widget: "image"
+                hint: "Logo in formato PNG o SVG"
+              - label: "Mantieni colori originali logo"
+                name: "colori_originali"
+                widget: "boolean"
+                default: true
+                hint: "Se attivo, il logo appare a colori; se disattivo, diventa bianco"
+
+  # ── TICKER ULTIMA ORA ──────────────────────────────────────
+  - name: "sito_ticker"
+    label: "📢 Ultima ora — Ticker"
+    files:
+      - label: "Ticker"
+        name: "ticker"
+        file: "_sito/ticker.json"
+        fields:
+          - label: "Testi fissi del ticker"
+            name: "testi"
+            widget: "list"
+            hint: "Testi sempre visibili nel ticker (in aggiunta alle notizie automatiche)"
+            field:
+              label: "Testo"
+              name: "testo"
+              widget: "string"
+              hint: "Es: P.A.S.T. — Patrimonio Arte Storia Territorio · Ragusa Ibla"
+
+  # ── SEO ────────────────────────────────────────────────────
+  - name: "sito_seo"
+    label: "🔍 SEO — Titoli e descrizioni"
+    files:
+      - label: "SEO"
+        name: "seo"
+        file: "_sito/seo.json"
+        fields:
+          - label: "Home — Titolo pagina"
+            name: "home_titolo"
+            widget: "string"
+            hint: "Es: P.A.S.T. — Patrimonio Arte Storia Territorio"
+          - label: "Home — Descrizione"
+            name: "home_descrizione"
+            widget: "text"
+            hint: "Testo che appare su Google (max 160 caratteri)"
+          - label: "Eventi — Titolo pagina"
+            name: "eventi_titolo"
+            widget: "string"
+          - label: "Eventi — Descrizione"
+            name: "eventi_descrizione"
+            widget: "text"
+          - label: "Luoghi — Titolo pagina"
+            name: "luoghi_titolo"
+            widget: "string"
+          - label: "Luoghi — Descrizione"
+            name: "luoghi_descrizione"
+            widget: "text"
+          - label: "Notizie — Titolo pagina"
+            name: "notizie_titolo"
+            widget: "string"
+          - label: "Notizie — Descrizione"
+            name: "notizie_descrizione"
+            widget: "text"
+          - label: "Contatti — Titolo pagina"
+            name: "contatti_titolo"
+            widget: "string"
+          - label: "Contatti — Descrizione"
+            name: "contatti_descrizione"
+            widget: "text"
+
+  # ── VERSIONE INGLESE ───────────────────────────────────────
+  - name: "sito_en"
+    label: "🇬🇧 Versione inglese"
+    files:
+      - label: "Home EN"
+        name: "home_en"
+        file: "_sito/en-home.json"
+        fields:
+          - label: "Hero — Titolo"
+            name: "hero_titolo"
+            widget: "string"
+          - label: "Hero — Sottotitolo"
+            name: "hero_sottotitolo"
+            widget: "string"
+          - label: "Hero — Testo"
+            name: "hero_testo"
+            widget: "text"
+          - label: "Pulsante 1"
+            name: "btn1_testo"
+            widget: "string"
+          - label: "Pulsante 2"
+            name: "btn2_testo"
+            widget: "string"
+          - label: "Card 1 — Titolo"
+            name: "card1_titolo"
+            widget: "string"
+          - label: "Card 1 — Testo"
+            name: "card1_testo"
+            widget: "text"
+          - label: "Card 2 — Titolo"
+            name: "card2_titolo"
+            widget: "string"
+          - label: "Card 2 — Testo"
+            name: "card2_testo"
+            widget: "text"
+          - label: "Card 3 — Titolo"
+            name: "card3_titolo"
+            widget: "string"
+          - label: "Card 3 — Testo"
+            name: "card3_testo"
+            widget: "text"
+      - label: "Chi siamo EN"
+        name: "about_en"
+        file: "_sito/en-about.json"
+        fields:
+          - label: "Titolo pagina"
+            name: "titolo"
+            widget: "string"
+          - label: "Testo principale"
+            name: "testo"
+            widget: "markdown"
+      - label: "Contatti EN"
+        name: "contatti_en"
+        file: "_sito/en-contatti.json"
+        fields:
+          - label: "Titolo pagina"
+            name: "titolo"
+            widget: "string"
+          - label: "Sottotitolo"
+            name: "sottotitolo"
+            widget: "string"
+
+  # ── IMPOSTAZIONI GENERALI ──────────────────────────────────
+  - name: "sito_generale"
+    label: "⚙️ Impostazioni generali"
+    files:
+      - label: "Generale"
+        name: "generale"
+        file: "_sito/generale.json"
+        fields:
+          - label: "Nome del sito"
+            name: "nome_sito"
+            widget: "string"
+            hint: "Es: P.A.S.T."
+          - label: "Slogan / tagline"
+            name: "tagline"
+            widget: "string"
+            hint: "Es: Patrimonio Arte Storia Territorio"
+          - label: "Email principale"
+            name: "email"
+            widget: "string"
+          - label: "Telefono"
+            name: "telefono"
+            widget: "string"
+            required: false
+          - label: "Indirizzo"
+            name: "indirizzo"
+            widget: "string"
+          - label: "Link Facebook"
+            name: "facebook"
+            widget: "string"
+            required: false
+          - label: "Link Instagram"
+            name: "instagram"
+            widget: "string"
+            required: false
+          - label: "Mostra versione inglese"
+            name: "mostra_en"
+            widget: "boolean"
+            default: true
+            hint: "Se disattivo, nasconde il pulsante EN dalla navbar"
+          - label: "Logo personalizzato (navbar e footer)"
+            name: "logo"
+            widget: "image"
+            required: false
+            hint: "Carica un'immagine per sostituire il logo predefinito (img/logo.png). Lascia vuoto per usare il logo di default."
+
+  # ── PAGINE INGLESE (creabili dal CMS) ──────────────────────
+  - name: "pagine_en"
+    label: "🇬🇧 Pagine in inglese"
+    label_singular: "Pagina EN"
+    folder: "_en"
+    create: true
+    slug: "{{fields.slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - label: "Slug (identificatore URL)"
+        name: "slug"
+        widget: "string"
+        hint: "Usa solo lettere minuscole e trattini — es: chi-siamo. La pagina sarà accessibile su /en/chi-siamo"
+      - label: "Titolo pagina (EN)"
+        name: "titolo"
+        widget: "string"
+        hint: "Titolo che appare nel browser e nell'intestazione"
+      - label: "Sottotitolo / tag"
+        name: "tag"
+        widget: "string"
+        required: false
+        hint: "Piccola etichetta sopra il titolo"
+      - label: "Contenuto (EN)"
+        name: "contenuto"
+        widget: "markdown"
+        hint: "Testo principale della pagina in inglese"
+      - label: "Immagine hero (opzionale)"
+        name: "immagine_hero"
+        widget: "image"
+        required: false
+        hint: "Immagine di sfondo del banner"
+      - label: "Pagina italiana corrispondente"
+        name: "it_url"
+        widget: "string"
+        required: false
+        hint: "Es: chi-siamo.html — per il bottone IT/EN"
+
+  # ── COLORI SITO ─────────────────────────────────────────────
+  - name: "sito_colori"
+    label: "🎨 Colori del sito"
+    files:
+      - label: "Palette colori"
+        name: "colori"
+        file: "_sito/colori.json"
+        fields:
+          - label: "Blu scuro (sfondo hero, sfondo sezioni scure)"
+            name: "blu_scuro"
+            widget: "color"
+            hint: "Valore attuale: #1e5566"
+          - label: "Blu medio (link, accenti, badge)"
+            name: "blu_medio"
+            widget: "color"
+            hint: "Valore attuale: #75b3c5"
+          - label: "Blu chiaro (hover, bordi chiari)"
+            name: "blu_chiaro"
+            widget: "color"
+            hint: "Valore attuale: #abd6e3"
+          - label: "Oro (badge, decorazioni, titoli sezioni)"
+            name: "oro"
+            widget: "color"
+            hint: "Valore attuale: #c9a96e"
+          - label: "Oro scuro (hover oro, testi oro su sfondo chiaro)"
+            name: "oro_chiaro"
+            widget: "color"
+            hint: "Valore attuale: #8a6f3e"
+          - label: "Crema / bianco caldo (sfondo card, testo su scuro)"
+            name: "crema"
+            widget: "color"
+            hint: "Valore attuale: #f5f0e8 — usato come testo chiaro e sfondo card"
+          - label: "Sfondo pagina principale (colore di fondo del sito)"
+            name: "sfondo_pagina"
+            widget: "color"
+            hint: "Valore attuale: #0d2d36 — sfondo scuro generale"
+          - label: "Colore testo su sfondo chiaro"
+            name: "testo_scuro"
+            widget: "color"
+            hint: "Valore attuale: #1a1a1a"
+
+  # ── MANUTENZIONE ───────────────────────────────────────────
+  - name: "sito_manutenzione"
+    label: "🔧 Manutenzione sito"
+    files:
+      - label: "Manutenzione"
+        name: "manutenzione"
+        file: "_sito/manutenzione.json"
+        fields:
+          - label: "🔴 ATTIVA modalità manutenzione"
+            name: "attiva"
+            widget: "boolean"
+            default: false
+            hint: "Se attivo, i visitatori vedono solo la pagina di manutenzione"
+          - label: "Titolo pagina manutenzione"
+            name: "titolo"
+            widget: "string"
+            hint: "Es: Sito in manutenzione"
+          - label: "Testo descrittivo"
+            name: "testo"
+            widget: "text"
+            hint: "Messaggio mostrato ai visitatori durante la manutenzione"
+          - label: "Data riapertura prevista (opzionale)"
+            name: "data_riapertura"
+            widget: "string"
+            required: false
+            hint: "Es: Lunedì 15 aprile 2026"
+          - label: "Email di contatto per urgenze"
+            name: "email"
+            widget: "string"
+            required: false
+            hint: "Appare come link di contatto sulla pagina"
+          - label: "Mostra logo P.A.S.T."
+            name: "mostra_logo"
+            widget: "boolean"
+            default: true
+
+  # ── BANNER ANNUNCIO ─────────────────────────────────────────
+  - name: "sito_banner"
+    label: "📢 Banner annuncio"
+    files:
+      - label: "Banner"
+        name: "banner"
+        file: "_sito/banner.json"
+        fields:
+          - label: "✅ Mostra banner"
+            name: "attivo"
+            widget: "boolean"
+            default: false
+            hint: "Se attivo, appare una striscia colorata in cima ad ogni pagina"
+          - label: "Testo del banner"
+            name: "testo"
+            widget: "string"
+            hint: "Es: Nuovo evento in arrivo — segui i nostri canali social!"
+          - label: "Link (opzionale)"
+            name: "link"
+            widget: "string"
+            required: false
+            hint: "Se vuoi che il bottone porti da qualche parte"
+          - label: "Testo del link"
+            name: "link_testo"
+            widget: "string"
+            required: false
+            hint: "Es: Scopri di più"
+          - label: "Colore banner"
+            name: "colore"
+            widget: "select"
+            options:
+              - { label: "Blu (predefinito)", value: "blu" }
+              - { label: "Oro / Giallo", value: "oro" }
+              - { label: "Verde", value: "verde" }
+              - { label: "Rosso / Borgogna", value: "rosso" }
+              - { label: "Grigio scuro", value: "grigio" }
+
+  # ── IN EVIDENZA ─────────────────────────────────────────────
+  - name: "sito_in_evidenza"
+    label: "⭐ In evidenza"
+    files:
+      - label: "In evidenza"
+        name: "in-evidenza"
+        file: "_sito/in-evidenza.json"
+        fields:
+          - label: "✅ Mostra sezione"
+            name: "attivo"
+            widget: "boolean"
+            default: false
+            hint: "Se attivo, la sezione 'In evidenza' appare sulla home o sulla pagina designata"
+          - label: "Titolo sezione"
+            name: "titolo"
+            widget: "string"
+          - label: "Testo / contenuto"
+            name: "contenuto"
+            widget: "text"
+          - label: "Link del bottone (opzionale)"
+            name: "link"
+            widget: "string"
+            required: false
+          - label: "Testo del bottone"
+            name: "link_testo"
+            widget: "string"
+            required: false
+            hint: "Es: Scopri di più"
+          - label: "Immagine (opzionale)"
+            name: "immagine"
+            widget: "image"
+            required: false
+
+  # ── RECENSIONI ──────────────────────────────────────────────
+  - name: "sito_recensioni"
+    label: "⭐ Recensioni visitatori"
+    files:
+      - label: "Recensioni"
+        name: "recensioni"
+        file: "_sito/recensioni.json"
+        fields:
+          - label: "✅ Mostra sezione"
+            name: "attivo"
+            widget: "boolean"
+            default: false
+          - label: "Titolo sezione"
+            name: "titolo_sezione"
+            widget: "string"
+            hint: "Es: Cosa dicono i visitatori"
+          - label: "Recensioni"
+            name: "recensioni"
+            widget: "list"
+            fields:
+              - label: "Nome visitatore"
+                name: "nome"
+                widget: "string"
+              - label: "Testo recensione"
+                name: "testo"
+                widget: "text"
+              - label: "Stelle (1–5)"
+                name: "stelle"
+                widget: "number"
+                min: 1
+                max: 5
+                default: 5
+              - label: "Luogo visitato"
+                name: "luogo"
+                widget: "string"
+                required: false
+              - label: "Data"
+                name: "data"
+                widget: "string"
+                required: false
+                hint: "Es: Settembre 2026"
+
+  # ── RASSEGNA STAMPA ─────────────────────────────────────────
+  - name: "sito_rassegna_stampa"
+    label: "📰 Rassegna stampa"
+    files:
+      - label: "Rassegna stampa"
+        name: "rassegna-stampa"
+        file: "_sito/rassegna-stampa.json"
+        fields:
+          - label: "✅ Mostra sezione"
+            name: "attivo"
+            widget: "boolean"
+            default: false
+          - label: "Titolo sezione"
+            name: "titolo_sezione"
+            widget: "string"
+            hint: "Es: Rassegna stampa"
+          - label: "Articoli"
+            name: "articoli"
+            widget: "list"
+            fields:
+              - label: "Testata giornalistica"
+                name: "testata"
+                widget: "string"
+                hint: "Es: La Sicilia"
+              - label: "Titolo articolo"
+                name: "titolo"
+                widget: "string"
+              - label: "Data pubblicazione"
+                name: "data"
+                widget: "string"
+                hint: "Es: Luglio 2026"
+              - label: "URL online (opzionale)"
+                name: "url"
+                widget: "string"
+                required: false
+              - label: "PDF allegato (opzionale)"
+                name: "pdf"
+                widget: "file"
+                required: false
+
+  # ── FAQ ─────────────────────────────────────────────────────
+  - name: "sito_faq"
+    label: "❓ FAQ — Domande frequenti"
+    files:
+      - label: "FAQ"
+        name: "faq"
+        file: "_sito/faq.json"
+        fields:
+          - label: "✅ Mostra sezione FAQ"
+            name: "attivo"
+            widget: "boolean"
+            default: false
+          - label: "Titolo sezione"
+            name: "titolo_sezione"
+            widget: "string"
+            hint: "Es: Domande frequenti"
+          - label: "Domande"
+            name: "domande"
+            widget: "list"
+            fields:
+              - label: "Domanda"
+                name: "domanda"
+                widget: "string"
+              - label: "Risposta"
+                name: "risposta"
+                widget: "text"
+
+  # ── TEAM ────────────────────────────────────────────────────
+  - name: "sito_team"
+    label: "👥 Team / Staff"
+    files:
+      - label: "Team"
+        name: "team"
+        file: "_sito/team.json"
+        fields:
+          - label: "✅ Mostra sezione team"
+            name: "attivo"
+            widget: "boolean"
+            default: false
+          - label: "Titolo sezione"
+            name: "titolo_sezione"
+            widget: "string"
+            hint: "Es: Il team"
+          - label: "Membri"
+            name: "membri"
+            widget: "list"
+            fields:
+              - label: "Nome e cognome"
+                name: "nome"
+                widget: "string"
+              - label: "Ruolo"
+                name: "ruolo"
+                widget: "string"
+              - label: "Bio breve"
+                name: "bio"
+                widget: "text"
+                required: false
+              - label: "Foto"
+                name: "foto"
+                widget: "image"
+                required: false
+              - label: "Email"
+                name: "email"
+                widget: "string"
+                required: false
+
+  # ── NEWSLETTER ──────────────────────────────────────────────
+  - name: "sito_newsletter"
+    label: "📧 Newsletter"
+    files:
+      - label: "Newsletter"
+        name: "newsletter"
+        file: "_sito/newsletter.json"
+        fields:
+          - label: "✅ Mostra sezione newsletter"
+            name: "attivo"
+            widget: "boolean"
+            default: false
+          - label: "Titolo sezione"
+            name: "titolo"
+            widget: "string"
+            hint: "Es: Resta aggiornato"
+          - label: "Testo descrittivo"
+            name: "testo"
+            widget: "text"
+          - label: "Placeholder campo email"
+            name: "placeholder"
+            widget: "string"
+            hint: "Es: La tua email"
+          - label: "Testo bottone iscrizione"
+            name: "bottone"
+            widget: "string"
+            hint: "Es: Iscriviti"
+          - label: "URL form Mailchimp"
+            name: "mailchimp_url"
+            widget: "string"
+            required: false
+            hint: "URL action del form Mailchimp (opzionale)"
+          - label: "Testo informativa privacy"
+            name: "privacy_testo"
+            widget: "string"
+            required: false
+          - label: "URL pagina privacy"
+            name: "privacy_url"
+            widget: "string"
+            required: false
+
+  # ── OPEN GRAPH / SOCIAL ─────────────────────────────────────
+  - name: "sito_og"
+    label: "🌐 Social / Open Graph"
+    files:
+      - label: "Open Graph"
+        name: "og"
+        file: "_sito/og.json"
+        fields:
+          - label: "Titolo predefinito (OG)"
+            name: "og_titolo"
+            widget: "string"
+            hint: "Titolo che appare quando si condivide il sito sui social"
+          - label: "Descrizione predefinita (OG)"
+            name: "og_descrizione"
+            widget: "text"
+            hint: "Descrizione che appare quando si condivide il sito"
+          - label: "Immagine predefinita (OG)"
+            name: "og_immagine"
+            widget: "image"
+            required: false
+            hint: "Immagine mostrata nei link condivisi (1200×630 px consigliata)"
+          - label: "URL sito"
+            name: "og_url"
+            widget: "string"
+            hint: "Es: https://www.progettopasst.it"
+          - label: "Twitter Card type"
+            name: "twitter_card"
+            widget: "select"
+            options:
+              - { label: "Grande con immagine", value: "summary_large_image" }
+              - { label: "Piccola", value: "summary" }
+          - label: "Twitter @account (opzionale)"
+            name: "twitter_site"
+            widget: "string"
+            required: false
+            hint: "Es: @progettopasst"
+
+  # ── FOOTER — SOCIAL E TESTI ─────────────────────────────────
+  - name: "sito_footer_completo"
+    label: "🔻 Footer — Social e testi"
+    files:
+      - label: "Footer"
+        name: "footer"
+        file: "_sito/footer.json"
+        fields:
+          - label: "Indirizzo"
+            name: "indirizzo"
+            widget: "string"
+          - label: "Email"
+            name: "email"
+            widget: "string"
+          - label: "Copyright"
+            name: "copyright"
+            widget: "string"
+            hint: "Es: © 2026 P.A.S.T. — Associazione Novum 1693"
+          - label: "Testo descrizione footer"
+            name: "testo_descrizione"
+            widget: "text"
+            required: false
+            hint: "Breve frase descrittiva sotto il logo nel footer"
+          - label: "Link Facebook"
+            name: "facebook"
+            widget: "string"
+            required: false
+          - label: "Link Instagram"
+            name: "instagram"
+            widget: "string"
+            required: false
+          - label: "Link YouTube"
+            name: "youtube"
+            widget: "string"
+            required: false
+          - label: "Link TikTok"
+            name: "tiktok"
+            widget: "string"
+            required: false
+
+  # ── IMMAGINI SFONDO PAGINE ──────────────────────────────────
+  - name: "sito_sfondi"
+    label: "🖼️ Immagini sfondo pagine"
+    files:
+      - label: "Sfondi pagine"
+        name: "sfondi"
+        file: "_sito/sfondi.json"
+        fields:
+          - label: "Home — sfondo hero"
+            name: "home"
+            widget: "image"
+            required: false
+            hint: "Lascia vuoto per usare lo sfondo CSS predefinito"
+          - label: "Chi siamo — sfondo banner"
+            name: "chi-siamo"
+            widget: "image"
+            required: false
+          - label: "Contatti — sfondo banner"
+            name: "contatti"
+            widget: "image"
+            required: false
+          - label: "I Luoghi — sfondo banner"
+            name: "i-luoghi"
+            widget: "image"
+            required: false
+          - label: "Eventi — sfondo banner"
+            name: "eventi"
+            widget: "image"
+            required: false
+          - label: "Notizie — sfondo banner"
+            name: "notizie"
+            widget: "image"
+            required: false
+          - label: "Mappa — sfondo banner"
+            name: "mappa"
+            widget: "image"
+            required: false
+          - label: "Vitruvio Card — sfondo banner"
+            name: "le-card"
+            widget: "image"
+            required: false
+          - label: "Prenota — sfondo banner"
+            name: "prenota"
+            widget: "image"
+            required: false
+
+  # ── GALLERIA FOTO ────────────────────────────────────────────
+  - name: "sito_galleria"
+    label: "📷 Galleria fotografica"
+    files:
+      - label: "Galleria"
+        name: "galleria"
+        file: "_sito/galleria.json"
+        fields:
+          - label: "✅ Mostra galleria"
+            name: "attiva"
+            widget: "boolean"
+            default: false
+            hint: "Se attivo, la sezione galleria appare sulla pagina designata"
+          - label: "Titolo sezione"
+            name: "titolo_sezione"
+            widget: "string"
+            hint: "Es: Galleria fotografica"
+          - label: "Foto"
+            name: "foto"
+            widget: "list"
+            hint: "Aggiungi le foto che vuoi mostrare nella galleria"
+            fields:
+              - label: "Foto"
+                name: "url"
+                widget: "image"
+              - label: "Didascalia (opzionale)"
+                name: "didascalia"
+                widget: "string"
+                required: false
+
+  # ── PRIVACY ─────────────────────────────────────────────────
+  - name: "sito_privacy"
+    label: "🔏 Privacy Policy — Testi"
+    files:
+      - label: "Privacy Policy"
+        name: "privacy"
+        file: "_sito/privacy.json"
+        fields:
+          - label: "Titolo pagina"
+            name: "titolo"
+            widget: "string"
+          - label: "Tag / etichetta"
+            name: "tag"
+            widget: "string"
+            hint: "Es: Informativa legale"
+          - label: "Ultimo aggiornamento"
+            name: "ultimo_aggiornamento"
+            widget: "string"
+            hint: "Es: aprile 2025"
+          - label: "Sezioni"
+            name: "sezioni"
+            widget: "list"
+            fields:
+              - label: "Titolo sezione"
+                name: "titolo"
+                widget: "string"
+              - label: "Testo"
+                name: "testo"
+                widget: "text"
+
+  # ── PRENOTA ─────────────────────────────────────────────────
+  - name: "sito_prenota"
+    label: "📋 Prenota — Testi"
+    files:
+      - label: "Prenota"
+        name: "prenota"
+        file: "_sito/prenota.json"
+        fields:
+          - label: "Titolo pagina"
+            name: "titolo"
+            widget: "string"
+            hint: "Es: Prenota la tua visita"
+          - label: "Tag / etichetta"
+            name: "tag"
+            widget: "string"
+            hint: "Es: Prenotazione"
+          - label: "Sottotitolo / descrizione form"
+            name: "sottotitolo"
+            widget: "text"
+            hint: "Testo descrittivo sopra il form di prenotazione"
+          - label: "ID form Formspree"
+            name: "formspree_id"
+            widget: "string"
+            required: false
+            hint: "Inserisci qui l'ID del form Formspree (es: xabc1234)"
+          - label: "Immagine sfondo (opzionale)"
+            name: "immagine_sfondo"
+            widget: "image"
+            required: false
+
+  # ── PERCORSI ────────────────────────────────────────────────
+  - name: "percorsi"
+    label: "🗺 Percorsi"
+    label_singular: "Percorso"
+    folder: "_percorsi"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    identifier_field: "titolo"
+    fields:
+      - label: "Pubblicato"
+        name: "pubblicato"
+        widget: "boolean"
+        default: true
+        hint: "Deseleziona per mettere in bozza (non visibile sul sito)"
+      - label: "Slug (URL)"
+        name: "slug"
+        widget: "string"
+        hint: "Solo lettere minuscole e trattini, es: barocco-ibleo"
+      - label: "Titolo"
+        name: "titolo"
+        widget: "string"
+      - label: "Titolo (EN)"
+        name: "titolo_en"
+        widget: "string"
+        required: false
+      - label: "Sottotitolo"
+        name: "sottotitolo"
+        widget: "string"
+        required: false
+      - label: "Sottotitolo (EN)"
+        name: "sottotitolo_en"
+        widget: "string"
+        required: false
+      - label: "Descrizione"
+        name: "descrizione"
+        widget: "text"
+      - label: "Descrizione (EN)"
+        name: "descrizione_en"
+        widget: "text"
+        required: false
+      - label: "Immagine copertina"
+        name: "immagine"
+        widget: "image"
+        required: false
+      - label: "Durata totale"
+        name: "durata_totale"
+        widget: "string"
+        hint: "Es: 2 ore, 3 ore e mezza"
+        required: false
+      - label: "Difficoltà"
+        name: "difficolta"
+        widget: "select"
+        options: ["Facile", "Media", "Impegnativa"]
+        default: "Facile"
+        required: false
+      - label: "Lingue guida disponibili"
+        name: "lingue_guida"
+        widget: "select"
+        multiple: true
+        options:
+          - { label: "Italiano", value: "it" }
+          - { label: "English", value: "en" }
+          - { label: "Français", value: "fr" }
+          - { label: "Deutsch", value: "de" }
+          - { label: "Español", value: "es" }
+        required: false
+      - label: "Tappe (slug dei luoghi, in ordine)"
+        name: "luoghi"
+        widget: "list"
+        field:
+          label: "Slug luogo"
+          name: "slug"
+          widget: "string"
+          hint: "Inserisci lo slug del luogo, es: san-giorgio"
+        hint: "Aggiungi i luoghi nell'ordine in cui si visitano"
+      # ── Accessibilità ──
+      - label: "♿ Accessibile in sedia a rotelle"
+        name: "accessibile_sedia"
+        widget: "boolean"
+        default: false
+        required: false
+      - label: "🎧 Audioguida disponibile"
+        name: "audioguida"
+        widget: "boolean"
+        default: false
+        required: false
+      - label: "🤟 Disponibile in LIS (Lingua dei Segni)"
+        name: "lingua_segni"
+        widget: "boolean"
+        default: false
+        required: false
+      - label: "Note accessibilità"
+        name: "note_accessibilita"
+        widget: "string"
+        required: false
+        hint: "Es: Alcuni tratti in salita, sedia a rotelle consigliata solo per il tratto pianeggiante"

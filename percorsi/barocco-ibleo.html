@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="page-title">Percorso — P.A.S.T.</title>
+  <meta name="description" content="Percorso tematico P.A.S.T. — Ragusa." />
+  <link rel="icon" href="../img/logo.jpeg" type="image/jpeg" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <a href="../index.html" class="logo"><img src="../img/logo.png" alt="P.A.S.T." /></a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li class="nav-dropdown">
+        <a href="../i-luoghi.html">I Luoghi <span class="dropdown-arrow">▾</span></a>
+        <div class="dropdown-menu" id="luoghi-dropdown"></div>
+      </li>
+      <li><a href="../le-card.html">Card</a></li>
+      <li><a href="../mappa.html">Mappa</a></li>
+      <li><a href="../percorsi.html" class="active">Percorsi</a></li>
+      <li><a href="../eventi.html">Eventi</a></li>
+      <li><a href="../notizie.html">Notizie</a></li>
+      <li><a href="../contatti.html">Contatti</a></li>
+      <li class="lang-switch">
+        <a href="../index.html" class="lang-btn">IT</a>
+        <span class="lang-sep">·</span>
+        <a href="../en/index.html" class="lang-btn">EN</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="ticker-bar">
+    <div class="ticker-label"><span class="ticker-dot"></span>Ultima ora</div>
+    <div class="ticker-window"><div class="ticker-track" id="ticker-track"></div></div>
+  </div>
+
+  <!-- HERO percorso -->
+  <div class="luogo-hero" id="percorso-hero">
+    <div class="luogo-hero-overlay"></div>
+    <div class="luogo-hero-content">
+      <span class="badge-categoria" id="percorso-badge">Percorso</span>
+      <h1 id="percorso-titolo">Caricamento…</h1>
+      <p id="percorso-sottotitolo" style="margin-top:.5rem;opacity:.85;font-size:1.05rem;"></p>
+    </div>
+  </div>
+
+  <div class="luogo-layout">
+    <!-- Colonna principale: descrizione + tappe -->
+    <div class="luogo-descrizione" id="percorso-body">
+      <!-- caricato da JS -->
+    </div>
+
+    <!-- Sidebar info -->
+    <div class="luogo-sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-card-header" style="padding:1rem 1.2rem;">
+          <div style="font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.6;margin-bottom:.3rem;">Durata totale</div>
+          <div class="prezzo" id="percorso-durata" style="font-size:1.4rem;">—</div>
+        </div>
+        <div class="sidebar-card-body" id="percorso-info">
+          <!-- caricato da JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sponsor-bar">
+    <div class="sponsor-bar-label">In collaborazione con:</div>
+    <div class="sponsor-track" id="sponsor-track"></div>
+  </div>
+  <footer>
+    <a href="../index.html" class="footer-logo"><img src="../img/logo.png" alt="P.A.S.T." /></a>
+    <div class="footer-info" id="footer-info">
+      Ragusa &nbsp;·&nbsp;
+      <a href="mailto:novum1693@gmail.com">novum1693@gmail.com</a> &nbsp;·&nbsp;
+      <a href="../privacy.html">Privacy policy</a>
+    </div>
+    <div class="footer-copy" id="footer-copyright">© 2026 GDT</div>
+    <div class="footer-social" id="footer-social"></div>
+  </footer>
+  <div class="cookie-banner" id="cookie-banner">
+    <div class="cookie-testo">Utilizziamo solo cookie tecnici necessari al funzionamento del sito. Leggi la nostra <a href="../privacy.html">Privacy Policy</a>.</div>
+    <div class="cookie-azioni">
+      <button class="btn-cookie-rifiuta" id="cookie-rifiuta">Solo necessari</button>
+      <button class="btn-cookie-accetta" id="cookie-accetta">Accetto</button>
+    </div>
+  </div>
+
+  <script src="../js/data-eventi.js"></script>
+  <script src="../js/data-notizie.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+  (async function() {
+    var slug = window.location.pathname.split('/').pop().replace('.html','');
+    // Se siamo sulla pagina template, non caricare nulla
+    if (slug === '_percorso') return;
+    var base = '../';
+
+    // Carica index percorsi e trova il percorso giusto
+    var idx = null;
+    try { var r = await fetch(base + '_percorsi/index.json'); if (r.ok) idx = await r.json(); } catch(e) {}
+    var dati = null;
+    if (idx) dati = idx.find(function(p){ return p.slug === slug; });
+    if (!dati) { document.getElementById('percorso-titolo').textContent = 'Percorso non trovato'; return; }
+
+    var lingua = localStorage.getItem('past_lingua') || 'it';
+    function tl(it, en) { return (lingua === 'en' && en) ? en : (it || ''); }
+
+    // Titolo e header
+    document.getElementById('page-title').textContent = tl(dati.titolo, dati.titolo_en) + ' — P.A.S.T.';
+    document.getElementById('percorso-titolo').textContent = tl(dati.titolo, dati.titolo_en);
+    document.getElementById('percorso-sottotitolo').textContent = tl(dati.sottotitolo, dati.sottotitolo_en);
+
+    // Hero immagine
+    if (dati.immagine) {
+      var hero = document.getElementById('percorso-hero');
+      hero.style.backgroundImage = "url('" + base + dati.immagine.replace(/^\//,'') + "')";
+      hero.style.backgroundSize = 'cover';
+      hero.style.backgroundPosition = 'center';
+    }
+
+    // Durata
+    if (dati.durata_totale) document.getElementById('percorso-durata').textContent = '⏱ ' + dati.durata_totale;
+
+    // Icone accessibilità
+    var acc = '';
+    if (dati.accessibile_sedia) acc += '<span title="Accessibile in sedia a rotelle">♿</span> ';
+    if (dati.audioguida) acc += '<span title="Audioguida disponibile">🎧</span> ';
+    if (dati.lingua_segni) acc += '<span title="Disponibile in LIS">🤟</span> ';
+
+    // Badge lingue guida
+    var labelLingua = { it: 'Italiano', en: 'English', fr: 'Français', de: 'Deutsch', es: 'Español' };
+    var lingueBadge = '';
+    if (dati.lingue_guida && dati.lingue_guida.length > 0) {
+      lingueBadge = dati.lingue_guida.map(function(l) {
+        return '<span style="display:inline-block;font-size:.7rem;font-weight:700;border:1px solid var(--oro,#b8972c);color:var(--oro,#b8972c);border-radius:4px;padding:.1rem .45rem;margin-right:.3rem;">' + (labelLingua[l] || l.toUpperCase()) + '</span>';
+      }).join('');
+    }
+
+    // Sidebar info
+    var info = '';
+    if (dati.difficolta) info += '<div class="info-row"><div class="etichetta">Difficoltà</div><div class="valore">' + dati.difficolta + '</div></div>';
+    if (dati.luoghi && dati.luoghi.length) info += '<div class="info-row"><div class="etichetta">Tappe</div><div class="valore">' + dati.luoghi.length + ' luoghi</div></div>';
+    if (lingueBadge) info += '<div class="info-row"><div class="etichetta">Guide</div><div class="valore">' + lingueBadge + '</div></div>';
+    if (acc) info += '<div class="info-row"><div class="etichetta">Accessibilità</div><div class="valore" style="font-size:1.1rem;letter-spacing:.15rem;">' + acc.trim() + '</div></div>';
+    if (dati.note_accessibilita) info += '<div class="info-row" style="grid-column:1/-1;"><div class="etichetta">Note</div><div class="valore" style="font-size:.82rem;opacity:.75;">' + dati.note_accessibilita + '</div></div>';
+    document.getElementById('percorso-info').innerHTML = info;
+
+    // Corpo principale: descrizione + tappe
+    var body = '<p style="line-height:1.85;margin-bottom:2rem;">' + tl(dati.descrizione, dati.descrizione_en) + '</p>';
+    body += '<h2 style="font-size:1.1rem;letter-spacing:.06em;text-transform:uppercase;opacity:.5;margin-bottom:1.2rem;">Le tappe</h2>';
+    body += '<div id="tappe-lista"><p style="opacity:.5;">Caricamento tappe…</p></div>';
+    body += '<a href="../percorsi.html" class="back-link" style="margin-top:2rem;display:inline-block;">← Tutti i percorsi</a>';
+    document.getElementById('percorso-body').innerHTML = body;
+
+    // Carica dettagli dei luoghi (tappe) in parallelo
+    if (dati.luoghi && dati.luoghi.length > 0) {
+      var promises = dati.luoghi.map(function(s) {
+        return fetch(base + '_luoghi/' + s + '.json').then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; });
+      });
+      var luoghiDati = await Promise.all(promises);
+
+      var tappeHtml = luoghiDati.map(function(l, i) {
+        if (!l) return '';
+        var imgStyle = l.immagine ? 'background-image:url("' + base + l.immagine.replace(/^\//,'') + '");background-size:cover;background-position:center;' : 'background:rgba(255,255,255,.05);';
+        var titolol = tl(l.titolo, l.titolo_en);
+        var descl = tl(l.descrizione_breve, l.descrizione_breve_en);
+
+        // Icone accessibilità del singolo luogo
+        var accL = '';
+        if (l.accessibile_sedia) accL += '<span title="♿ Sedia a rotelle">♿</span>';
+        if (l.audioguida) accL += '<span title="🎧 Audioguida">🎧</span>';
+        if (l.lingua_segni) accL += '<span title="🤟 LIS">🤟</span>';
+
+        // Durata visita del singolo luogo
+        var durataL = l.durata_visita ? '<span style="font-size:.72rem;background:rgba(184,151,44,.12);color:var(--oro,#b8972c);border:1px solid var(--oro,#b8972c);border-radius:4px;padding:.1rem .4rem;">⏱ ' + l.durata_visita + '</span>' : '';
+
+        return '<div style="display:flex;gap:1.2rem;align-items:flex-start;padding:1.2rem 0;border-bottom:1px solid rgba(255,255,255,.07);">'
+          + '<div style="min-width:36px;min-height:36px;width:36px;height:36px;border-radius:50%;background:var(--oro,#b8972c);color:#fff;font-weight:800;font-size:.95rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + (i+1) + '</div>'
+          + '<div style="display:flex;gap:1rem;flex:1;flex-wrap:wrap;">'
+          + '<div style="width:80px;height:70px;border-radius:8px;flex-shrink:0;' + imgStyle + '"></div>'
+          + '<div style="flex:1;min-width:140px;">'
+          + '<div style="font-weight:700;margin-bottom:.25rem;">' + titolol + '</div>'
+          + '<div style="font-size:.83rem;opacity:.65;line-height:1.5;margin-bottom:.4rem;">' + descl + '</div>'
+          + '<div style="display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;">'
+          + durataL
+          + (accL ? '<span style="font-size:.9rem;letter-spacing:.1rem;">' + accL + '</span>' : '')
+          + '<a href="../luoghi/' + (l.slug || dati.luoghi[i]) + '.html" style="font-size:.78rem;color:var(--oro,#b8972c);text-decoration:none;margin-left:auto;">Scopri →</a>'
+          + '</div></div></div></div>';
+      }).join('');
+
+      document.getElementById('tappe-lista').innerHTML = tappeHtml || '<p style="opacity:.5;">Nessuna tappa trovata.</p>';
+    }
+  })();
+  </script>
+</body>
+</html>

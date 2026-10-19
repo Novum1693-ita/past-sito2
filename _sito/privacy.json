@@ -1,0 +1,32 @@
+{
+  "titolo": "Privacy Policy",
+  "tag": "Informativa legale",
+  "ultimo_aggiornamento": "aprile 2025",
+  "titolare": "Associazione Novum 1693 - Cantiere Culturale · Via Salita Duomo 13, 97100 Ragusa · info@novum1693.it",
+  "sezioni": [
+    {
+      "titolo": "1. Titolare del trattamento",
+      "testo": "Associazione Novum 1693 - Cantiere Culturale · Via Salita Duomo 13, 97100 Ragusa · info@novum1693.it"
+    },
+    {
+      "titolo": "2. Dati raccolti",
+      "testo": "Dati di navigazione tecnici (IP, browser, pagine visitate) e dati forniti volontariamente nei moduli di contatto (nome, email). Nessun cookie di profilazione o tracciamento."
+    },
+    {
+      "titolo": "3. Finalità",
+      "testo": "Rispondere alle richieste di informazioni e prenotazione (base giuridica: esecuzione contratto, art. 6 lett. b GDPR). Sicurezza del sito (legittimo interesse, art. 6 lett. f GDPR)."
+    },
+    {
+      "titolo": "4. Conservazione",
+      "testo": "I dati sono conservati per il tempo necessario alle finalità indicate, comunque non oltre 24 mesi dall'ultimo contatto."
+    },
+    {
+      "titolo": "5. Diritti",
+      "testo": "Hai diritto di accedere, rettificare, cancellare i tuoi dati. Scrivi a info@novum1693.it."
+    },
+    {
+      "titolo": "6. Cookie",
+      "testo": "Solo cookie tecnici di prima parte necessari al funzionamento. Nessun cookie pubblicitario o di profilazione di terze parti."
+    }
+  ]
+}

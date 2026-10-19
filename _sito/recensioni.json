@@ -1,0 +1,13 @@
+{
+  "attivo": false,
+  "titolo_sezione": "Cosa dicono i visitatori",
+  "recensioni": [
+    {
+      "nome": "Maria R.",
+      "testo": "Un'esperienza indimenticabile. La guida era preparatissima e il Duomo di San Giorgio è meraviglioso.",
+      "stelle": 5,
+      "luogo": "Duomo San Giorgio",
+      "data": "Settembre 2026"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sito in manutenzione — P.A.S.T.</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="icon" href="img/logo.jpeg" type="image/jpeg" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Georgia', serif;
+      background: #f5f0e8;
+      color: #1a3a5c;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+    .logo-wrap { margin-bottom: 2.5rem; }
+    .logo-wrap img { max-height: 80px; width: auto; }
+    h1 {
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      margin-bottom: 1rem;
+      letter-spacing: .04em;
+    }
+    p {
+      font-size: 1.05rem;
+      max-width: 480px;
+      line-height: 1.7;
+      opacity: .8;
+      margin-bottom: 1.2rem;
+    }
+    .data-riapertura {
+      display: inline-block;
+      background: #1a3a5c;
+      color: #f5f0e8;
+      padding: .4rem 1.2rem;
+      border-radius: 4px;
+      font-size: .9rem;
+      margin-top: .6rem;
+    }
+    .contatto {
+      margin-top: 2rem;
+      font-size: .9rem;
+      opacity: .65;
+    }
+    .contatto a { color: inherit; text-decoration: underline; }
+    .divisore {
+      width: 60px;
+      height: 2px;
+      background: #b8972c;
+      margin: 1.5rem auto;
+    }
+    .admin-link {
+      position: fixed;
+      bottom: 1.2rem;
+      right: 1.4rem;
+      font-size: .72rem;
+      color: rgba(26,58,92,.3);
+      text-decoration: none;
+      letter-spacing: .04em;
+    }
+    .admin-link:hover { color: #b8972c; }
+  </style>
+</head>
+<body>
+  <div class="logo-wrap" id="logo-wrap">
+    <img src="img/logo.png" alt="P.A.S.T." id="logo-img" />
+  </div>
+  <h1 id="titolo-manutenzione">Sito in manutenzione</h1>
+  <div class="divisore"></div>
+  <p id="testo-manutenzione">Stiamo lavorando per migliorare il sito. Torneremo presto.</p>
+  <div id="data-riapertura-wrap" style="display:none;">
+    <div class="data-riapertura" id="data-riapertura"></div>
+  </div>
+  <div class="contatto" id="contatto-wrap" style="display:none;">
+    Per urgenze: <a href="#" id="email-contatto"></a>
+  </div>
+
+  <!-- Link admin discreto sempre visibile sulla pagina manutenzione -->
+  <a href="/admin/" class="admin-link" title="Accesso amministratori">⚙</a>
+
+  <script>
+    async function caricaManutenzione() {
+      try {
+        var r = await fetch('_sito/manutenzione.json');
+        if (!r.ok) return;
+        var d = await r.json();
+        if (d.titolo) document.getElementById('titolo-manutenzione').textContent = d.titolo;
+        if (d.testo) document.getElementById('testo-manutenzione').textContent = d.testo;
+        if (d.data_riapertura) {
+          var w = document.getElementById('data-riapertura-wrap');
+          document.getElementById('data-riapertura').textContent = 'Riapertura prevista: ' + d.data_riapertura;
+          w.style.display = '';
+        }
+        if (d.email) {
+          var cw = document.getElementById('contatto-wrap');
+          var el = document.getElementById('email-contatto');
+          el.href = 'mailto:' + d.email;
+          el.textContent = d.email;
+          cw.style.display = '';
+        }
+        if (d.mostra_logo === false) {
+          document.getElementById('logo-wrap').style.display = 'none';
+        }
+      } catch(e) {}
+    }
+    caricaManutenzione();
+  </script>
+</body>
+</html>
