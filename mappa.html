@@ -206,48 +206,9 @@
     </div>
   </div>
 
-  <!-- ELENCO ORIZZONTALE -->
+  <!-- ELENCO ORIZZONTALE — generato dinamicamente da _luoghi/index.json -->
   <div class="mappa-elenco" id="elenco-luoghi">
-    <a class="luogo-chip" data-id="san-giorgio" data-tipo="unico" href="luoghi/san-giorgio.html" onclick="seleziona(event,'san-giorgio')">
-      <div class="chip-icona">⛪</div>
-      <div class="chip-info"><h4>Duomo San Giorgio</h4><p>Unicità · € 3,00</p></div>
-    </a>
-    <a class="luogo-chip" data-id="museo-del-duomo" data-tipo="museo" href="luoghi/museo-del-duomo.html" onclick="seleziona(event,'museo-del-duomo')">
-      <div class="chip-icona">🏛</div>
-      <div class="chip-info"><h4>Museo del Duomo</h4><p>Museo · € 3,00</p></div>
-    </a>
-    <a class="luogo-chip" data-id="san-giacomo" data-tipo="chiesa" href="luoghi/san-giacomo.html" onclick="seleziona(event,'san-giacomo')">
-      <div class="chip-icona">⛪</div>
-      <div class="chip-info"><h4>San Giacomo</h4><p>Chiesa · € 2,00</p></div>
-    </a>
-    <a class="luogo-chip" data-id="maddalena" data-tipo="chiesa" href="luoghi/maddalena.html" onclick="seleziona(event,'maddalena')">
-      <div class="chip-icona">⛪</div>
-      <div class="chip-info"><h4>S.M. Maddalena</h4><p>Chiesa · € 2,00</p></div>
-    </a>
-    <a class="luogo-chip" data-id="obsculta" data-tipo="museo" href="luoghi/obsculta.html" onclick="seleziona(event,'obsculta')">
-      <div class="chip-icona">🏛</div>
-      <div class="chip-info"><h4>Obsculta</h4><p>Museo · € 4,00</p></div>
-    </a>
-    <a class="luogo-chip" data-id="museo-cattedrale" data-tipo="museo" href="luoghi/museo-cattedrale.html" onclick="seleziona(event,'museo-cattedrale')">
-      <div class="chip-icona">🏛</div>
-      <div class="chip-info"><h4>Museo Cattedrale</h4><p>Museo · € 3,00</p></div>
-    </a>
-    <a class="luogo-chip" data-id="cattedrale" data-tipo="chiesa" href="luoghi/cattedrale.html" onclick="seleziona(event,'cattedrale')">
-      <div class="chip-icona">⛪</div>
-      <div class="chip-info"><h4>Cattedrale S. Giovanni</h4><p>Chiesa · Gratuito</p></div>
-    </a>
-    <a class="luogo-chip" data-id="purgatorio" data-tipo="chiesa" href="luoghi/purgatorio.html" onclick="seleziona(event,'purgatorio')">
-      <div class="chip-icona">⛪</div>
-      <div class="chip-info"><h4>Anime Purgatorio</h4><p>Chiesa · € 2,00</p></div>
-    </a>
-    <a class="luogo-chip" data-id="itria" data-tipo="chiesa" href="luoghi/itria.html" onclick="seleziona(event,'itria')">
-      <div class="chip-icona">⛪</div>
-      <div class="chip-info"><h4>S.M. dell'Itria</h4><p>Chiesa · € 2,00</p></div>
-    </a>
-    <a class="luogo-chip" data-id="scale" data-tipo="chiesa" href="luoghi/scale.html" onclick="seleziona(event,'scale')">
-      <div class="chip-icona">⛪</div>
-      <div class="chip-info"><h4>S.M. delle Scale</h4><p>Chiesa · € 2,00</p></div>
-    </a>
+    <div style="padding:1rem 1.5rem;opacity:.4;font-size:.8rem;">Caricamento luoghi…</div>
   </div>
 
   <!-- MAPPA GOOGLE + CARD INFO -->
@@ -303,27 +264,98 @@
   <script src="js/main.js"></script>
 
   <script>
-  /* ── Dati luoghi con coordinate per zoom Google Maps ── */
-  var LUOGHI = {
-    'san-giorgio':      { nome:'Chiesa Madre e Duomo San Giorgio',   orari:'Tutti i giorni 9:00–19:00',       prezzo:'€ 3,00',    link:'luoghi/san-giorgio.html',      lat:36.92573, lng:14.74493 },
-    'museo-del-duomo':  { nome:'Museo del Duomo',                    orari:'Lun–Sab 10:00–13:00 / 16:00–19:00', prezzo:'€ 3,00', link:'luoghi/museo-del-duomo.html',  lat:36.92560, lng:14.74510 },
-    'san-giacomo':      { nome:'Chiesa di San Giacomo Apostolo',      orari:'Tutti i giorni 10:30–17:30',      prezzo:'€ 2,00',    link:'luoghi/san-giacomo.html',      lat:36.92650, lng:14.74320 },
-    'maddalena':        { nome:'Chiesa di Santa Maria Maddalena',     orari:'Tutti i giorni 10:00–17:00',      prezzo:'€ 2,00',    link:'luoghi/maddalena.html',        lat:36.92710, lng:14.74400 },
-    'obsculta':         { nome:'Museo Benedettino Obsculta',          orari:'Mar–Dom 9:30–17:00',              prezzo:'€ 4,00',    link:'luoghi/obsculta.html',         lat:36.92480, lng:14.74280 },
-    'museo-cattedrale': { nome:'Museo della Cattedrale',              orari:'Mar–Sab 10:00–17:00',             prezzo:'€ 3,00',    link:'luoghi/museo-cattedrale.html', lat:36.92390, lng:14.74620 },
-    'cattedrale':       { nome:'Cattedrale San Giovanni Battista',    orari:'Tutti i giorni 8:00–19:00',       prezzo:'Gratuito',  link:'luoghi/cattedrale.html',       lat:36.92370, lng:14.74650 },
-    'purgatorio':       { nome:'Chiesa Anime Sante del Purgatorio',   orari:'Sab–Dom 10:00–13:00',             prezzo:'€ 2,00',    link:'luoghi/purgatorio.html',       lat:36.92540, lng:14.74430 },
-    'itria':            { nome:"Chiesa di Santa Maria dell'Itria",    orari:'Tutti i giorni 10:00–17:00',      prezzo:'€ 2,00',    link:'luoghi/itria.html',            lat:36.92680, lng:14.74460 },
-    'scale':            { nome:'Chiesa di Santa Maria delle Scale',   orari:'Tutti i giorni 10:00–17:00',      prezzo:'€ 2,00',    link:'luoghi/scale.html',            lat:36.92450, lng:14.74180 },
+  /* ── Icone per categoria ── */
+  var ICONE_CAT = {
+    'Unicità': '⭐', 'Musei': '🏛', 'Chiese': '⛪',
+    'Palazzi': '🏰', 'Siti Archeologici': '🏺', 'Campanili': '🔔', 'Altro': '📍'
+  };
+  /* ── Mappa categoria → tipo filtro ── */
+  var TIPO_CAT = {
+    'Unicità': 'unico', 'Musei': 'museo', 'Chiese': 'chiesa',
+    'Palazzi': 'palazzo', 'Siti Archeologici': 'sito', 'Campanili': 'campanile', 'Altro': 'altro'
   };
 
-  /* Cliccando un chip: mostra card + sposta la mappa Google sul luogo */
+  var LUOGHI_MAP = {}; /* id → dati luogo, costruito dinamicamente */
+
+  function prezzoBreve(l) {
+    if (l.tariffe && l.tariffe.length) return l.tariffe[0].prezzo || '';
+    return l.prezzo || '';
+  }
+
+  function costruisciMappa(luoghi) {
+    var elenco = document.getElementById('elenco-luoghi');
+    elenco.innerHTML = '';
+    /* Contatori per i filtri */
+    var contat = { tutti: 0, unico: 0, museo: 0, chiesa: 0 };
+
+    luoghi.forEach(function(l) {
+      if (l.pubblicato === false) return;
+      var slug = l.slug || '';
+      var cat  = l.categoria || 'Altro';
+      var tipo = TIPO_CAT[cat] || 'altro';
+      var icona = ICONE_CAT[cat] || '📍';
+      var prezzo = prezzoBreve(l);
+      var link = 'luoghi/' + slug + '.html';
+
+      LUOGHI_MAP[slug] = {
+        nome: l.titolo || slug,
+        orari: l.orari || '',
+        prezzo: prezzo,
+        link: link,
+        lat: parseFloat(l.lat) || 0,
+        lng: parseFloat(l.lng) || 0
+      };
+
+      contat.tutti++;
+      if (contat[tipo] !== undefined) contat[tipo]++;
+
+      var chip = document.createElement('a');
+      chip.className = 'luogo-chip';
+      chip.dataset.id   = slug;
+      chip.dataset.tipo = tipo;
+      chip.href = link;
+      chip.addEventListener('click', function(e) { seleziona(e, slug); });
+      chip.innerHTML =
+        '<div class="chip-icona">' + icona + '</div>' +
+        '<div class="chip-info"><h4>' + (l.titolo || slug) + '</h4>' +
+        '<p>' + cat + (prezzo ? ' · ' + prezzo : '') + '</p></div>';
+      elenco.appendChild(chip);
+    });
+
+    /* Aggiorna contatori pillole filtro */
+    var pills = document.querySelectorAll('.mappa-filtri .filter-pill');
+    pills.forEach(function(p) {
+      var f = p.dataset.filtro;
+      var n = contat[f];
+      if (n !== undefined) {
+        p.textContent = p.textContent.replace(/\s*\(\d+\)/, '') + ' (' + n + ')';
+      }
+    });
+  }
+
+  /* Carica _luoghi/index.json */
+  (function() {
+    var base = (function() {
+      var s = document.createElement('script');
+      s.src = 'js/main.js';
+      var p = location.pathname.replace(/\/[^/]*$/, '/');
+      return p.replace(/\/$/, '');
+    })();
+    fetch('_luoghi/index.json')
+      .then(function(r) { return r.json(); })
+      .then(function(data) { costruisciMappa(data); })
+      .catch(function() {
+        document.getElementById('elenco-luoghi').innerHTML =
+          '<div style="padding:1rem 1.5rem;opacity:.4;font-size:.8rem;">Nessun luogo trovato.</div>';
+      });
+  })();
+
+  /* ── Interazione ── */
   function seleziona(e, id) {
     e.preventDefault();
-    var l = LUOGHI[id];
+    var l = LUOGHI_MAP[id];
     if (!l) return;
 
-    /* Evidenzia chip */
     document.querySelectorAll('.luogo-chip').forEach(function(c) { c.classList.remove('attivo'); });
     var chip = document.querySelector('.luogo-chip[data-id="' + id + '"]');
     if (chip) {
@@ -331,24 +363,23 @@
       chip.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
     }
 
-    /* Aggiorna card info */
     document.getElementById('info-nome').textContent   = l.nome;
     document.getElementById('info-orari').textContent  = l.orari;
     document.getElementById('info-prezzo').textContent = l.prezzo;
     document.getElementById('info-link').href          = l.link;
     document.getElementById('info-card').classList.add('visibile');
 
-    /* Ricentra la mappa My Maps sul luogo selezionato mantenendo i pin P.A.S.T. */
-    var iframe = document.getElementById('mappa-iframe');
-    var mid = '1S449ICv_CNpwOx4PlJXmTKXuxqRYaKo';
-    iframe.src = 'https://www.google.com/maps/d/embed?mid=' + mid
-      + '&ll=' + l.lat + '%2C' + l.lng + '&z=19';
+    if (l.lat && l.lng) {
+      var mid = '1S449ICv_CNpwOx4PlJXmTKXuxqRYaKo';
+      document.getElementById('mappa-iframe').src =
+        'https://www.google.com/maps/d/embed?mid=' + mid +
+        '&ll=' + l.lat + '%2C' + l.lng + '&z=19';
+    }
   }
 
   function chiudiInfo() {
     document.getElementById('info-card').classList.remove('visibile');
     document.querySelectorAll('.luogo-chip').forEach(function(c) { c.classList.remove('attivo'); });
-    /* Ripristina la mappa originale */
     document.getElementById('mappa-iframe').src =
       'https://www.google.com/maps/d/embed?mid=1S449ICv_CNpwOx4PlJXmTKXuxqRYaKo&ll=36.926022543157686%2C14.738625899999978&z=17';
   }

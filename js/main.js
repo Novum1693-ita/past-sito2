@@ -139,6 +139,22 @@ async function fetchJSON(url) {
   catch (e) { return null; }
 }
 
+/* Renderizza lista tariffe [ {etichetta, prezzo} ] come HTML */
+function renderTariffe(tariffe, fallbackPrezzo) {
+  if (tariffe && Array.isArray(tariffe) && tariffe.length > 0) {
+    var righe = tariffe.map(function(t) {
+      return '<span class="tariffa-riga"><span class="tariffa-label">' + (t.etichetta || '') + '</span>'
+           + '<span class="tariffa-prezzo">' + (t.prezzo || '') + '</span></span>';
+    }).join('');
+    return '<div class="tariffe-box">' + righe + '</div>';
+  }
+  // fallback: vecchio campo prezzo stringa
+  if (fallbackPrezzo) {
+    return '<div class="tariffe-box"><span class="tariffa-riga"><span class="tariffa-prezzo">' + fallbackPrezzo + '</span></span></div>';
+  }
+  return '';
+}
+
 /* ──────────────────────────────────────────
    TICKER
 ────────────────────────────────────────── */
@@ -283,6 +299,7 @@ function renderCardEvento(ev, base) {
       + '&location=' + encodeURIComponent(ev.luogo || 'Ragusa');
     calBtn = '<a href="' + gcUrl + '" target="_blank" rel="noopener" style="font-size:.75rem;color:var(--oro,#b8972c);text-decoration:none;margin-left:.8rem;" title="Aggiungi al calendario">📅 +Cal</a>';
   }
+  var tariffeHtml = renderTariffe(ev.tariffe, ev.prezzo);
   return '<article class="evento-card" data-categoria="' + (ev.categoria || '') + '" data-mese="' + (ev.mese || '') + '">'
     + '<div class="evento-card-header">'
     + '<div class="evento-data-grande"><span class="giorno">' + (ev.giorno || '&mdash;') + '</span>'
@@ -294,6 +311,7 @@ function renderCardEvento(ev, base) {
     + '</div></div>'
     + '<div class="evento-card-body">'
     + '<p>' + anteprima + '</p>'
+    + tariffeHtml
     + '<a href="' + url + '" class="evento-link">Scopri</a>' + calBtn
     + '</div></article>';
 }
@@ -455,8 +473,8 @@ async function caricaLuoghi() {
       + '<p>' + descrizione + '</p>'
       + '<div class="course-meta">'
       + '<span>' + t(l.orari, l.orari_en) + '</span>'
-      + '<span>' + (l.prezzo || '') + '</span>'
       + '</div>'
+      + renderTariffe(l.tariffe, l.prezzo)
       + iconeAcc
       + '<span class="book-link">Scopri e prenota</span>'
       + '</div></a>';
@@ -824,10 +842,10 @@ async function caricaVitruvioCard() {
     var testo = t(c.testo, c.testo_en);
     var imgHtml = c.immagine ? '<img src="' + base + c.immagine.replace(/^\//, '') + '" alt="' + nome + '" />' : '';
     var widgetHtml = c.widget_id ? '<booking-widget widget-id="' + c.widget_id + '"></booking-widget>' : '';
-    var prezzoHtml = c.prezzo ? '<div style="font-size:.9rem;font-weight:600;color:var(--oro,#b8972c);margin:.5rem 0;">' + c.prezzo + '</div>' : '';
+    var tariffeHtml = renderTariffe(c.tariffe, c.prezzo);
     return '<a href="#" class="vitruvio-card" data-sezione="' + (sezione || '') + '">'
       + '<div class="vitruvio-thumb" style="background:rgba(122,173,101,0.1);">' + imgHtml + '</div>'
-      + '<div class="vitruvio-body"><h3>' + nome + '</h3>' + prezzoHtml + '<p>' + testo + '</p>' + widgetHtml + '</div></a>';
+      + '<div class="vitruvio-body"><h3>' + nome + '</h3>' + tariffeHtml + '<p>' + testo + '</p>' + widgetHtml + '</div></a>';
   }
 
   // Formato nuovo: sezioni[]
