@@ -1,5 +1,15 @@
 [
   {
+    "titolo": "Aperi-culturale",
+    "sottotitolo": "Ore 19:00 - Chiesa S. Giacomo Apostolo",
+    "giorno": "25",
+    "mese": "Set",
+    "categoria": "apertura",
+    "anteprima": "evento prova che non esiste",
+    "badge1": "badge-spettacolo",
+    "url": "eventi/aperi-culturale.html"
+  },
+  {
     "titolo": "Mostra delle Confraternite Iblee",
     "sottotitolo": "21:00-22:00 · Chiesa S. Maria Maddalena",
     "giorno": "19 e 26",
@@ -9,8 +19,19 @@
     "badge1": "badge-mostra",
     "badge2": "badge-spettacolo",
     "immagine": "",
-    "url": "eventi/le-confraternite-iblee.html",
-    "data_completa": "19 e 26 Agosto 2026"
+    "url": "eventi/le-confraternite-iblee.html"
+  },
+  {
+    "titolo": "Novum prova",
+    "sottotitolo": "scrittura prova evento",
+    "giorno": "23",
+    "mese": "Ott",
+    "categoria": "incontro",
+    "anteprima": "prova evento",
+    "badge1": "badge-incontro",
+    "badge2": "badge-gratuito",
+    "immagine": "/img/uploads/whatsapp-image-2026-08-07-at-15.11.44.jpeg",
+    "url": "eventi/novum-prova.html"
   },
   {
     "titolo": "Ragusa Pre-Terremoto",
@@ -22,8 +43,7 @@
     "badge1": "badge-spettacolo",
     "badge2": "",
     "immagine": "",
-    "url": "eventi/ragusa-pre-terremoto.html",
-    "data_completa": "Ogni mercoledì e giovedì di Agosto 2026"
+    "url": "eventi/ragusa-pre-terremoto.html"
   },
   {
     "titolo": "San Giorgio, tra Arte e Leggenda",
@@ -35,7 +55,6 @@
     "badge1": "badge-spettacolo",
     "badge2": "",
     "immagine": "/img/Eventi/Portone.jpeg",
-    "url": "eventi/san-giorgio-arte-leggenda.html",
-    "data_completa": "15 e 22 Agosto 2026"
+    "url": "eventi/san-giorgio-arte-leggenda.html"
   }
 ]
