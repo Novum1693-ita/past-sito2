@@ -1,4 +1,10 @@
 {
+  "tariffe": [
+    {
+      "etichetta": "e",
+      "prezzo": "e"
+    }
+  ],
   "audioguida": true,
   "lng": "14.74493",
   "colore_secondario": "#965801",
