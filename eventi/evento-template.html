@@ -103,22 +103,36 @@
   <script src="../js/main.js"></script>
   <script>
   (async function() {
-    // Ricava lo slug dal nome del file (es: san-giorgio-arte-leggenda.html → san-giorgio-arte-leggenda)
     var slug = window.location.pathname.split('/').pop().replace('.html','');
     var base = '../';
+    var isEN = window.location.pathname.indexOf('/en/') !== -1;
+
+    function md2html(txt) {
+      if (!txt) return '';
+      return '<p>' + txt
+        .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+        .replace(/^## (.+)$/gm,  '<h2>$1</h2>')
+        .replace(/^# (.+)$/gm,   '<h1>$1</h1>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g,     '<em>$1</em>')
+        .replace(/\n\n/g, '</p><p>')
+        .replace(/\n/g, '<br>') + '</p>';
+    }
 
     try {
       var r = await fetch(base + '_eventi/' + slug + '.json');
       if (!r.ok) return;
       var d = await r.json();
 
-      // Titolo pagina
-      if (d.titolo) {
-        document.getElementById('page-title').textContent = d.titolo + ' — P.A.S.T.';
-        document.getElementById('evento-titolo').textContent = d.titolo;
-      }
+      // Lingua
+      var titolo = (isEN && d.titolo_en) ? d.titolo_en : (d.titolo || '');
+      var descrizione = (isEN && d.descrizione_en) ? d.descrizione_en : (d.descrizione || '');
 
-      // Badge categoria
+      // Titolo pagina + hero
+      document.getElementById('page-title').textContent = (titolo || 'Evento') + ' — P.A.S.T.';
+      document.getElementById('evento-titolo').textContent = titolo;
+
+      // Badge categoria + badge1/badge2
       var badgeMap = {
         'inaugurazione': 'badge-mostra',
         'apertura':      'badge-spettacolo',
@@ -132,53 +146,70 @@
         badgeEl.className = 'badge-tipo ' + (badgeMap[d.categoria] || 'badge-incontro');
         badgeEl.textContent = d.categoria.charAt(0).toUpperCase() + d.categoria.slice(1);
       }
+      // Badge aggiuntivi (badge1, badge2)
+      var badgeClasses = { 'badge-mostra':'Inaugurazione','badge-workshop':'Workshop','badge-spettacolo':'Spettacolo','badge-incontro':'Incontro','badge-gratuito':'Ingresso libero' };
+      [d.badge1, d.badge2].forEach(function(b) {
+        if (!b) return;
+        var sp = document.createElement('span');
+        sp.className = 'badge-tipo ' + b;
+        sp.style.marginLeft = '.5rem';
+        sp.textContent = badgeClasses[b] || b;
+        badgeEl.insertAdjacentElement('afterend', sp);
+      });
 
       // Hero meta
       if (d.data_completa) document.getElementById('evento-data-span').textContent = '📅 ' + d.data_completa;
       if (d.orario)        document.getElementById('evento-ora-span').textContent  = '🕐 ' + d.orario;
       if (d.luogo)         document.getElementById('evento-luogo-span').textContent = '📍 ' + d.luogo;
 
-      // Immagine hero
-      if (d.immagine) {
+      // Immagine hero (usa immagine_hero se presente, altrimenti immagine)
+      var heroSrc = d.immagine_hero || d.immagine || '';
+      if (heroSrc) {
         var hero = document.getElementById('evento-hero');
-        hero.style.backgroundImage = 'url(\'' + base + d.immagine.replace(/^\//,'') + '\')';
+        hero.style.backgroundImage = 'url(\'' + base + heroSrc.replace(/^\//,'') + '\')';
         hero.style.backgroundSize = 'cover';
         hero.style.backgroundPosition = 'center';
       }
 
-      // Descrizione (markdown base → HTML)
-      if (d.descrizione) {
-        var html = d.descrizione
-          .replace(/^### (.+)$/gm, '<h3>$1</h3>')
-          .replace(/^## (.+)$/gm,  '<h2>$1</h2>')
-          .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-          .replace(/\*(.+?)\*/g,     '<em>$1</em>')
-          .replace(/\n\n/g, '</p><p>')
-          .replace(/\n/g, '<br>');
-        document.getElementById('evento-descrizione').innerHTML = '<p>' + html + '</p>';
-      }
+      // Descrizione
+      document.getElementById('evento-descrizione').innerHTML = md2html(descrizione);
 
       // Immagine corpo
-      if (d.immagine) {
+      if (d.immagine_corpo) {
         document.getElementById('evento-immagine').innerHTML =
-          '<img src="' + base + d.immagine.replace(/^\//,'') + '" alt="' + (d.titolo||'') + '" style="width:100%;max-width:500px;height:auto;display:block;margin:1.5rem auto;border:1px solid rgba(48,122,143,0.3);" />';
+          '<img src="' + base + d.immagine_corpo.replace(/^\//,'') + '" alt="' + titolo + '" style="width:100%;max-width:500px;height:auto;display:block;margin:1.5rem auto;border:1px solid rgba(48,122,143,0.3);" />';
       }
 
-      // Sidebar: prezzo
-      if (d.prezzo) document.getElementById('evento-prezzo').textContent = d.prezzo;
-      if (d.sub_prezzo) document.getElementById('evento-sub-prezzo').textContent = d.sub_prezzo;
+      // Sidebar: tariffe (con fallback a prezzo)
+      var prezzoEl = document.getElementById('evento-prezzo');
+      if (d.tariffe && d.tariffe.length) {
+        prezzoEl.innerHTML = d.tariffe.map(function(t) {
+          return '<div style="display:flex;justify-content:space-between;gap:.5rem;font-size:.85em;margin:.15rem 0;">' +
+            '<span style="opacity:.6">' + (t.etichetta||'') + '</span>' +
+            '<span style="font-weight:600">' + (t.prezzo||'') + '</span></div>';
+        }).join('');
+        document.getElementById('evento-sub-prezzo').textContent = '';
+      } else {
+        prezzoEl.textContent = d.prezzo || (isEN ? 'Free admission' : 'Ingresso libero');
+        if (d.sub_prezzo) document.getElementById('evento-sub-prezzo').textContent = d.sub_prezzo;
+      }
 
       // Sidebar: info
       var info = '';
-      if (d.data_completa) info += '<div class="info-row"><div class="etichetta">Data</div><div class="valore">' + d.data_completa + '</div></div>';
-      if (d.orario)        info += '<div class="info-row"><div class="etichetta">Orario</div><div class="valore">' + d.orario + '</div></div>';
-      if (d.luogo)         info += '<div class="info-row"><div class="etichetta">Luogo</div><div class="valore">' + d.luogo + '</div></div>';
+      var lData = isEN ? 'Date' : 'Data';
+      var lOra  = isEN ? 'Time' : 'Orario';
+      var lLuogo= isEN ? 'Venue' : 'Luogo';
+      if (d.data_completa) info += '<div class="info-row"><div class="etichetta">' + lData  + '</div><div class="valore">' + d.data_completa + '</div></div>';
+      if (d.orario)        info += '<div class="info-row"><div class="etichetta">' + lOra   + '</div><div class="valore">' + d.orario + '</div></div>';
+      if (d.luogo)         info += '<div class="info-row"><div class="etichetta">' + lLuogo + '</div><div class="valore">' + d.luogo + '</div></div>';
       document.getElementById('evento-info').innerHTML = info;
+
+      // Link "torna al calendario"
+      document.querySelector('.back-link').href = base + 'eventi.html';
+      document.querySelector('.back-link').textContent = isEN ? '← Back to calendar' : '← Torna al calendario';
 
       // Widget prenotazione
       var booking = document.getElementById('evento-booking');
-
-      // Supporta più widget Regiondo
       var widgets = d.widgets_regiondo || [];
       if (widgets.length > 0) {
         var whtml = '';
@@ -187,14 +218,11 @@
           if (w.etichetta) whtml += '<h4 style="margin:1.5rem 0 0.5rem;font-family:var(--font-sans);font-size:13px;text-transform:uppercase;letter-spacing:.08em;opacity:.6">' + w.etichetta + '</h4>';
           whtml += '<booking-widget widget-id="' + w.id + '"></booking-widget>';
         });
-        if (whtml) {
-          whtml += '<script type="text/javascript" src="https://widgets.regiondo.net/booking/v1/booking-widget.min.js"><\/script>';
-          booking.innerHTML = whtml;
-        }
+        if (whtml) booking.innerHTML = whtml;
       } else if (d.tipo_prenotazione === 'eventbrite' && d.link_prenotazione) {
-        booking.innerHTML = '<a href="' + d.link_prenotazione + '" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:1rem">📅 Prenota su Eventbrite</a>';
+        booking.innerHTML = '<a href="' + d.link_prenotazione + '" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;margin-top:1rem">📅 ' + (isEN ? 'Book on Eventbrite' : 'Prenota su Eventbrite') + '</a>';
       } else if (d.tipo_prenotazione === 'free') {
-        booking.innerHTML = '<p class="nota-prenotazione" style="margin-top:1rem">Ingresso libero — nessuna prenotazione richiesta</p>';
+        booking.innerHTML = '<p class="nota-prenotazione" style="margin-top:1rem">' + (isEN ? 'Free admission — no booking required' : 'Ingresso libero — nessuna prenotazione richiesta') + '</p>';
       }
 
     } catch(e) { console.error(e); }

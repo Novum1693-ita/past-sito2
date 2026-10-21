@@ -1,0 +1,25 @@
+{
+  "luoghi": {
+    "tag": "I Luoghi",
+    "titolo": "Scegli la tua prossima<br>scoperta",
+    "titolo_en": "Choose your next<br>discovery"
+  },
+  "eventi": {
+    "tag": "Calendario",
+    "titolo": "Cosa succede<br>con P.A.S.T.",
+    "titolo_en": "What's happening<br>with P.A.S.T.",
+    "categorie": [
+      { "id": "tutti",        "etichetta": "Tutti" },
+      { "id": "inaugurazione","etichetta": "Inaugurazioni" },
+      { "id": "apertura",     "etichetta": "Aperture serali" },
+      { "id": "proiezione",   "etichetta": "Proiezioni" },
+      { "id": "incontro",     "etichetta": "Incontri" }
+    ]
+  },
+  "notizie": {
+    "tag": "Bacheca",
+    "titolo": "Ultime notizie",
+    "titolo_en": "Latest news",
+    "sidebar_categorie": ["Annunci", "Eventi", "Luoghi", "Associazione"]
+  }
+}

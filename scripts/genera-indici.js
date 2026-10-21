@@ -7,7 +7,7 @@ const ROOT = path.join(__dirname, '..');
 
 const CAMPI = {
   '_eventi':  ['titolo','sottotitolo','giorno','mese','categoria','anteprima','badge1','badge2','immagine','url','pubblicato','data_completa','tariffe','prezzo'],
-  '_notizie': ['titolo','anteprima','data','badge_testo','categoria','pubblicata','slug'],
+  '_notizie': ['titolo','titolo_en','anteprima','anteprima_en','data','badge_testo','categoria','pubblicata','slug'],
   '_luoghi':  ['titolo','slug','categoria','tag_extra','descrizione_breve','orari','prezzo','tariffe','lat','lng','immagine','colore_principale','pubblicato'],
   '_percorsi':['titolo','titolo_en','sottotitolo','sottotitolo_en','slug','immagine','durata_totale','difficolta','lingue_guida','luoghi','accessibile_sedia','audioguida','lingua_segni','pubblicato'],
 };

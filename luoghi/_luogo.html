@@ -115,17 +115,27 @@
       return;
     }
 
+    // Lingua: EN se siamo in /en/luoghi/
+    var isEN = window.location.pathname.indexOf('/en/') !== -1;
+
     // Titolo e meta
-    document.getElementById('page-title').textContent = (dati.titolo || 'Luogo') + ' — P.A.S.T.';
-    document.title = (dati.titolo || 'Luogo') + ' — P.A.S.T.';
-    if (dati.descrizione_breve) {
-      document.getElementById('page-desc').setAttribute('content', dati.descrizione_breve);
+    var titoloMostra = (isEN && dati.titolo_en) ? dati.titolo_en : (dati.titolo || 'Luogo');
+    document.getElementById('page-title').textContent = titoloMostra + ' — P.A.S.T.';
+    document.title = titoloMostra + ' — P.A.S.T.';
+    var descBreve = (isEN && dati.descrizione_breve_en) ? dati.descrizione_breve_en : (dati.descrizione_breve || '');
+    if (descBreve) document.getElementById('page-desc').setAttribute('content', descBreve);
+
+    document.getElementById('luogo-titolo').textContent = titoloMostra;
+    document.getElementById('luogo-badge').textContent = dati.categoria || '';
+    if (dati.tag_extra) {
+      var badge2 = document.createElement('span');
+      badge2.className = 'badge-categoria';
+      badge2.style.cssText = 'margin-left:.5rem;opacity:.7;';
+      badge2.textContent = dati.tag_extra;
+      document.getElementById('luogo-badge').insertAdjacentElement('afterend', badge2);
     }
 
-    document.getElementById('luogo-titolo').textContent = dati.titolo || '';
-    document.getElementById('luogo-badge').textContent = dati.categoria || '';
-
-    // Hero immagine (immagine = hero banner)
+    // Hero immagine
     var heroImg = dati.immagine || '';
     if (heroImg) {
       document.getElementById('luogo-hero').style.backgroundImage = "url('" + base + heroImg.replace(/^\//,'') + "')";
@@ -143,7 +153,8 @@
     }
 
     // Descrizione (markdown semplice → HTML)
-    var desc = dati.descrizione || '';
+    var descRaw = (isEN && dati.descrizione_en) ? dati.descrizione_en : (dati.descrizione || '');
+    var desc = descRaw;
     desc = desc.replace(/^### (.+)$/gm, '<h3>$1</h3>');
     desc = desc.replace(/^## (.+)$/gm, '<h2>$1</h2>');
     desc = desc.replace(/^# (.+)$/gm, '<h1>$1</h1>');
@@ -152,23 +163,53 @@
     desc = desc.replace(/\n\n/g, '</p><p>');
     desc = '<p>' + desc + '</p>';
 
-    // Immagine corpo (foto nel testo)
+    // Immagine corpo
     if (dati.immagine_corpo) {
-      desc += '<img src="' + base + dati.immagine_corpo.replace(/^\//,'') + '" alt="' + (dati.titolo||'') + '" style="width:100%;max-width:600px;border-radius:8px;margin:1.5rem 0;" />';
+      desc += '<img src="' + base + dati.immagine_corpo.replace(/^\//,'') + '" alt="' + titoloMostra + '" style="width:100%;max-width:600px;border-radius:8px;margin:1.5rem 0;" />';
     }
 
+    var backLink = isEN ? '../../en/i-luoghi.html' : '../i-luoghi.html';
+    var backLabel = isEN ? '← Back to all places' : '← Torna a tutti i luoghi';
     document.getElementById('luogo-descrizione').innerHTML =
-      desc + '<a href="../i-luoghi.html" class="back-link">← Torna a tutti i luoghi</a>';
+      desc + '<a href="' + backLink + '" class="back-link">' + backLabel + '</a>';
 
-    // Prezzo sidebar
-    document.getElementById('luogo-prezzo').textContent = dati.prezzo || 'Ingresso libero';
+    // Tariffe sidebar (con fallback a prezzo stringa)
+    var prezzoEl = document.getElementById('luogo-prezzo');
+    if (dati.tariffe && dati.tariffe.length) {
+      var tariffeHtml = dati.tariffe.map(function(t) {
+        return '<div style="display:flex;justify-content:space-between;gap:.5rem;font-size:.85em;margin:.15rem 0;">' +
+          '<span style="opacity:.6">' + (t.etichetta || '') + '</span>' +
+          '<span style="font-weight:600">' + (t.prezzo || '') + '</span></div>';
+      }).join('');
+      prezzoEl.innerHTML = tariffeHtml;
+    } else {
+      prezzoEl.textContent = dati.prezzo || 'Ingresso libero';
+    }
 
     // Info sidebar
     var info = '';
-    if (dati.orari) info += '<div class="info-row"><div class="etichetta">Orari</div><div class="valore">' + dati.orari + '</div></div>';
-    if (dati.prezzo_ridotto) info += '<div class="info-row"><div class="etichetta">Ridotto</div><div class="valore">' + dati.prezzo_ridotto + '</div></div>';
-    if (dati.indirizzo) info += '<div class="info-row"><div class="etichetta">Indirizzo</div><div class="valore">' + dati.indirizzo + '</div></div>';
-    info += '<div class="info-row"><div class="etichetta">Progetto</div><div class="valore">P.A.S.T.</div></div>';
+    var orariMostra = (isEN && dati.orari_en) ? dati.orari_en : (dati.orari || '');
+    var arrivareMostra = (isEN && dati.come_arrivare_en) ? dati.come_arrivare_en : (dati.come_arrivare || '');
+    if (orariMostra) info += '<div class="info-row"><div class="etichetta">' + (isEN ? 'Opening hours' : 'Orari') + '</div><div class="valore">' + orariMostra + '</div></div>';
+    if (dati.durata_visita) info += '<div class="info-row"><div class="etichetta">' + (isEN ? 'Visit duration' : 'Durata visita') + '</div><div class="valore">' + dati.durata_visita + '</div></div>';
+    if (dati.indirizzo) info += '<div class="info-row"><div class="etichetta">' + (isEN ? 'Address' : 'Indirizzo') + '</div><div class="valore">' + dati.indirizzo + '</div></div>';
+    if (arrivareMostra) info += '<div class="info-row"><div class="etichetta">' + (isEN ? 'Getting there' : 'Come arrivare') + '</div><div class="valore">' + arrivareMostra + '</div></div>';
+    if (dati.telefono) info += '<div class="info-row"><div class="etichetta">Telefono</div><div class="valore"><a href="tel:' + dati.telefono + '">' + dati.telefono + '</a></div></div>';
+    if (dati.email) info += '<div class="info-row"><div class="etichetta">Email</div><div class="valore"><a href="mailto:' + dati.email + '">' + dati.email + '</a></div></div>';
+    if (dati.sito_web) info += '<div class="info-row"><div class="etichetta">Sito web</div><div class="valore"><a href="' + dati.sito_web + '" target="_blank" rel="noopener">Visita il sito →</a></div></div>';
+
+    // Accessibilità
+    var acc = [];
+    if (dati.accessibile_sedia) acc.push(isEN ? '♿ Wheelchair' : '♿ Sedia a rotelle');
+    if (dati.accessibile_bagno) acc.push(isEN ? '🚻 Accessible bathroom' : '🚻 Bagno accessibile');
+    if (dati.audioguida) acc.push(isEN ? '🎧 Audio guide' : '🎧 Audioguida');
+    if (dati.lingua_segni) acc.push(isEN ? '🤟 Sign language' : '🤟 Lingua dei segni');
+    if (acc.length) {
+      info += '<div class="info-row"><div class="etichetta">' + (isEN ? 'Accessibility' : 'Accessibilità') + '</div><div class="valore">' + acc.join(' · ') + '</div></div>';
+    }
+    if (dati.note_accessibilita) info += '<div class="info-row"><div class="etichetta">' + (isEN ? 'Access. notes' : 'Note acc.') + '</div><div class="valore" style="font-size:.85em;opacity:.7">' + dati.note_accessibilita + '</div></div>';
+
+    info += '<div class="info-row"><div class="etichetta">' + (isEN ? 'Project' : 'Progetto') + '</div><div class="valore">P.A.S.T.</div></div>';
     document.getElementById('luogo-info').innerHTML = info;
 
     // Widget Regiondo

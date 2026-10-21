@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="page-title">Notizia — P.A.S.T.</title>
+  <meta name="description" id="page-desc" content="P.A.S.T. — valorizzazione culturale di Ragusa." />
+  <link rel="icon" href="../img/logo.jpeg" type="image/jpeg" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <a href="../index.html" class="logo">
+      <img src="../img/logo.png" alt="P.A.S.T." />
+    </a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li class="nav-dropdown">
+        <a href="../i-luoghi.html">I Luoghi <span class="dropdown-arrow">▾</span></a>
+        <div class="dropdown-menu" id="luoghi-dropdown"></div>
+      </li>
+      <li><a href="../le-card.html">Card</a></li>
+      <li><a href="../mappa.html">Mappa</a></li>
+      <li><a href="../eventi.html">Eventi</a></li>
+      <li><a href="../notizie.html">Notizie</a></li>
+      <li><a href="../contatti.html">Contatti</a></li>
+      <li class="lang-switch">
+        <a href="../index.html" class="lang-btn">IT</a>
+        <span class="lang-sep">·</span>
+        <a href="../en/index.html" class="lang-btn">EN</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="ticker-bar">
+    <div class="ticker-label"><span class="ticker-dot"></span>Ultima ora</div>
+    <div class="ticker-window"><div class="ticker-track" id="ticker-track"></div></div>
+  </div>
+
+  <!-- HERO -->
+  <div class="luogo-hero" id="notizia-hero" style="background: linear-gradient(160deg, var(--blu-scuro), var(--sfondo)); min-height: 220px;">
+    <div class="luogo-hero-overlay"></div>
+    <div class="luogo-hero-content">
+      <span class="badge-tipo badge-incontro" id="notizia-badge">Notizia</span>
+      <h1 id="notizia-titolo" style="margin-top:0.8rem">Caricamento...</h1>
+      <div style="margin-top:.6rem;font-family:var(--font-sans);font-size:11px;color:rgba(245,240,232,0.6)" id="notizia-data"></div>
+    </div>
+  </div>
+
+  <div class="luogo-layout">
+    <div class="luogo-descrizione" id="notizia-corpo">
+      <!-- contenuto caricato da JS -->
+    </div>
+    <div class="luogo-sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-card-body" id="notizia-sidebar">
+          <!-- info caricate da JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sponsor-bar">
+    <div class="sponsor-bar-label">In collaborazione con:</div>
+    <div class="sponsor-track" id="sponsor-track"></div>
+  </div>
+  <footer>
+    <a href="../index.html" class="footer-logo">
+      <img src="../img/logo.png" alt="P.A.S.T." />
+    </a>
+    <div class="footer-info" id="footer-info">
+      Ragusa &nbsp;·&nbsp;
+      <a href="mailto:novum1693@gmail.com">novum1693@gmail.com</a> &nbsp;·&nbsp;
+      <a href="../privacy.html">Privacy policy</a>
+    </div>
+    <div class="footer-copy" id="footer-copy">© 2026 GDT</div>
+    <div class="footer-social" id="footer-social"></div>
+  </footer>
+  <div class="cookie-banner" id="cookie-banner">
+    <div class="cookie-testo">Utilizziamo solo cookie tecnici necessari al funzionamento del sito. Leggi la nostra <a href="../privacy.html">Privacy Policy</a>.</div>
+    <div class="cookie-azioni">
+      <button class="btn-cookie-rifiuta" id="cookie-rifiuta">Solo necessari</button>
+      <button class="btn-cookie-accetta" id="cookie-accetta">Accetto</button>
+    </div>
+  </div>
+  <script src="../js/data-eventi.js"></script>
+  <script src="../js/data-notizie.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+  (async function() {
+    var slug = window.location.pathname.split('/').pop().replace('.html','');
+    var base = '../';
+    var isEN = window.location.pathname.indexOf('/en/') !== -1;
+
+    function md2html(txt) {
+      if (!txt) return '';
+      return '<p>' + txt
+        .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+        .replace(/^## (.+)$/gm,  '<h2>$1</h2>')
+        .replace(/^# (.+)$/gm,   '<h1>$1</h1>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g,     '<em>$1</em>')
+        .replace(/\n\n/g, '</p><p>')
+        .replace(/\n/g,   '<br>') + '</p>';
+    }
+
+    try {
+      var r = await fetch(base + '_notizie/' + slug + '.json');
+      if (!r.ok) { document.getElementById('notizia-titolo').textContent = 'Notizia non trovata'; return; }
+      var d = await r.json();
+
+      var titolo    = (isEN && d.titolo_en)    ? d.titolo_en    : (d.titolo    || '');
+      var anteprima = (isEN && d.anteprima_en) ? d.anteprima_en : (d.anteprima || '');
+      var contenuto = (isEN && d.contenuto_en) ? d.contenuto_en : (d.contenuto || '');
+
+      // Meta
+      document.getElementById('page-title').textContent = (titolo || 'Notizia') + ' — P.A.S.T.';
+      document.title = (titolo || 'Notizia') + ' — P.A.S.T.';
+      if (anteprima) document.getElementById('page-desc').setAttribute('content', anteprima);
+
+      // Hero
+      document.getElementById('notizia-titolo').textContent = titolo;
+      if (d.data) document.getElementById('notizia-data').textContent = '📅 ' + d.data;
+
+      // Badge categoria
+      var badgeEl = document.getElementById('notizia-badge');
+      var badgeClassMap = { 'Annuncio':'badge-mostra','Evento':'badge-spettacolo','Luogo':'badge-incontro','Associazione':'badge-workshop' };
+      if (d.badge_testo) {
+        badgeEl.className = 'badge-tipo ' + (badgeClassMap[d.badge_testo] || 'badge-incontro');
+        badgeEl.textContent = d.badge_testo;
+      }
+
+      // Corpo: anteprima in grassetto + contenuto completo
+      var corpoHtml = '';
+      if (anteprima) corpoHtml += '<p style="font-size:1.1em;opacity:.85;font-style:italic;margin-bottom:1.5rem;">' + anteprima + '</p>';
+      corpoHtml += md2html(contenuto);
+      corpoHtml += '<a href="' + base + 'notizie.html" class="back-link">' + (isEN ? '← Back to news' : '← Torna alle notizie') + '</a>';
+      document.getElementById('notizia-corpo').innerHTML = corpoHtml;
+
+      // Sidebar info
+      var sidebar = '';
+      sidebar += '<div class="info-row"><div class="etichetta">' + (isEN ? 'Date' : 'Data') + '</div><div class="valore">' + (d.data || '—') + '</div></div>';
+      if (d.badge_testo) sidebar += '<div class="info-row"><div class="etichetta">' + (isEN ? 'Category' : 'Categoria') + '</div><div class="valore">' + d.badge_testo + '</div></div>';
+      sidebar += '<div class="info-row"><div class="etichetta">Progetto</div><div class="valore">P.A.S.T.</div></div>';
+      document.getElementById('notizia-sidebar').innerHTML = sidebar;
+
+    } catch(e) { console.error(e); }
+
+    // Footer dal CMS
+    try {
+      var rf = await fetch(base + '_sito/footer.json');
+      if (!rf.ok) return;
+      var df = await rf.json();
+      var fi = document.getElementById('footer-info');
+      var fc = document.getElementById('footer-copy');
+      if (fi && df.indirizzo && df.email) fi.innerHTML = df.indirizzo + ' &nbsp;·&nbsp; <a href="mailto:' + df.email + '">' + df.email + '</a> &nbsp;·&nbsp; <a href="../privacy.html">Privacy policy</a>';
+      if (fc && df.copyright) fc.textContent = df.copyright;
+    } catch(e) {}
+  })();
+  </script>
+</body>
+</html>

@@ -13,15 +13,25 @@
   to = "/admin/index.html"
   status = 200
 
-# Pagine luogo dinamiche: ogni nuovo luogo aggiunto dal CMS
-# viene servito dalla pagina template universale
+# Pagine luogo dinamiche
 [[redirects]]
   from = "/luoghi/:slug"
   to = "/luoghi/_luogo.html"
   status = 200
 
-# Pagine EN dinamiche: ogni nuova pagina inglese creata dal CMS
-# viene servita dalla pagina template universale EN
+# Pagine evento dinamiche
+[[redirects]]
+  from = "/eventi/:slug"
+  to = "/eventi/evento-template.html"
+  status = 200
+
+# Pagine notizia dinamiche
+[[redirects]]
+  from = "/notizie/:slug"
+  to = "/notizie/_notizia.html"
+  status = 200
+
+# Pagine EN dinamiche
 [[redirects]]
   from = "/en/:slug"
   to = "/en/_pagina.html"

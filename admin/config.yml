@@ -1553,3 +1553,46 @@ collections:
         widget: "string"
         required: false
         hint: "Es: Alcuni tratti in salita, sedia a rotelle consigliata solo per il tratto pianeggiante"
+
+# ─── Testi pagine listing (luoghi, eventi, notizie) ───────────────────
+- name: "sito_pagine"
+  label: "📄 Testi pagine listing"
+  files:
+    - label: "Pagine (Luoghi / Eventi / Notizie)"
+      name: "pagine"
+      file: "_sito/pagine.json"
+      fields:
+        - label: "Pagina I Luoghi"
+          name: "luoghi"
+          widget: "object"
+          fields:
+            - { label: "Tag (piccolo sopra il titolo)", name: "tag",      widget: "string" }
+            - { label: "Titolo IT",                    name: "titolo",    widget: "string" }
+            - { label: "Titolo EN",                    name: "titolo_en", widget: "string", required: false }
+        - label: "Pagina Eventi"
+          name: "eventi"
+          widget: "object"
+          fields:
+            - { label: "Tag",      name: "tag",      widget: "string" }
+            - { label: "Titolo IT",name: "titolo",   widget: "string" }
+            - { label: "Titolo EN",name: "titolo_en",widget: "string", required: false }
+            - label: "Categorie (pillole filtro)"
+              name: "categorie"
+              widget: "list"
+              fields:
+                - { label: "ID (valore tecnico)", name: "id",        widget: "string" }
+                - { label: "Etichetta visibile",  name: "etichetta", widget: "string" }
+        - label: "Pagina Notizie"
+          name: "notizie"
+          widget: "object"
+          fields:
+            - { label: "Tag",      name: "tag",      widget: "string" }
+            - { label: "Titolo IT",name: "titolo",   widget: "string" }
+            - { label: "Titolo EN",name: "titolo_en",widget: "string", required: false }
+            - label: "Categorie sidebar"
+              name: "sidebar_categorie"
+              widget: "list"
+              field:
+                label: "Categoria"
+                name: "voce"
+                widget: "string"

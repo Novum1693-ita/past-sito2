@@ -118,6 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
   caricaPrivacy();
   caricaPrenota();
   if (document.getElementById('eventi-home-grid')) caricaEventiHome();
+  caricaPagine();
   if (document.getElementById('eventi-grid'))      caricaEventiPagina();
   if (document.getElementById('notizie-grid'))     caricaNotizie();
   if (document.getElementById('luoghi-grid'))      caricaLuoghi();
@@ -351,11 +352,14 @@ function renderCardNotizia(n) {
   if (n.pubblicata === false) return '';
   var titolo = t(n.titolo, n.titolo_en);
   var anteprima = t(n.anteprima, n.anteprima_en);
-  return '<article class="notizia-card">'
+  var base = basePath();
+  var link = n.slug ? (base + 'notizie/' + n.slug + '.html') : '#';
+  return '<article class="notizia-card" style="cursor:pointer" onclick="location.href=\'' + link + '\'">'
     + '<div class="notizia-meta"><span class="notizia-badge">' + (n.badge_testo || n.categoria || 'Notizia') + '</span>'
     + '<span class="notizia-data">' + (n.data || '') + '</span></div>'
     + '<h3 class="notizia-titolo">' + titolo + '</h3>'
     + '<p class="notizia-anteprima">' + anteprima + '</p>'
+    + (n.slug ? '<a href="' + link + '" class="leggi-tutto" style="font-family:var(--font-sans);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blu-chiaro);text-decoration:none;">Leggi →</a>' : '')
     + '</article>';
 }
 
@@ -567,6 +571,79 @@ window.apriLightbox = function(fig) {
   var lbImg = document.getElementById('past-lightbox-img');
   if (lb && lbImg && img) { lbImg.src = img.src; lb.style.display = 'flex'; }
 };
+
+/* ──────────────────────────────────────────
+   PAGINE LISTING (titoli, filtri, sidebar da CMS)
+   Gestisce i-luoghi.html, eventi.html, notizie.html
+────────────────────────────────────────── */
+async function caricaPagine() {
+  var base = basePath();
+  var isEN = window.location.pathname.indexOf('/en/') !== -1;
+  var d = await fetchJSON(base + '_sito/pagine.json');
+  if (!d) return;
+
+  // Identifica la pagina corrente
+  var path = window.location.pathname;
+  var chiave = null;
+  if (path.indexOf('i-luoghi') !== -1) chiave = 'luoghi';
+  else if (path.indexOf('eventi') !== -1 && path.indexOf('evento-template') === -1) chiave = 'eventi';
+  else if (path.indexOf('notizie') !== -1 && path.indexOf('_notizia') === -1) chiave = 'notizie';
+  if (!chiave || !d[chiave]) return;
+
+  var cfg = d[chiave];
+
+  // Aggiorna page-tag
+  var tagEl = document.querySelector('.page-header .page-tag');
+  if (tagEl && cfg.tag) tagEl.textContent = cfg.tag;
+
+  // Aggiorna h1
+  var h1El = document.querySelector('.page-header h1');
+  if (h1El && cfg.titolo) {
+    h1El.innerHTML = isEN && cfg.titolo_en ? cfg.titolo_en : cfg.titolo;
+  }
+
+  // ── EVENTI: filtri categorie da CMS ──
+  if (chiave === 'eventi' && cfg.categorie && cfg.categorie.length) {
+    var filterBar = document.querySelector('.filter-bar');
+    if (filterBar) {
+      filterBar.innerHTML = cfg.categorie.map(function(cat, i) {
+        return '<a class="filter-pill' + (i === 0 ? ' active' : '') + '" data-categoria="' + cat.id + '">'
+          + cat.etichetta + '</a>';
+      }).join('');
+
+      // Aggancia click filtro sulla griglia eventi
+      filterBar.addEventListener('click', function(e) {
+        var pill = e.target.closest('.filter-pill');
+        if (!pill) return;
+        filterBar.querySelectorAll('.filter-pill').forEach(function(p) { p.classList.remove('active'); });
+        pill.classList.add('active');
+        var cat = pill.dataset.categoria;
+        document.querySelectorAll('#eventi-grid .evento-card').forEach(function(c) {
+          c.style.display = (cat === 'tutti' || c.dataset.categoria === cat) ? '' : 'none';
+        });
+      });
+    }
+  }
+
+  // ── NOTIZIE: sidebar categorie + social dal CMS ──
+  if (chiave === 'notizie') {
+    var catWidget = document.getElementById('sidebar-categorie');
+    if (catWidget && cfg.sidebar_categorie && cfg.sidebar_categorie.length) {
+      catWidget.innerHTML = cfg.sidebar_categorie.map(function(c) { return '<li>' + c + '</li>'; }).join('');
+    }
+
+    // Social links da generale.json
+    var gen = await fetchJSON(base + '_sito/generale.json');
+    var socialWidget = document.getElementById('sidebar-social');
+    if (socialWidget && gen) {
+      var socialHtml = '';
+      if (gen.instagram) socialHtml += '<a href="' + gen.instagram + '" target="_blank" rel="noopener" class="social-btn" style="text-align:center">Instagram</a>';
+      if (gen.facebook)  socialHtml += '<a href="' + gen.facebook  + '" target="_blank" rel="noopener" class="social-btn" style="text-align:center">Facebook</a>';
+      if (gen.youtube)   socialHtml += '<a href="' + gen.youtube   + '" target="_blank" rel="noopener" class="social-btn" style="text-align:center">YouTube</a>';
+      if (socialHtml) socialWidget.innerHTML = socialHtml;
+    }
+  }
+}
 
 /* ──────────────────────────────────────────
    PRIVACY (contenuto da CMS)
