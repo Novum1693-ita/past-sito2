@@ -257,11 +257,16 @@ collections:
       - label: "Orari di apertura"
         name: "orari"
         widget: "string"
-      - label: "Tariffe"
+      - label: "Testo prezzo (sidebar)"
+        name: "prezzo_testo"
+        widget: "string"
+        required: false
+        hint: "Testo libero mostrato in evidenza nella sidebar, es: Da € 3,00 · Gratuito con Card"
+      - label: "Tariffe dettagliate (sotto la descrizione)"
         name: "tariffe"
         widget: "list"
         required: false
-        hint: "Aggiungi una riga per ogni tariffa (es: Intero → € 3, Ridotto → € 1,50, Gratuito → € 0)"
+        hint: "Ogni riga appare come tabella sotto la descrizione del luogo"
         fields:
           - label: "Etichetta"
             name: "etichetta"

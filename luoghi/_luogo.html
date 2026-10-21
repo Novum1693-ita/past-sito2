@@ -8,6 +8,35 @@
   <link rel="icon" href="../img/logo.jpeg" type="image/jpeg" />
   <link rel="stylesheet" href="../css/style.css" />
   <style id="luogo-colors"></style>
+  <style>
+    .tariffe-sezione {
+      margin: 2rem 0;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px;
+      background: rgba(255,255,255,.03);
+    }
+    .tariffe-sezione h4 {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      opacity: .5;
+      margin: 0 0 .75rem;
+    }
+    .tariffa-riga {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: .5rem;
+      padding: .3rem 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      font-size: .9em;
+    }
+    .tariffa-riga:last-child { border-bottom: none; }
+    .tariffa-riga .etichetta { opacity: .6; }
+    .tariffa-riga .prezzo-val { font-weight: 600; }
+  </style>
   <script type="text/javascript" src="https://widgets.regiondo.net/booking/v1/booking-widget.min.js"></script>
 </head>
 <body>
@@ -29,10 +58,10 @@
       <li><a href="../eventi.html">Eventi</a></li>
       <li><a href="../notizie.html">Notizie</a></li>
       <li><a href="../contatti.html">Contatti</a></li>
-      <li class="lang-switch">
-        <a href="../index.html" class="lang-btn">IT</a>
+      <li class="lang-switch" id="lang-switch">
+        <a href="?" class="lang-btn" id="lang-it">IT</a>
         <span class="lang-sep">·</span>
-        <a href="../en/index.html" class="lang-btn">EN</a>
+        <a href="?lang=en" class="lang-btn" id="lang-en">EN</a>
       </li>
     </ul>
   </nav>
@@ -82,7 +111,7 @@
       <a href="../privacy.html">Privacy policy</a>
     </div>
     <div class="footer-copy" id="footer-copy">© 2026 GDT</div>
-      <div class="footer-social" id="footer-social"></div>
+    <div class="footer-social" id="footer-social"></div>
   </footer>
 
   <div class="cookie-banner" id="cookie-banner">
@@ -97,7 +126,6 @@
   <script src="../js/data-notizie.js"></script>
   <script src="../js/main.js"></script>
   <script>
-  // Legge lo slug dall'URL: /luoghi/nome-luogo → "nome-luogo"
   (async function() {
     var parts = window.location.pathname.split('/').filter(Boolean);
     var slug = parts[parts.length - 1].replace('.html', '');
@@ -115,33 +143,10 @@
       return;
     }
 
-    // Lingua: EN se siamo in /en/luoghi/
-    var isEN = window.location.pathname.indexOf('/en/') !== -1;
+    // Lingua: parametro ?lang=en nell'URL
+    var isEN = new URLSearchParams(window.location.search).get('lang') === 'en';
 
-    // Titolo e meta
-    var titoloMostra = (isEN && dati.titolo_en) ? dati.titolo_en : (dati.titolo || 'Luogo');
-    document.getElementById('page-title').textContent = titoloMostra + ' — P.A.S.T.';
-    document.title = titoloMostra + ' — P.A.S.T.';
-    var descBreve = (isEN && dati.descrizione_breve_en) ? dati.descrizione_breve_en : (dati.descrizione_breve || '');
-    if (descBreve) document.getElementById('page-desc').setAttribute('content', descBreve);
-
-    document.getElementById('luogo-titolo').textContent = titoloMostra;
-    document.getElementById('luogo-badge').textContent = dati.categoria || '';
-    if (dati.tag_extra) {
-      var badge2 = document.createElement('span');
-      badge2.className = 'badge-categoria';
-      badge2.style.cssText = 'margin-left:.5rem;opacity:.7;';
-      badge2.textContent = dati.tag_extra;
-      document.getElementById('luogo-badge').insertAdjacentElement('afterend', badge2);
-    }
-
-    // Hero immagine
-    var heroImg = dati.immagine || '';
-    if (heroImg) {
-      document.getElementById('luogo-hero').style.backgroundImage = "url('" + base + heroImg.replace(/^\//,'') + "')";
-    }
-
-    // Colori custom
+    // Colori custom (applicati subito, indipendenti dalla lingua)
     if (dati.colore_principale || dati.colore_secondario) {
       var c1 = dati.colore_principale || '#E19f42';
       var c2 = dati.colore_secondario || '#965801';
@@ -152,77 +157,136 @@
         '.luogo-hero-overlay { background: linear-gradient(to bottom, ' + c2 + '33, ' + c2 + 'cc); }';
     }
 
-    // Descrizione (markdown semplice → HTML)
-    var descRaw = (isEN && dati.descrizione_en) ? dati.descrizione_en : (dati.descrizione || '');
-    var desc = descRaw;
-    desc = desc.replace(/^### (.+)$/gm, '<h3>$1</h3>');
-    desc = desc.replace(/^## (.+)$/gm, '<h2>$1</h2>');
-    desc = desc.replace(/^# (.+)$/gm, '<h1>$1</h1>');
-    desc = desc.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    desc = desc.replace(/\*(.+?)\*/g, '<em>$1</em>');
-    desc = desc.replace(/\n\n/g, '</p><p>');
-    desc = '<p>' + desc + '</p>';
-
-    // Immagine corpo
-    if (dati.immagine_corpo) {
-      desc += '<img src="' + base + dati.immagine_corpo.replace(/^\//,'') + '" alt="' + titoloMostra + '" style="width:100%;max-width:600px;border-radius:8px;margin:1.5rem 0;" />';
+    // Hero immagine
+    var heroImg = dati.immagine || '';
+    if (heroImg) {
+      document.getElementById('luogo-hero').style.backgroundImage = "url('" + base + heroImg.replace(/^\//,'') + "')";
     }
 
-    var backLink = isEN ? '../../en/i-luoghi.html' : '../i-luoghi.html';
-    var backLabel = isEN ? '← Back to all places' : '← Torna a tutti i luoghi';
-    document.getElementById('luogo-descrizione').innerHTML =
-      desc + '<a href="' + backLink + '" class="back-link">' + backLabel + '</a>';
-
-    // Tariffe sidebar (con fallback a prezzo stringa)
-    var prezzoEl = document.getElementById('luogo-prezzo');
-    if (dati.tariffe && dati.tariffe.length) {
-      var tariffeHtml = dati.tariffe.map(function(t) {
-        return '<div style="display:flex;justify-content:space-between;gap:.5rem;font-size:.85em;margin:.15rem 0;">' +
-          '<span style="opacity:.6">' + (t.etichetta || '') + '</span>' +
-          '<span style="font-weight:600">' + (t.prezzo || '') + '</span></div>';
-      }).join('');
-      prezzoEl.innerHTML = tariffeHtml;
-    } else {
-      prezzoEl.textContent = dati.prezzo || 'Ingresso libero';
+    // Badge categoria
+    document.getElementById('luogo-badge').textContent = dati.categoria || '';
+    if (dati.tag_extra) {
+      var badge2 = document.createElement('span');
+      badge2.className = 'badge-categoria';
+      badge2.style.cssText = 'margin-left:.5rem;opacity:.7;';
+      badge2.textContent = dati.tag_extra;
+      document.getElementById('luogo-badge').insertAdjacentElement('afterend', badge2);
     }
 
-    // Info sidebar
-    var info = '';
-    var orariMostra = (isEN && dati.orari_en) ? dati.orari_en : (dati.orari || '');
-    var arrivareMostra = (isEN && dati.come_arrivare_en) ? dati.come_arrivare_en : (dati.come_arrivare || '');
-    if (orariMostra) info += '<div class="info-row"><div class="etichetta">' + (isEN ? 'Opening hours' : 'Orari') + '</div><div class="valore">' + orariMostra + '</div></div>';
-    if (dati.durata_visita) info += '<div class="info-row"><div class="etichetta">' + (isEN ? 'Visit duration' : 'Durata visita') + '</div><div class="valore">' + dati.durata_visita + '</div></div>';
-    if (dati.indirizzo) info += '<div class="info-row"><div class="etichetta">' + (isEN ? 'Address' : 'Indirizzo') + '</div><div class="valore">' + dati.indirizzo + '</div></div>';
-    if (arrivareMostra) info += '<div class="info-row"><div class="etichetta">' + (isEN ? 'Getting there' : 'Come arrivare') + '</div><div class="valore">' + arrivareMostra + '</div></div>';
-    if (dati.telefono) info += '<div class="info-row"><div class="etichetta">Telefono</div><div class="valore"><a href="tel:' + dati.telefono + '">' + dati.telefono + '</a></div></div>';
-    if (dati.email) info += '<div class="info-row"><div class="etichetta">Email</div><div class="valore"><a href="mailto:' + dati.email + '">' + dati.email + '</a></div></div>';
-    if (dati.sito_web) info += '<div class="info-row"><div class="etichetta">Sito web</div><div class="valore"><a href="' + dati.sito_web + '" target="_blank" rel="noopener">Visita il sito →</a></div></div>';
-
-    // Accessibilità
-    var acc = [];
-    if (dati.accessibile_sedia) acc.push(isEN ? '♿ Wheelchair' : '♿ Sedia a rotelle');
-    if (dati.accessibile_bagno) acc.push(isEN ? '🚻 Accessible bathroom' : '🚻 Bagno accessibile');
-    if (dati.audioguida) acc.push(isEN ? '🎧 Audio guide' : '🎧 Audioguida');
-    if (dati.lingua_segni) acc.push(isEN ? '🤟 Sign language' : '🤟 Lingua dei segni');
-    if (acc.length) {
-      info += '<div class="info-row"><div class="etichetta">' + (isEN ? 'Accessibility' : 'Accessibilità') + '</div><div class="valore">' + acc.join(' · ') + '</div></div>';
-    }
-    if (dati.note_accessibilita) info += '<div class="info-row"><div class="etichetta">' + (isEN ? 'Access. notes' : 'Note acc.') + '</div><div class="valore" style="font-size:.85em;opacity:.7">' + dati.note_accessibilita + '</div></div>';
-
-    info += '<div class="info-row"><div class="etichetta">' + (isEN ? 'Project' : 'Progetto') + '</div><div class="valore">P.A.S.T.</div></div>';
-    document.getElementById('luogo-info').innerHTML = info;
-
-    // Widget Regiondo
+    // Widget Regiondo (una sola volta)
     var widgets = dati.widgets_regiondo || [];
     if (widgets.length > 0) {
-      var html = '';
+      var bookHtml = '';
       widgets.forEach(function(w) {
         if (!w.id) return;
-        if (w.etichetta) html += '<h4 style="margin:1.5rem 0 0.5rem;font-family:var(--font-sans);font-size:13px;text-transform:uppercase;letter-spacing:.08em;opacity:.6">' + w.etichetta + '</h4>';
-        html += '<booking-widget widget-id="' + w.id + '"></booking-widget>';
+        if (w.etichetta) bookHtml += '<h4 style="margin:1.5rem 0 0.5rem;font-family:var(--font-sans);font-size:13px;text-transform:uppercase;letter-spacing:.08em;opacity:.6">' + w.etichetta + '</h4>';
+        bookHtml += '<booking-widget widget-id="' + w.id + '"></booking-widget>';
       });
-      if (html) document.getElementById('luogo-booking').innerHTML = html;
+      if (bookHtml) document.getElementById('luogo-booking').innerHTML = bookHtml;
     }
+
+    // md → html semplice
+    function md2html(testo) {
+      if (!testo) return '';
+      var t = testo;
+      t = t.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+      t = t.replace(/^## (.+)$/gm,  '<h2>$1</h2>');
+      t = t.replace(/^# (.+)$/gm,   '<h1>$1</h1>');
+      t = t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      t = t.replace(/\*(.+?)\*/g,     '<em>$1</em>');
+      t = t.replace(/\n\n/g, '</p><p>');
+      return '<p>' + t + '</p>';
+    }
+
+    // Sezione tariffe (HTML, riusata ogni render)
+    function htmlTariffe(en) {
+      if (!dati.tariffe || !dati.tariffe.length) return '';
+      var label = en ? 'Tickets & prices' : 'Tariffe e prezzi';
+      var righe = dati.tariffe.map(function(t) {
+        return '<div class="tariffa-riga">'
+          + '<span class="etichetta">' + (t.etichetta || '') + '</span>'
+          + '<span class="prezzo-val">' + (t.prezzo || '') + '</span>'
+          + '</div>';
+      }).join('');
+      return '<div class="tariffe-sezione"><h4>' + label + '</h4>' + righe + '</div>';
+    }
+
+    // Funzione principale di render (chiamata a ogni cambio lingua)
+    function renderPagina() {
+      var titolo = (isEN && dati.titolo_en) ? dati.titolo_en : (dati.titolo || 'Luogo');
+      document.getElementById('page-title').textContent = titolo + ' — P.A.S.T.';
+      document.title = titolo + ' — P.A.S.T.';
+      document.getElementById('luogo-titolo').textContent = titolo;
+
+      var descBreve = (isEN && dati.descrizione_breve_en) ? dati.descrizione_breve_en : (dati.descrizione_breve || '');
+      if (descBreve) document.getElementById('page-desc').setAttribute('content', descBreve);
+
+      // Descrizione
+      var descRaw = (isEN && dati.descrizione_en) ? dati.descrizione_en : (dati.descrizione || '');
+      var descHtml = md2html(descRaw);
+
+      // Immagine corpo
+      if (dati.immagine_corpo) {
+        descHtml += '<img src="' + base + dati.immagine_corpo.replace(/^\//,'') + '" alt="' + titolo + '" style="width:100%;max-width:600px;border-radius:8px;margin:1.5rem 0;" />';
+      }
+
+      // Tariffe sotto la descrizione
+      descHtml += htmlTariffe(isEN);
+
+      // Link ritorno
+      var backLabel = isEN ? '← Back to all places' : '← Torna a tutti i luoghi';
+      descHtml += '<a href="../i-luoghi.html" class="back-link">' + backLabel + '</a>';
+
+      document.getElementById('luogo-descrizione').innerHTML = descHtml;
+
+      // Sidebar — testo libero prezzi (campo prezzo_testo) o fallback
+      var prezzoEl = document.getElementById('luogo-prezzo');
+      var testoPrezzo = dati.prezzo_testo || dati.prezzo || 'Ingresso libero';
+      prezzoEl.textContent = testoPrezzo;
+
+      // Info sidebar
+      var info = '';
+      var orariMostra   = (isEN && dati.orari_en)         ? dati.orari_en         : (dati.orari || '');
+      var arrivareMostra = (isEN && dati.come_arrivare_en) ? dati.come_arrivare_en : (dati.come_arrivare || '');
+
+      if (orariMostra)       info += row(isEN ? 'Opening hours'   : 'Orari',          orariMostra);
+      if (dati.durata_visita) info += row(isEN ? 'Visit duration'  : 'Durata visita',  dati.durata_visita);
+      if (dati.indirizzo)    info += row(isEN ? 'Address'         : 'Indirizzo',       dati.indirizzo);
+      if (arrivareMostra)    info += row(isEN ? 'Getting there'   : 'Come arrivare',   arrivareMostra);
+      if (dati.telefono)     info += row('Telefono', '<a href="tel:' + dati.telefono + '">' + dati.telefono + '</a>');
+      if (dati.email)        info += row('Email',    '<a href="mailto:' + dati.email + '">' + dati.email + '</a>');
+      if (dati.sito_web)     info += row('Sito web', '<a href="' + dati.sito_web + '" target="_blank" rel="noopener">Visita il sito →</a>');
+
+      // Accessibilità
+      var acc = [];
+      if (dati.accessibile_sedia) acc.push(isEN ? '♿ Wheelchair'          : '♿ Sedia a rotelle');
+      if (dati.accessibile_bagno) acc.push(isEN ? '🚻 Accessible bathroom' : '🚻 Bagno accessibile');
+      if (dati.audioguida)        acc.push(isEN ? '🎧 Audio guide'         : '🎧 Audioguida');
+      if (dati.lingua_segni)      acc.push(isEN ? '🤟 Sign language'       : '🤟 Lingua dei segni');
+      if (acc.length) info += row(isEN ? 'Accessibility' : 'Accessibilità', acc.join(' · '));
+      if (dati.note_accessibilita) info += row(
+        isEN ? 'Access. notes' : 'Note acc.',
+        '<span style="font-size:.85em;opacity:.7">' + dati.note_accessibilita + '</span>'
+      );
+
+      info += row(isEN ? 'Project' : 'Progetto', 'P.A.S.T.');
+      document.getElementById('luogo-info').innerHTML = info;
+    }
+
+    function row(label, val) {
+      return '<div class="info-row"><div class="etichetta">' + label + '</div><div class="valore">' + val + '</div></div>';
+    }
+
+    // Evidenzia bottone lingua attivo in navbar
+    if (isEN) {
+      var elEN = document.getElementById('lang-en');
+      if (elEN) elEN.style.fontWeight = '700';
+    } else {
+      var elIT = document.getElementById('lang-it');
+      if (elIT) elIT.style.fontWeight = '700';
+    }
+
+    renderPagina();
   })();
   </script>
 </body>
