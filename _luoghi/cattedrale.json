@@ -1,18 +1,36 @@
 {
-  "titolo": "Cattedrale San Giovanni Battista",
-  "slug": "cattedrale",
-  "categoria": "Chiese",
-  "tag_extra": "Campanili",
-  "descrizione_breve": "La Cattedrale della Diocesi di Ragusa, con la sua imponente facciata barocca e i preziosi interni.",
-  "descrizione": "La Cattedrale di San Giovanni Battista è la chiesa madre della città di Ragusa e sede della diocesi. Ricostruita dopo il terremoto del 1693 nello stile barocco che caratterizza tutto il centro storico, conserva opere d'arte di grande valore e un campanile che domina il panorama cittadino. L'ingresso è gratuito.",
-  "orari": "Tutti i giorni 8:00–19:00",
-  "prezzo": "Gratuito",
-  "prezzo_ridotto": "",
-  "indirizzo": "Piazza San Giovanni, Ragusa",
-  "lat": "36.92370",
+  "tariffe": [
+    {
+      "etichetta": "Intero",
+      "prezzo": "€ 3,00"
+    },
+    {
+      "etichetta": "Ridotto",
+      "prezzo": "€ 1,50"
+    }
+  ],
+  "audioguida": false,
   "lng": "14.74650",
-  "colore_principale": "#bb1424",
+  "note_interne": "- aggiungere una foto dell'altare o di San Giovanni\n- aggiungere versione in inglese",
+  "durata_visita": "1 ora",
   "colore_secondario": "#e8e4d7",
+  "prezzo_testo": "L'ingresso alla Cattedrale è totalmente gratuito, mentre l'accesso al campanile è possibile tramite biglietto",
+  "slug": "cattedrale",
+  "tag_extra": "Campanili",
+  "prezzo": "Gratuito",
+  "indirizzo": "Piazza San Giovanni, Ragusa",
+  "accessibile_bagno": false,
+  "descrizione": "La Cattedrale di San Giovanni Battista è la chiesa madre della città di Ragusa e sede della diocesi. Ricostruita dopo il terremoto del 1693 nello stile barocco che caratterizza tutto il centro storico, conserva opere d'arte di grande valore e un campanile che domina il panorama cittadino. L'ingresso è gratuito.",
+  "widgets_regiondo": [],
+  "accessibile_sedia": true,
   "immagine": "/img/i luoghi/cattedrale.png",
-  "widgets_regiondo": []
+  "titolo": "Cattedrale San Giovanni Battista",
+  "categoria": "Chiese",
+  "lingua_segni": false,
+  "descrizione_breve": "La Cattedrale della Diocesi di Ragusa, con la sua imponente facciata barocca e i preziosi interni.",
+  "colore_principale": "#bb1424",
+  "orari": "Tutti i giorni 9:30–18:00",
+  "prezzo_ridotto": "",
+  "pubblicato": false,
+  "lat": "36.92370"
 }
