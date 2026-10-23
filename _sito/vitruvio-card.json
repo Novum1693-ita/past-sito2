@@ -1,21 +1,21 @@
 {
   "titolo": "Card",
   "titolo_en": "Cards",
-  "testo_intro": "Le card culturali del progetto P.A.S.T. Ispirate ai tre ordini architettonici della tradizione classica, ogni card offre un livello diverso di accesso ai luoghi e agli eventi del territorio ragusano.",
+  "testo_intro": "Qui troverai le card che potrai utilizzare i tutti i luoghi coinvolti nel piano strategico P.A.S.T.",
   "testo_intro_en": "The cultural cards of the P.A.S.T. project. Inspired by the three architectural orders of classical tradition, each card offers a different level of access to the places and events of the Ragusa area.",
   "sezioni": [
     {
       "pubblicata": true,
       "titolo_sezione": "Vitruvio Card",
       "titolo_sezione_en": "Vitruvio Cards",
-      "descrizione_sezione": "Le carte culturali ispirate agli ordini architettonici classici.",
+      "descrizione_sezione": "Queste card culturali, che prendono il nome dal creatore del De Architettua, Vitruvio, dove vennero trattati per la prima volta i 3 ordini architettonici del mondo antico: Dorico, Ionico e Corinzio. Acquista le Card in loco oppure prenotale, così da avere delle scontistiche per accedere ai luoghi",
       "descrizione_sezione_en": "Cultural cards inspired by the classical architectural orders.",
       "cards": [
         {
           "pubblicata": true,
           "nome": "Dorico Card",
           "nome_en": "Doric Card",
-          "testo": "Il livello base. Accesso a tutti i luoghi P.A.S.T. con tariffa agevolata e guida cartacea inclusa.",
+          "testo": "La Card Base, puoi accedere a 3 luoghi che sono coinvolti nel piano P.A.S.T.",
           "testo_en": "The base level. Access to all P.A.S.T. sites at a discounted rate, including a printed guide.",
           "prezzo": "",
           "widget_id": "c0321b60-2cdf-4ea1-b53c-4273150ea8ea",
@@ -42,6 +42,12 @@
           "immagine": "img/Corinzio.png"
         }
       ]
+    },
+    {
+      "pubblicata": false,
+      "titolo_sezione": "Duomo Card",
+      "titolo_sezione_en": "Duomo Card",
+      "descrizione_sezione": "Scopri la storia della Perla Tardo Barocco, il Duomo di San Giorgio. Attraverso questa card puoi accedere:\n- Balconata e Scalinata del Duomo\n- Sacrestia Monumentale\n- Museo del Duomo"
     }
   ]
 }
