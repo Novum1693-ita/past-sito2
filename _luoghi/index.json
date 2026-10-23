@@ -108,5 +108,14 @@
     "prezzo": "€ 2,00",
     "immagine": "/img/i luoghi/scale.png",
     "colore_principale": "#5384a0"
+  },
+  {
+    "titolo": "Chiesa SS. Trovato",
+    "slug": "ss-trovato",
+    "categoria": "Chiese",
+    "tag_extra": "unicità",
+    "descrizione_breve": "work in progress",
+    "orari": "Tutti i giorni 10:30–16:30 — Giovedì chiuso",
+    "colore_principale": "#148b80"
   }
 ]
