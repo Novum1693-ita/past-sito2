@@ -11,6 +11,15 @@
     "colore_principale": "#bb1424"
   },
   {
+    "titolo": "Chiesa S. Filippo Neri",
+    "slug": "Filippo-Neri",
+    "categoria": "Chiese",
+    "tag_extra": "Unicità",
+    "descrizione_breve": "in lavorazione",
+    "orari": "Chiuso",
+    "colore_principale": "#ab450d"
+  },
+  {
     "titolo": "Chiesa di Santa Maria dell'Itria",
     "slug": "itria",
     "categoria": "Chiese",
