@@ -1,0 +1,21 @@
+{
+  "audioguida": true,
+  "lng": "56.00000",
+  "durata_visita": "15 min",
+  "colore_secondario": "#da642f",
+  "prezzo_testo": "Gratuito",
+  "slug": "Filippo-Neri",
+  "tag_extra": "Unicità",
+  "indirizzo": "via s. filippo neri",
+  "accessibile_bagno": false,
+  "descrizione": "in lavorazione",
+  "accessibile_sedia": true,
+  "titolo": "Chiesa S. Filippo Neri",
+  "categoria": "Chiese",
+  "lingua_segni": false,
+  "descrizione_breve": "in lavorazione",
+  "colore_principale": "#ab450d",
+  "orari": "Chiuso",
+  "pubblicato": false,
+  "lat": "45.00000"
+}
